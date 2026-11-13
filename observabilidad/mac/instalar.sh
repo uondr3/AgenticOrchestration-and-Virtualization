@@ -64,6 +64,9 @@ PROV="$ETC/grafana/provisioning"
 respaldar "$INI"
 mkdir -p "$PROV/datasources" "$PROV/dashboards" "$PROV/alerting" "$PROV/plugins"
 cp "$DIR/grafana/provisioning/datasources/prometheus.yml" "$PROV/datasources/prometheus.yml"
+mkdir -p "$ETC/grafana/dashboards"
+cp "$DIR"/grafana/dashboards/*.json "$ETC/grafana/dashboards/"
+sed "s|__DASHBOARDS_DIR__|$ETC/grafana/dashboards|" "$DIR/grafana/provisioning/dashboards/uondr.yml" > "$PROV/dashboards/uondr.yml"
 python3 -I - "$INI" "$PROV" <<'PY'
 import re, sys
 ini, prov = sys.argv[1], sys.argv[2]

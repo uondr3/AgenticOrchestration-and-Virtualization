@@ -104,10 +104,33 @@ Cada estación reporta dos tarjetas de video: la integrada del procesador y la N
 | Ver sus datos | <http://127.0.0.1:9182/metrics> |
 | Desinstalar | Panel de control → Programas → windows_exporter |
 
+## Tablero UONDR · Estaciones
+
+En Grafana: carpeta **UONDR** → **UONDR · Estaciones**, o directo en <http://127.0.0.1:3000/d/uondr-estaciones>.
+
+| Sección | Qué muestra |
+|---|---|
+| 🚦 Ahora | Conexión, procesador, RAM, Revit abiertos, bakes en curso y temperatura de la NVIDIA, por estación |
+| 📈 Tendencia | Procesador y RAM de las dos estaciones en el tiempo |
+| 🧩 Por programa | RAM, procesador y memoria de video de Revit, 3dsmax, 3dsmaxbatch, claude y rvt-mcp. Una fila por estación |
+| 🏗️ Revit por instancia | RAM y procesador de cada Revit abierto, identificado por su `pid` |
+| 🎮 Tarjeta de video NVIDIA | Uso, memoria de video y temperatura |
+| 💾 Disco y red | Espacio libre por disco y tráfico de red |
+
+Colores: azul para la estación Revit y para Revit, naranja para la estación 3ds Max y para 3dsmax. Verde, amarillo y rojo solo marcan umbrales: procesador y RAM al 75 % y 90 %, temperatura a 75 °C y 85 °C, disco con menos de 20 % y 10 % libre.
+
+El tablero es código: se genera con `observabilidad/mac/grafana/generar_tablero.py`. Para cambiarlo se edita ese archivo y se corre:
+
+```bash
+python3 observabilidad/mac/grafana/generar_tablero.py --probar   # genera y prueba cada consulta
+cp observabilidad/mac/grafana/dashboards/uondr.json /opt/homebrew/etc/grafana/dashboards/
+```
+
+Grafana lo recarga solo en 30 segundos. Los cambios hechos a mano en Grafana se pierden al regenerarlo.
+
 ## Siguientes pasos
 
 | Paso | Qué |
 |---|---|
-| Tablero UONDR | Las dos estaciones lado a lado: RAM por Revit, bakes en curso, temperatura de la tarjeta |
 | Alertas | RAM arriba del 90 %, disco casi lleno, estación desconectada, temperatura alta |
 | Eventos de agentes | Los agentes marcan en Grafana el inicio y fin de cada bake o entrega |

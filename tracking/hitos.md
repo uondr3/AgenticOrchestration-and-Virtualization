@@ -17,7 +17,8 @@
 | 2026-11-13 | Repo público en `uondr3` | ✅ |
 | 2026-11-13 | Observabilidad: decisión Prometheus + Grafana en la Mac; scripts listos | ✅ |
 | 2026-11-13 | Observabilidad instalada: Prometheus y Grafana en la Mac, medidor en las dos estaciones | ✅ |
-| — | Tablero UONDR y alertas | ⬜ |
+| 2026-11-13 | Tablero UONDR · Estaciones en Grafana | ✅ |
+| — | Alertas de observabilidad | ⬜ |
 | — | **P5** Bake con la arquitecta trabajando | ⬜ |
 | — | **P6** Bake en otra estación y licencias | ⬜ |
 | — | **P7** Entrega sin WhatsApp | ⬜ |
