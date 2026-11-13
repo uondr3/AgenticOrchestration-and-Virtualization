@@ -82,7 +82,7 @@ Todo viaja por **Tailscale**, la red privada que une las tres máquinas.
 | P5 🔥 Bake trabajando | ¿La arquitecta sigue en Max durante un bake? | ⬜ |
 | P6 🖥️ Bake en otra PC | ¿La cadena corre en otra estación y qué licencias pide? | ⬜ |
 | P7 📦 Entrega sin WhatsApp | ¿La entrega llega y se valida sola? | ⬜ |
-| 📈 Observabilidad | ¿Vemos el historial de recursos de cada estación? | 🟡 En preparación |
+| 📈 Observabilidad | ¿Vemos el historial de recursos de cada estación? | ✅ Recolectando datos. Falta el tablero |
 
 Detalle en [tracking/hitos.md](tracking/hitos.md) y [tracking/ejecuciones.md](tracking/ejecuciones.md).
 

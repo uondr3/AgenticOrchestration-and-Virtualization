@@ -73,6 +73,37 @@ Grafana queda en <http://127.0.0.1:3000>. El primer inicio pide cambiar la contr
 - El puerto 9182 de cada estación acepta solo direcciones de Tailscale.
 - Los nombres reales de las máquinas viven en `observabilidad/mac/.env`, que no se publica.
 
+## Estado
+
+| Pieza | Versión | Estado |
+|---|---|---|
+| Prometheus | 3.16.0 | ✅ En la Mac desde 2026-11-13 |
+| Grafana | 13.3.1 | ✅ En la Mac desde 2026-11-13 |
+| windows_exporter, estación Revit | 0.32.1 | ✅ |
+| windows_exporter, estación 3ds Max | 0.32.1 | ✅ |
+
+Cada estación reporta dos tarjetas de video: la integrada del procesador y la NVIDIA. Para el tablero se filtra la NVIDIA.
+
+## Operación diaria en la Mac
+
+| Qué | Comando |
+|---|---|
+| Ver si los servicios corren | `brew services list` |
+| Reiniciar | `brew services restart prometheus` · `brew services restart grafana` |
+| Estado de las estaciones | <http://127.0.0.1:9090/targets> |
+| Tableros | <http://127.0.0.1:3000> |
+| Configuración | `/opt/homebrew/etc/prometheus.yml` · `/opt/homebrew/etc/grafana/grafana.ini` |
+| Historial | `/opt/homebrew/var/prometheus` |
+
+## Operación en las estaciones
+
+| Qué | Comando en PowerShell |
+|---|---|
+| Ver si el medidor corre | `Get-Service windows_exporter` |
+| Reiniciarlo | `Restart-Service windows_exporter`, como administrador |
+| Ver sus datos | <http://127.0.0.1:9182/metrics> |
+| Desinstalar | Panel de control → Programas → windows_exporter |
+
 ## Siguientes pasos
 
 | Paso | Qué |

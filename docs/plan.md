@@ -30,7 +30,7 @@
 | 2. Validación | Pruebas P1 a P7 ([pruebas.md](pruebas.md)) | 🟡 4 de 7 |
 | 3. Documentación para agentes | Reglas en los proyectos de cada estación ([agentes/](agentes)) | 🟡 Estación Revit lista |
 | 4. Coordinación y piloto | Trabajo real con varias casas y entregas automáticas | 🟡 Estación Revit en uso |
-| 5. Observabilidad | Prometheus + Grafana ([observabilidad.md](observabilidad.md)) | 🟡 En preparación |
+| 5. Observabilidad | Prometheus + Grafana ([observabilidad.md](observabilidad.md)) | 🟡 Instalada, falta el tablero |
 
 ## Medidas preventivas que siempre se mantienen
 

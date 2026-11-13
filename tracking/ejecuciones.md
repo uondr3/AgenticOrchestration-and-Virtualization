@@ -4,6 +4,9 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-13 | Estación 3ds Max | windows_exporter 0.32.1 instalado con `instalar-exporter.ps1` descargado del repo y verificado por SHA-256, ejecutado con permiso de administrador | ✅ 1,824 métricas, puerto solo para Tailscale |
+| 2026-11-13 | Estación Revit | windows_exporter 0.32.1 instalado de la misma forma | ✅ 2,021 métricas, puerto solo para Tailscale |
+| 2026-11-13 | Mac | Prometheus 3.16.0 y Grafana 13.3.1 instalados con `observabilidad/mac/instalar.sh` | ✅ Las dos estaciones en estado `up` |
 | 2026-11-13 | Mac | Repo trasladado a `uondr3` y publicado. Autoría de commits con la dirección anónima de GitHub | ✅ |
 | 2026-11-13 | Mac | Scripts de observabilidad: `observabilidad/mac/instalar.sh` y `observabilidad/windows/instalar-exporter.ps1` | ✅ Listos, sin instalar |
 | 2026-11-12 | Estación Revit | Agente nuevo de verificación: respondió de memoria las 4 reglas de `ORQUESTACION.md` | ✅ Las reglas cargan solas |

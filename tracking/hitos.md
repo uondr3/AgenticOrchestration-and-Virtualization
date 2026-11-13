@@ -15,8 +15,9 @@
 | 2026-11-12 | **P4** Dos agentes en dos casas a la vez, cada uno en su Revit. 0 errores | ✅ |
 | 2026-11-12 | Reglas de trabajo en paralelo instaladas y verificadas en la estación Revit | ✅ |
 | 2026-11-13 | Repo público en `uondr3` | ✅ |
-| 2026-11-13 | Observabilidad: decisión Prometheus + Grafana en la Mac; scripts listos | 🟡 |
-| — | Observabilidad instalada y tablero UONDR | ⬜ |
+| 2026-11-13 | Observabilidad: decisión Prometheus + Grafana en la Mac; scripts listos | ✅ |
+| 2026-11-13 | Observabilidad instalada: Prometheus y Grafana en la Mac, medidor en las dos estaciones | ✅ |
+| — | Tablero UONDR y alertas | ⬜ |
 | — | **P5** Bake con la arquitecta trabajando | ⬜ |
 | — | **P6** Bake en otra estación y licencias | ⬜ |
 | — | **P7** Entrega sin WhatsApp | ⬜ |
