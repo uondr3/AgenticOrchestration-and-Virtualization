@@ -4,6 +4,11 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-13 | Mac | Tablero v2: secciones numeradas sin emojis, temperatura del procesador, áreas apiladas sin línea, umbrales punteados, red con color por estación. Revisado con capturas | ✅ |
+| 2026-11-13 | Mac | Vista de solo lectura sin contraseña en Grafana, limitada a la Mac | ✅ |
+| 2026-11-13 | Estación 3ds Max | PawnIO 2.2.0 + OhmGraphite 0.38.0 con `instalar-temperatura.ps1`, verificados por SHA-256. Procesador a 51 °C en reposo | ✅ |
+| 2026-11-13 | Estación Revit | Instalación de temperatura pendiente: la estación no respondía, apagada o suspendida | ⏸️ |
+| 2026-11-13 | Estación 3ds Max | El disco E: con poco espacio no afecta los bakes: la arquitecta hornea en el disco con más espacio libre | ✅ Aclarado |
 | 2026-11-13 | Mac | Tablero **UONDR · Estaciones** en Grafana: 24 paneles en 6 secciones, generado por código y cargado por provisioning. Las 18 consultas probadas contra datos reales | ✅ |
 | 2026-11-13 | Mac | Estaciones renombradas en Prometheus a `Estación Revit` y `Estación 3ds Max` | ✅ |
 | 2026-11-13 | Estación 3ds Max | Hallazgo del tablero: el disco E: de 1 TB tiene 9.4 GB libres | ⚠️ Por revisar |

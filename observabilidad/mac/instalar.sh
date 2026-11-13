@@ -12,6 +12,8 @@ DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$DIR/.env"
 : "${OBS_TARGETS:?Define OBS_TARGETS en .env}"
 OBS_RETENCION="${OBS_RETENCION:-90d}"
+OBS_PUERTO_SENSORES="${OBS_PUERTO_SENSORES:-4445}"
+OBS_VISTA_ANONIMA="${OBS_VISTA_ANONIMA:-no}"
 
 command -v brew >/dev/null || { echo "Se necesita Homebrew: https://brew.sh"; exit 1; }
 PREFIX="$(brew --prefix)"
@@ -48,6 +50,17 @@ respaldar "$ETC/prometheus.args"
     echo "        labels:"
     echo "          estacion: \"$etiqueta\""
   done
+  echo ""
+  echo "  - job_name: sensores"
+  echo "    scrape_timeout: 10s"
+  echo "    metrics_path: /metrics/"
+  echo "    static_configs:"
+  for e in "${ENTRADAS[@]}"; do
+    etiqueta="${e%%=*}"; destino="${e#*=}"
+    echo "      - targets: [\"${destino%:*}:$OBS_PUERTO_SENSORES\"]"
+    echo "        labels:"
+    echo "          estacion: \"$etiqueta\""
+  done
 } > "$ETC/prometheus.yml"
 
 cat > "$ETC/prometheus.args" <<EOF
@@ -67,13 +80,22 @@ cp "$DIR/grafana/provisioning/datasources/prometheus.yml" "$PROV/datasources/pro
 mkdir -p "$ETC/grafana/dashboards"
 cp "$DIR"/grafana/dashboards/*.json "$ETC/grafana/dashboards/"
 sed "s|__DASHBOARDS_DIR__|$ETC/grafana/dashboards|" "$DIR/grafana/provisioning/dashboards/uondr.yml" > "$PROV/dashboards/uondr.yml"
-python3 -I - "$INI" "$PROV" <<'PY'
+python3 -I - "$INI" "$PROV" "$OBS_VISTA_ANONIMA" <<'PY'
 import re, sys
 ini, prov = sys.argv[1], sys.argv[2]
 s = open(ini, encoding="utf-8").read()
 s, n = re.subn(r"(?m)^;?\s*provisioning\s*=.*$", f"provisioning = {prov}", s, count=1)
 if n == 0:
     s = s.replace("[paths]", f"[paths]\nprovisioning = {prov}", 1)
+# Vista anónima de solo lectura: Grafana escucha solo en 127.0.0.1, así que solo aplica dentro de la Mac
+anon = "true" if sys.argv[3] == "si" else "false"
+i = s.find("[auth.anonymous]")
+if i >= 0:
+    j = s.find("\n[", i + 1); j = len(s) if j < 0 else j
+    sec = s[i:j]
+    sec = re.sub(r"(?m)^;?\s*enabled\s*=.*$", f"enabled = {anon}", sec, count=1)
+    sec = re.sub(r"(?m)^;?\s*org_role\s*=.*$", "org_role = Viewer", sec, count=1)
+    s = s[:i] + sec + s[j:]
 open(ini, "w", encoding="utf-8").write(s)
 PY
 grep -E "^(provisioning|http_addr) *=" "$INI" || true

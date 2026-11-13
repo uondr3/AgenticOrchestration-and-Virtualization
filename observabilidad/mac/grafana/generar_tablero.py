@@ -38,6 +38,7 @@ Q = {
     "ram_total": 'windows_memory_physical_total_bytes{%s}' % EST,
     "revit_abiertos": 'count by (estacion) (windows_process_info{process="Revit",%s}) or (0 * group by (estacion) (up{job="estaciones",%s}))' % (EST, EST),
     "bakes": 'count by (estacion) (windows_process_info{process="3dsmaxbatch",%s}) or (0 * group by (estacion) (up{job="estaciones",%s}))' % (EST, EST),
+    "cpu_temp": 'max by (estacion) (ohm_cpu_celsius{sensor="Core (Tctl/Tdie)",%s})' % EST,
     "gpu_temp": 'max by (estacion) (windows_gpu_temperature_celsius{%s} * on (instance, estacion, luid) group_left () %s)' % (EST, NVIDIA),
     "gpu_uso": 'max by (estacion) (sum by (estacion, instance, luid, engtype, eng) (rate(windows_gpu_engine_time_seconds_total{%s}[$__rate_interval])) * on (instance, estacion, luid) group_left () %s)' % (EST, NVIDIA),
     "gpu_vram": 'max by (estacion) (windows_gpu_adapter_memory_dedicated_bytes{%s} * on (instance, estacion, luid) group_left () %s)' % (EST, NVIDIA),
@@ -45,7 +46,7 @@ Q = {
     "prog_cpu": 'sum by (estacion, process) (rate(windows_process_cpu_time_seconds_total{%s}[$__rate_interval])) / on (estacion) group_left () count by (estacion) (windows_cpu_time_seconds_total{mode="idle",%s})' % (EST, EST),
     "prog_vram": 'sum by (estacion, process) ((windows_gpu_process_memory_dedicated_bytes{%s} * on (instance, estacion, luid) group_left () %s) * on (instance, estacion, process_id) group_left (process) windows_process_info{%s})' % (EST, NVIDIA, EST),
     "revit_ram": 'windows_process_working_set_private_bytes{process="Revit",estacion="Estación Revit"}',
-    "revit_cpu": 'rate(windows_process_cpu_time_seconds_total{process="Revit",estacion="Estación Revit"}[$__rate_interval]) / on (estacion) group_left () count by (estacion) (windows_cpu_time_seconds_total{mode="idle",estacion="Estación Revit"})',
+    "revit_cpu": 'sum by (estacion, process_id) (rate(windows_process_cpu_time_seconds_total{process="Revit",estacion="Estación Revit"}[$__rate_interval])) / on (estacion) group_left () count by (estacion) (windows_cpu_time_seconds_total{mode="idle",estacion="Estación Revit"})',
     "disco": 'windows_logical_disk_free_bytes{volume=~"[A-Z]:",%s} / windows_logical_disk_size_bytes{volume=~"[A-Z]:",%s}' % (EST, EST),
     "red_rx": 'sum by (estacion) (rate(windows_net_bytes_received_total{%s}[$__rate_interval]))' % EST,
     "red_tx": 'sum by (estacion) (rate(windows_net_bytes_sent_total{%s}[$__rate_interval]))' % EST,
@@ -111,14 +112,16 @@ def stat(titulo, expr, x, y, w, h=4, unidad="none", decimales=None, umbral=None,
 
 
 def serie(titulo, objetivos, x, y, w, h=8, unidad="none", apilar=False, max_=None,
-          sobreescribir=None, descripcion="", umbral=None):
+          sobreescribir=None, descripcion="", umbral=None, tope=None):
     d = {"unit": unidad, "color": {"mode": "palette-classic-by-name"},
-         "custom": {"lineWidth": 2, "fillOpacity": 25 if apilar else 8, "showPoints": "never",
+         "custom": {"lineWidth": 0 if apilar else 2, "fillOpacity": 70 if apilar else 8, "showPoints": "never",
                     "stacking": {"mode": "normal" if apilar else "none", "group": "A"},
                     "spanNulls": 60000, "axisSoftMin": 0,
-                    "thresholdsStyle": {"mode": "line+area" if umbral else "off"}}}
+                    "thresholdsStyle": {"mode": "dashed" if umbral else "off"}}}
     if max_ is not None:
         d["max"] = max_
+    if tope is not None:
+        d["custom"]["axisSoftMax"] = tope
     if umbral:
         d["thresholds"] = umbral
     return {
@@ -131,29 +134,43 @@ def serie(titulo, objetivos, x, y, w, h=8, unidad="none", apilar=False, max_=Non
     }
 
 
+def red_colores():
+    o = []
+    for est, color in COLOR_ESTACION.items():
+        o.append({"matcher": {"id": "byName", "options": f"{est} · recibido"},
+                  "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": color}}]})
+        o.append({"matcher": {"id": "byName", "options": f"{est} · enviado"},
+                  "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": color}},
+                                 {"id": "custom.lineStyle", "value": {"fill": "dash", "dash": [6, 4]}}]})
+    return o
+
+
 def construir():
     panels = []
     y = 0
-    panels.append(fila("🚦 Ahora", y)); y += 1
+    panels.append(fila("01 · EN VIVO · Estado actual de cada estación", y)); y += 1
     panels += [
         stat("Conexión", Q["conexion"], 0, y, 4,
              mapeos=[{"type": "value", "options": {"1": {"text": "En línea", "color": BUENO},
                                                    "0": {"text": "Sin datos", "color": CRITICO}}}],
              umbral=umbrales((BUENO, 1)), descripcion="Prometheus lee el medidor de la estación"),
-        stat("Procesador", Q["cpu"], 4, y, 4, unidad="percentunit", decimales=0,
+        stat("Procesador", Q["cpu"], 4, y, 3, unidad="percentunit", decimales=0,
              umbral=umbrales((AVISO, 0.75), (CRITICO, 0.9))),
-        stat("RAM usada", Q["ram_pct"], 8, y, 4, unidad="percentunit", decimales=0,
+        stat("RAM usada", Q["ram_pct"], 7, y, 3, unidad="percentunit", decimales=0,
              umbral=umbrales((AVISO, 0.75), (CRITICO, 0.9))),
-        stat("Revit abiertos", Q["revit_abiertos"], 12, y, 4, decimales=0,
+        stat("Revit abiertos", Q["revit_abiertos"], 10, y, 3, decimales=0,
              descripcion="Cada casa debe ir en su propio Revit"),
-        stat("Bakes en curso", Q["bakes"], 16, y, 4, decimales=0,
+        stat("Bakes", Q["bakes"], 13, y, 3, decimales=0,
              descripcion="Procesos 3dsmaxbatch activos"),
-        stat("Temperatura NVIDIA", Q["gpu_temp"], 20, y, 4, unidad="celsius", decimales=0,
+        stat("Temp. procesador", Q["cpu_temp"], 16, y, 4, unidad="celsius", decimales=0,
+             umbral=umbrales((AVISO, 80), (CRITICO, 90)),
+             descripcion="Sensor Tctl/Tdie del Ryzen, leído por OhmGraphite"),
+        stat("Temp. tarjeta NVIDIA", Q["gpu_temp"], 20, y, 4, unidad="celsius", decimales=0,
              umbral=umbrales((AVISO, 75), (CRITICO, 85))),
     ]
     y += 4
 
-    panels.append(fila("📈 Tendencia", y)); y += 1
+    panels.append(fila("02 · TENDENCIA · Procesador y memoria en el tiempo", y)); y += 1
     panels += [
         serie("Procesador", [target(Q["cpu"], "{{estacion}}")], 0, y, 12, unidad="percentunit", max_=1,
               sobreescribir=colores(COLOR_ESTACION)),
@@ -163,12 +180,12 @@ def construir():
     ]
     y += 8
 
-    panels.append(fila("🧩 Por programa · $estacion", y, repetir="estacion")); y += 1
+    panels.append(fila("03 · POR PROGRAMA · $estacion", y, repetir="estacion")); y += 1
     panels += [
         serie("RAM por programa", [target(Q["prog_ram"], "{{process}}")], 0, y, 8, unidad="bytes",
               apilar=True, sobreescribir=colores(COLOR_PROGRAMA)),
         serie("Procesador por programa", [target(Q["prog_cpu"], "{{process}}")], 8, y, 8,
-              unidad="percentunit", apilar=True, sobreescribir=colores(COLOR_PROGRAMA),
+              unidad="percentunit", sobreescribir=colores(COLOR_PROGRAMA),
               descripcion="Porcentaje de toda la máquina"),
         serie("Memoria de video por programa", [target(Q["prog_vram"], "{{process}}")], 16, y, 8,
               unidad="bytes", apilar=True, sobreescribir=colores(COLOR_PROGRAMA),
@@ -176,7 +193,7 @@ def construir():
     ]
     y += 8
 
-    panels.append(fila("🏗️ Revit por instancia", y)); y += 1
+    panels.append(fila("04 · REVIT POR INSTANCIA · Una línea por casa abierta", y)); y += 1
     panels += [
         serie("RAM de cada Revit", [target(Q["revit_ram"], "Revit pid {{process_id}}")], 0, y, 12,
               unidad="bytes", descripcion="Una línea por Revit abierto. Cada casa va en su propio Revit"),
@@ -185,18 +202,27 @@ def construir():
     ]
     y += 8
 
-    panels.append(fila("🎮 Tarjeta de video NVIDIA", y)); y += 1
+    panels.append(fila("05 · TEMPERATURA · Procesador y tarjeta de video", y)); y += 1
     panels += [
-        serie("Uso", [target(Q["gpu_uso"], "{{estacion}}")], 0, y, 8, unidad="percentunit", max_=1,
-              sobreescribir=colores(COLOR_ESTACION)),
-        serie("Memoria de video usada", [target(Q["gpu_vram"], "{{estacion}}")], 8, y, 8, unidad="bytes",
-              sobreescribir=colores(COLOR_ESTACION)),
-        serie("Temperatura", [target(Q["gpu_temp"], "{{estacion}}")], 16, y, 8, unidad="celsius",
-              sobreescribir=colores(COLOR_ESTACION), umbral=umbrales((AVISO, 75), (CRITICO, 85))),
+        serie("Procesador", [target(Q["cpu_temp"], "{{estacion}}")], 0, y, 12, unidad="celsius",
+              sobreescribir=colores(COLOR_ESTACION), umbral=umbrales((AVISO, 80), (CRITICO, 90)),
+              descripcion="Sensor Tctl/Tdie del Ryzen. Aviso a 80 °C, crítico a 90 °C", tope=95),
+        serie("Tarjeta NVIDIA", [target(Q["gpu_temp"], "{{estacion}}")], 12, y, 12, unidad="celsius",
+              sobreescribir=colores(COLOR_ESTACION), umbral=umbrales((AVISO, 75), (CRITICO, 85)),
+              descripcion="Aviso a 75 °C, crítico a 85 °C", tope=95),
     ]
     y += 8
 
-    panels.append(fila("💾 Disco y red", y)); y += 1
+    panels.append(fila("06 · TARJETA DE VIDEO · Uso y memoria de la NVIDIA", y)); y += 1
+    panels += [
+        serie("Uso", [target(Q["gpu_uso"], "{{estacion}}")], 0, y, 12, unidad="percentunit", max_=1,
+              sobreescribir=colores(COLOR_ESTACION)),
+        serie("Memoria de video usada", [target(Q["gpu_vram"], "{{estacion}}")], 12, y, 12, unidad="bytes",
+              sobreescribir=colores(COLOR_ESTACION)),
+    ]
+    y += 8
+
+    panels.append(fila("07 · DISCO Y RED · Espacio libre y tráfico", y)); y += 1
     disco = {
         "type": "bargauge", "id": nid(), "title": "Espacio libre por disco", "datasource": DS,
         "gridPos": {"h": 8, "w": 12, "x": 0, "y": y},
@@ -213,7 +239,8 @@ def construir():
     panels += [
         disco,
         serie("Red", [target(Q["red_rx"], "{{estacion}} · recibido", "A"),
-                      target(Q["red_tx"], "{{estacion}} · enviado", "B")], 12, y, 12, unidad="Bps"),
+                      target(Q["red_tx"], "{{estacion}} · enviado", "B")], 12, y, 12, unidad="Bps",
+              sobreescribir=red_colores()),
     ]
 
     return {

@@ -81,6 +81,22 @@ Grafana queda en <http://127.0.0.1:3000>. El primer inicio pide cambiar la contr
 | Grafana | 13.3.1 | ✅ En la Mac desde 2026-11-13 |
 | windows_exporter, estación Revit | 0.32.1 | ✅ |
 | windows_exporter, estación 3ds Max | 0.32.1 | ✅ |
+| OhmGraphite + PawnIO, estación 3ds Max | 0.38.0 + 2.2.0 | ✅ Temperatura del procesador |
+| OhmGraphite + PawnIO, estación Revit | 0.38.0 + 2.2.0 | ⬜ La estación estaba apagada |
+
+### Temperatura del procesador
+
+Windows no expone la temperatura de los Ryzen. La lee **OhmGraphite**, un servicio basado en LibreHardwareMonitor que publica los sensores en el puerto 4445, con ayuda de **PawnIO**, un controlador firmado que reemplaza al antiguo WinRing0. Se instala con:
+
+```powershell
+.\observabilidad\windows\instalar-temperatura.ps1    # como administrador
+```
+
+El sensor del tablero es `Core (Tctl/Tdie)`. Prometheus lo recoge en el trabajo `sensores`.
+
+### Vista sin contraseña, solo en la Mac
+
+Con `OBS_VISTA_ANONIMA="si"` en `observabilidad/mac/.env`, Grafana permite ver los tableros en modo lectura sin iniciar sesión. Como Grafana escucha solo en `127.0.0.1`, esto aplica únicamente dentro de la Mac. Sirve para que el agente coordinador tome capturas del tablero. Para quitarlo: `OBS_VISTA_ANONIMA="no"` y volver a correr `instalar.sh`.
 
 Cada estación reporta dos tarjetas de video: la integrada del procesador y la NVIDIA. Para el tablero se filtra la NVIDIA.
 
@@ -110,14 +126,17 @@ En Grafana: carpeta **UONDR** → **UONDR · Estaciones**, o directo en <http://
 
 | Sección | Qué muestra |
 |---|---|
-| 🚦 Ahora | Conexión, procesador, RAM, Revit abiertos, bakes en curso y temperatura de la NVIDIA, por estación |
-| 📈 Tendencia | Procesador y RAM de las dos estaciones en el tiempo |
-| 🧩 Por programa | RAM, procesador y memoria de video de Revit, 3dsmax, 3dsmaxbatch, claude y rvt-mcp. Una fila por estación |
-| 🏗️ Revit por instancia | RAM y procesador de cada Revit abierto, identificado por su `pid` |
-| 🎮 Tarjeta de video NVIDIA | Uso, memoria de video y temperatura |
-| 💾 Disco y red | Espacio libre por disco y tráfico de red |
+| 01 · EN VIVO | Conexión, procesador, RAM, Revit abiertos, bakes, temperatura del procesador y de la NVIDIA, por estación |
+| 02 · TENDENCIA | Procesador y RAM de las dos estaciones en el tiempo |
+| 03 · POR PROGRAMA | RAM, procesador y memoria de video de Revit, 3dsmax, 3dsmaxbatch, claude y rvt-mcp. Una fila por estación |
+| 04 · REVIT POR INSTANCIA | RAM y procesador de cada Revit abierto, identificado por su `pid` |
+| 05 · TEMPERATURA | Procesador y tarjeta NVIDIA, con líneas punteadas de aviso y crítico |
+| 06 · TARJETA DE VIDEO | Uso y memoria de la NVIDIA |
+| 07 · DISCO Y RED | Espacio libre por disco y tráfico de red |
 
-Colores: azul para la estación Revit y para Revit, naranja para la estación 3ds Max y para 3dsmax. Verde, amarillo y rojo solo marcan umbrales: procesador y RAM al 75 % y 90 %, temperatura a 75 °C y 85 °C, disco con menos de 20 % y 10 % libre.
+Los títulos de sección van numerados y en mayúsculas, sin emojis. Las áreas apiladas se dibujan sin línea para que cada color corresponda a su programa.
+
+Colores: azul para la estación Revit y para Revit, naranja para la estación 3ds Max y para 3dsmax. Verde, amarillo y rojo solo marcan umbrales: procesador y RAM al 75 % y 90 %, temperatura de la tarjeta a 75 °C y 85 °C, temperatura del procesador a 80 °C y 90 °C, disco con menos de 20 % y 10 % libre.
 
 El tablero es código: se genera con `observabilidad/mac/grafana/generar_tablero.py`. Para cambiarlo se edita ese archivo y se corre:
 
