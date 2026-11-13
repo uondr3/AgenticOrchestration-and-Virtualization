@@ -1,0 +1,8 @@
+# Secretos y datos locales: nunca se publican
+.env
+.env.*
+!**/.env.example
+privado/
+
+# Sistema
+.DS_Store

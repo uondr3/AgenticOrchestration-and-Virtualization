@@ -1,0 +1,42 @@
+# 🧭 Plan general
+
+## Problema de partida
+
+- Los agentes de cada estación trabajan en Revit y 3ds Max, pero **la aplicación atiende una orden a la vez** y el arquitecto se queda esperando.
+- Prompts, respuestas y entregas viajan **por WhatsApp**, con ZIP de hasta 1.3 GB.
+- Un ciclo de bakes del recorrido 3D tarda **de 1 a 3 horas** y crecerá con casas más grandes.
+
+## Decisiones tomadas
+
+| Fecha | Decisión | Por qué |
+|---|---|---|
+| 2026-11-09 | No virtualizar las estaciones | GPU-P y passthrough no son viables en Windows 11 Pro con GeForce, y la licencia de Autodesk es por usuario |
+| 2026-11-11 | Ambos agentes usan Claude Code | Confirmado por el equipo |
+| 2026-11-11 | Un arquitecto y un agente nunca editan la misma casa a la vez | Autodesk desaconseja el mismo usuario en dos sesiones del mismo proyecto |
+| 2026-11-11 | La tarjeta de video no acelera los bakes | Corona 9 renderiza solo con CPU |
+| 2026-11-12 | Red: Tailscale | Direcciones fijas, cifrado y acceso desde fuera de la oficina |
+| 2026-11-12 | Orquestación: Orca con servidores remotos | La Mac lanza agentes en las estaciones y recibe sus reportes |
+| 2026-11-12 | Entregas por carpeta compartida de Windows sobre Tailscale | 1.3 GB en 39 s, con reanudación |
+| 2026-11-12 | **Un agente por Revit, una casa por Revit** | Cada Revit acepta una sola conexión de agente |
+| 2026-11-12 | rvt-mcp 1.2.2 en la estación Revit | Desde la 1.1.0 distingue varios Revit del mismo año |
+| 2026-11-13 | Observabilidad: Prometheus + Grafana en la Mac coordinadora | El equipo trabaja en el mismo horario; historial central y tableros propios |
+| 2026-11-13 | Repo público en `uondr3` | Documentación compartida y trazabilidad |
+
+## Fases
+
+| Fase | Contenido | Estado |
+|---|---|---|
+| 1. Diagnóstico | Flujo actual, MCPs, licencias, virtualización | ✅ |
+| 2. Validación | Pruebas P1 a P7 ([pruebas.md](pruebas.md)) | 🟡 4 de 7 |
+| 3. Documentación para agentes | Reglas en los proyectos de cada estación ([agentes/](agentes)) | 🟡 Estación Revit lista |
+| 4. Coordinación y piloto | Trabajo real con varias casas y entregas automáticas | 🟡 Estación Revit en uso |
+| 5. Observabilidad | Prometheus + Grafana ([observabilidad.md](observabilidad.md)) | 🟡 En preparación |
+
+## Medidas preventivas que siempre se mantienen
+
+- Respaldo antes de cualquier cambio en una estación.
+- Pruebas en copias o en áreas aparte, nunca sobre el trabajo abierto del arquitecto.
+- Nunca se toca la instancia interactiva de 3ds Max; los procesos pesados van en `3dsmaxbatch`.
+- Se avisa al arquitecto antes de arrancar algo pesado.
+- Si algo falla dos veces seguidas, el agente se detiene y reporta.
+- Al terminar una prueba se borra lo que creó.
