@@ -1,0 +1,136 @@
+# Reglas de alerta de las estaciones. Se cargan por provisioning.
+# Todas llevan la etiqueta equipo=uondr para que las rutee la política de correo.
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: estaciones
+    folder: UONDR
+    interval: 1m
+    rules:
+      - uid: uondr-estacion-desconectada
+        title: Estación desconectada
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange: { from: 300, to: 0 }
+            datasourceUid: prometheus-uondr
+            model: { refId: A, expr: 'up{job="estaciones"}', instant: true, range: false }
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: lt, params: [1] } }]
+        for: 5m
+        noDataState: OK
+        execErrState: Error
+        labels: { equipo: uondr, severidad: critico }
+        annotations:
+          summary: '{{ $labels.estacion }} no responde desde hace 5 minutos'
+          description: 'Prometheus no puede leer el medidor de {{ $labels.estacion }}. Puede estar apagada, suspendida o sin Tailscale.'
+
+      - uid: uondr-ram-alta
+        title: RAM arriba de 90 %
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange: { from: 600, to: 0 }
+            datasourceUid: prometheus-uondr
+            model:
+              refId: A
+              expr: '1 - windows_memory_available_bytes{job="estaciones"} / windows_memory_physical_total_bytes{job="estaciones"}'
+              instant: true
+              range: false
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: gt, params: [0.9] } }]
+        for: 10m
+        noDataState: OK
+        execErrState: Error
+        labels: { equipo: uondr, severidad: aviso }
+        annotations:
+          summary: '{{ $labels.estacion }}: RAM al {{ humanizePercentage $values.A.Value }} durante 10 minutos'
+
+      - uid: uondr-temp-procesador
+        title: Procesador arriba de 90 °C
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange: { from: 300, to: 0 }
+            datasourceUid: prometheus-uondr
+            model:
+              refId: A
+              expr: 'max by (estacion) (ohm_cpu_celsius{sensor="Core (Tctl/Tdie)"})'
+              instant: true
+              range: false
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: gt, params: [90] } }]
+        for: 2m
+        noDataState: OK
+        execErrState: Error
+        labels: { equipo: uondr, severidad: critico }
+        annotations:
+          summary: '{{ $labels.estacion }}: procesador a {{ printf "%.0f" $values.A.Value }} °C'
+
+      - uid: uondr-temp-tarjeta
+        title: Tarjeta NVIDIA arriba de 85 °C
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange: { from: 300, to: 0 }
+            datasourceUid: prometheus-uondr
+            model:
+              refId: A
+              expr: 'max by (estacion) (windows_gpu_temperature_celsius * on (instance, estacion, luid) group_left () windows_gpu_info{name=~"NVIDIA.*"})'
+              instant: true
+              range: false
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: gt, params: [85] } }]
+        for: 2m
+        noDataState: OK
+        execErrState: Error
+        labels: { equipo: uondr, severidad: critico }
+        annotations:
+          summary: '{{ $labels.estacion }}: tarjeta NVIDIA a {{ printf "%.0f" $values.A.Value }} °C'
+
+      - uid: uondr-disco-sistema
+        title: Disco del sistema con menos de 10 % libre
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange: { from: 900, to: 0 }
+            datasourceUid: prometheus-uondr
+            model:
+              refId: A
+              expr: 'windows_logical_disk_free_bytes{volume="C:"} / windows_logical_disk_size_bytes{volume="C:"}'
+              instant: true
+              range: false
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: lt, params: [0.1] } }]
+        for: 15m
+        noDataState: OK
+        execErrState: Error
+        labels: { equipo: uondr, severidad: aviso }
+        annotations:
+          summary: '{{ $labels.estacion }}: disco C: con {{ humanizePercentage $values.A.Value }} libre'

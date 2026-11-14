@@ -4,6 +4,11 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-14 | Repo | `CLAUDE.md` con las convenciones y el método de trabajo del proyecto | ✅ |
+| 2026-11-14 | Mac | Alertas de Grafana por Gmail: 5 reglas, silencio fuera de horario. Reglas validadas en Grafana; falta la contraseña de aplicación para enviar | 🟡 |
+| 2026-11-14 | Mac | Sección **00 · FICHA TÉCNICA** en el tablero con el hardware de cada estación | ✅ |
+| 2026-11-14 | Las dos estaciones | Inventario de hardware con `ficha-tecnica.ps1`, solo lectura. Estación Revit: 4 × 16 GB de dos kits distintos a 3600 MT/s. Estación 3ds Max: 2 × 32 GB a 4800 MT/s y dos discos externos USB | ✅ |
+| 2026-11-14 | Estación Revit | Instalación de temperatura lanzada; esperando que el arquitecto acepte el permiso de Windows | ⏸️ |
 | 2026-11-13 | Mac | Tablero v2: secciones numeradas sin emojis, temperatura del procesador, áreas apiladas sin línea, umbrales punteados, red con color por estación. Revisado con capturas | ✅ |
 | 2026-11-13 | Mac | Vista de solo lectura sin contraseña en Grafana, limitada a la Mac | ✅ |
 | 2026-11-13 | Estación 3ds Max | PawnIO 2.2.0 + OhmGraphite 0.38.0 con `instalar-temperatura.ps1`, verificados por SHA-256. Procesador a 51 °C en reposo | ✅ |

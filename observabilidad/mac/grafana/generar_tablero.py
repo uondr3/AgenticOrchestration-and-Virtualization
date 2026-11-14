@@ -145,9 +145,46 @@ def red_colores():
     return o
 
 
+# Ficha técnica de cada estación. Actualizar cuando cambie el hardware
+# (se obtiene con observabilidad/windows/ficha-tecnica.ps1).
+FICHA_FECHA = "2026-11-14"
+FICHA = {
+    "Estación Revit": [
+        ("Procesador", "AMD Ryzen 9 9900X · 12 núcleos / 24 hilos"),
+        ("Placa", "Gigabyte B850 AORUS ELITE WIFI7 ICE · BIOS F11"),
+        ("RAM", "**64 GB** DDR5 · 4 × 16 GB · 4 de 4 ranuras · **3600 MT/s**"),
+        ("Módulos", "2 × G.Skill F5-6000J3636F16G + 2 × ADATA AX5U5600C4616G"),
+        ("Tarjeta de video", "NVIDIA GeForce RTX 5080 · AMD Radeon integrada"),
+        ("Disco", "Kingston NV3 1 TB NVMe"),
+        ("Sistema", "Windows 11 Pro · build 26200"),
+        ("Nota", "Dos kits distintos: la RAM trabaja a 3600 MT/s, abajo de su nominal de 5600–6000"),
+    ],
+    "Estación 3ds Max": [
+        ("Procesador", "AMD Ryzen 9 9950X · 16 núcleos / 32 hilos"),
+        ("Placa", "ASUS ProArt B850-CREATOR WIFI NEO · BIOS 0239"),
+        ("RAM", "**64 GB** DDR5 · 2 × 32 GB · 2 de 4 ranuras · **4800 MT/s**"),
+        ("Módulos", "Corsair CMK64GX5M2D6000C40, kit de 2 × 32 GB"),
+        ("Tarjeta de video", "NVIDIA GeForce RTX 5070 · AMD Radeon integrada"),
+        ("Discos", "Kingston NV3 1 TB NVMe interno · ADATA HV620S 1 TB USB · Transcend StoreJet 1 TB USB"),
+        ("Sistema", "Windows 11 Pro · build 26200"),
+        ("Nota", "Kit de 6000 MT/s trabajando a 4800 MT/s: el perfil EXPO no está activo"),
+    ],
+}
+
+
+def ficha(nombre, x, y):
+    filas = "\n".join(f"| **{k}** | {v} |" for k, v in FICHA[nombre])
+    contenido = f"| | |\n|---|---|\n{filas}\n\n<small>Actualizada el {FICHA_FECHA}</small>"
+    return {"type": "text", "id": nid(), "title": nombre, "gridPos": {"h": 10, "w": 12, "x": x, "y": y},
+            "options": {"mode": "markdown", "content": contenido}}
+
+
 def construir():
     panels = []
     y = 0
+    panels.append(fila("00 · FICHA TÉCNICA · Hardware de cada estación", y)); y += 1
+    panels += [ficha("Estación Revit", 0, y), ficha("Estación 3ds Max", 12, y)]
+    y += 10
     panels.append(fila("01 · EN VIVO · Estado actual de cada estación", y)); y += 1
     panels += [
         stat("Conexión", Q["conexion"], 0, y, 4,

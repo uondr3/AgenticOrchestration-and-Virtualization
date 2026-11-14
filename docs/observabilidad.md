@@ -147,9 +147,40 @@ cp observabilidad/mac/grafana/dashboards/uondr.json /opt/homebrew/etc/grafana/da
 
 Grafana lo recarga solo en 30 segundos. Los cambios hechos a mano en Grafana se pierden al regenerarlo.
 
+## Alertas por correo
+
+Grafana envía las alertas por **Gmail**, con SMTP de `smtp.gmail.com:587` y una **contraseña de aplicación** de Google.
+
+| Alerta | Condición | Severidad |
+|---|---|---|
+| Estación desconectada | Prometheus no lee la estación durante 5 min | crítico |
+| RAM arriba de 90 % | Durante 10 min | aviso |
+| Procesador arriba de 90 °C | Durante 2 min | crítico |
+| Tarjeta NVIDIA arriba de 85 °C | Durante 2 min | crítico |
+| Disco del sistema con menos de 10 % libre | Disco C:, durante 15 min | aviso |
+
+- Fuera del horario de trabajo y en fin de semana las alertas se silencian.
+- Se agrupan por alerta y estación, y una alerta activa se repite cada 4 horas.
+- Las alertas salen de la Mac: si está dormida, no se evalúan.
+
+Para activarlas, en `observabilidad/mac/.env`:
+
+```bash
+OBS_SMTP_USUARIO="cuenta que envía"
+OBS_SMTP_CLAVE="contraseña de aplicación"   # https://myaccount.google.com/apppasswords
+OBS_ALERTA_CORREO="quién recibe"            # vacío = la misma cuenta
+OBS_HORA_INICIO="09:00"
+OBS_HORA_FIN="19:00"
+```
+
+y volver a correr `observabilidad/mac/instalar.sh`. Las reglas están en `observabilidad/mac/grafana/provisioning/alerting/reglas.yml`. El destinatario y el horario se generan desde `.env` y no se publican. Para probar el envío: Grafana → Alerting → Contact points → `correo-uondr` → Test.
+
+## Ficha técnica
+
+La sección **00 · FICHA TÉCNICA** del tablero muestra el hardware de cada estación. Se obtiene con `observabilidad/windows/ficha-tecnica.ps1`, que solo lee, y se escribe en `FICHA` dentro de `generar_tablero.py`. Hay que actualizarla cuando cambie el hardware.
+
 ## Siguientes pasos
 
 | Paso | Qué |
 |---|---|
-| Alertas | RAM arriba del 90 %, disco casi lleno, estación desconectada, temperatura alta |
 | Eventos de agentes | Los agentes marcan en Grafana el inicio y fin de cada bake o entrega |

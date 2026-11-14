@@ -20,7 +20,9 @@
 | 2026-11-13 | Tablero UONDR · Estaciones en Grafana | ✅ |
 | 2026-11-13 | Temperatura del procesador en la estación 3ds Max | ✅ |
 | — | Temperatura del procesador en la estación Revit | ⬜ |
-| — | Alertas de observabilidad | ⬜ |
+| 2026-11-14 | Ficha técnica de las estaciones en el tablero | ✅ |
+| 2026-11-14 | Convenciones del proyecto en `CLAUDE.md` | ✅ |
+| — | Alertas de observabilidad por Gmail | 🟡 Falta la contraseña de aplicación |
 | — | **P5** Bake con la arquitecta trabajando | ⬜ |
 | — | **P6** Bake en otra estación y licencias | ⬜ |
 | — | **P7** Entrega sin WhatsApp | ⬜ |

@@ -53,7 +53,7 @@
     {
       "type": "row",
       "id": 1,
-      "title": "01 · EN VIVO · Estado actual de cada estación",
+      "title": "00 · FICHA TÉCNICA · Hardware de cada estación",
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -64,8 +64,51 @@
       "panels": []
     },
     {
-      "type": "stat",
+      "type": "text",
       "id": 2,
+      "title": "Estación Revit",
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9900X · 12 núcleos / 24 hilos |\n| **Placa** | Gigabyte B850 AORUS ELITE WIFI7 ICE · BIOS F11 |\n| **RAM** | **64 GB** DDR5 · 4 × 16 GB · 4 de 4 ranuras · **3600 MT/s** |\n| **Módulos** | 2 × G.Skill F5-6000J3636F16G + 2 × ADATA AX5U5600C4616G |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5080 · AMD Radeon integrada |\n| **Disco** | Kingston NV3 1 TB NVMe |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Dos kits distintos: la RAM trabaja a 3600 MT/s, abajo de su nominal de 5600–6000 |\n\n<small>Actualizada el 2026-11-14</small>"
+      }
+    },
+    {
+      "type": "text",
+      "id": 3,
+      "title": "Estación 3ds Max",
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9950X · 16 núcleos / 32 hilos |\n| **Placa** | ASUS ProArt B850-CREATOR WIFI NEO · BIOS 0239 |\n| **RAM** | **64 GB** DDR5 · 2 × 32 GB · 2 de 4 ranuras · **4800 MT/s** |\n| **Módulos** | Corsair CMK64GX5M2D6000C40, kit de 2 × 32 GB |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5070 · AMD Radeon integrada |\n| **Discos** | Kingston NV3 1 TB NVMe interno · ADATA HV620S 1 TB USB · Transcend StoreJet 1 TB USB |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Kit de 6000 MT/s trabajando a 4800 MT/s: el perfil EXPO no está activo |\n\n<small>Actualizada el 2026-11-14</small>"
+      }
+    },
+    {
+      "type": "row",
+      "id": 4,
+      "title": "01 · EN VIVO · Estado actual de cada estación",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
+      "panels": []
+    },
+    {
+      "type": "stat",
+      "id": 5,
       "title": "Conexión",
       "description": "Prometheus lee el medidor de la estación",
       "datasource": {
@@ -76,7 +119,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 1
+        "y": 12
       },
       "targets": [
         {
@@ -146,7 +189,7 @@
     },
     {
       "type": "stat",
-      "id": 3,
+      "id": 6,
       "title": "Procesador",
       "description": "",
       "datasource": {
@@ -157,7 +200,7 @@
         "h": 4,
         "w": 3,
         "x": 4,
-        "y": 1
+        "y": 12
       },
       "targets": [
         {
@@ -218,7 +261,7 @@
     },
     {
       "type": "stat",
-      "id": 4,
+      "id": 7,
       "title": "RAM usada",
       "description": "",
       "datasource": {
@@ -229,7 +272,7 @@
         "h": 4,
         "w": 3,
         "x": 7,
-        "y": 1
+        "y": 12
       },
       "targets": [
         {
@@ -290,7 +333,7 @@
     },
     {
       "type": "stat",
-      "id": 5,
+      "id": 8,
       "title": "Revit abiertos",
       "description": "Cada casa debe ir en su propio Revit",
       "datasource": {
@@ -301,7 +344,7 @@
         "h": 4,
         "w": 3,
         "x": 10,
-        "y": 1
+        "y": 12
       },
       "targets": [
         {
@@ -354,7 +397,7 @@
     },
     {
       "type": "stat",
-      "id": 6,
+      "id": 9,
       "title": "Bakes",
       "description": "Procesos 3dsmaxbatch activos",
       "datasource": {
@@ -365,7 +408,7 @@
         "h": 4,
         "w": 3,
         "x": 13,
-        "y": 1
+        "y": 12
       },
       "targets": [
         {
@@ -418,7 +461,7 @@
     },
     {
       "type": "stat",
-      "id": 7,
+      "id": 10,
       "title": "Temp. procesador",
       "description": "Sensor Tctl/Tdie del Ryzen, leído por OhmGraphite",
       "datasource": {
@@ -429,7 +472,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 1
+        "y": 12
       },
       "targets": [
         {
@@ -490,7 +533,7 @@
     },
     {
       "type": "stat",
-      "id": 8,
+      "id": 11,
       "title": "Temp. tarjeta NVIDIA",
       "description": "",
       "datasource": {
@@ -501,7 +544,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 1
+        "y": 12
       },
       "targets": [
         {
@@ -562,20 +605,20 @@
     },
     {
       "type": "row",
-      "id": 9,
+      "id": 12,
       "title": "02 · TENDENCIA · Procesador y memoria en el tiempo",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 5
+        "y": 16
       },
       "panels": []
     },
     {
       "type": "timeseries",
-      "id": 10,
+      "id": 13,
       "title": "Procesador",
       "description": "",
       "datasource": {
@@ -586,7 +629,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 6
+        "y": 17
       },
       "targets": [
         {
@@ -672,7 +715,7 @@
     },
     {
       "type": "timeseries",
-      "id": 11,
+      "id": 14,
       "title": "RAM usada",
       "description": "Cada estación tiene 64 GB",
       "datasource": {
@@ -683,7 +726,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 6
+        "y": 17
       },
       "targets": [
         {
@@ -768,21 +811,21 @@
     },
     {
       "type": "row",
-      "id": 12,
+      "id": 15,
       "title": "03 · POR PROGRAMA · $estacion",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 14
+        "y": 25
       },
       "panels": [],
       "repeat": "estacion"
     },
     {
       "type": "timeseries",
-      "id": 13,
+      "id": 16,
       "title": "RAM por programa",
       "description": "",
       "datasource": {
@@ -793,7 +836,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 15
+        "y": 26
       },
       "targets": [
         {
@@ -923,7 +966,7 @@
     },
     {
       "type": "timeseries",
-      "id": 14,
+      "id": 17,
       "title": "Procesador por programa",
       "description": "Porcentaje de toda la máquina",
       "datasource": {
@@ -934,7 +977,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 15
+        "y": 26
       },
       "targets": [
         {
@@ -1064,7 +1107,7 @@
     },
     {
       "type": "timeseries",
-      "id": 15,
+      "id": 18,
       "title": "Memoria de video por programa",
       "description": "Solo la tarjeta NVIDIA",
       "datasource": {
@@ -1075,7 +1118,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 15
+        "y": 26
       },
       "targets": [
         {
@@ -1205,20 +1248,20 @@
     },
     {
       "type": "row",
-      "id": 16,
+      "id": 19,
       "title": "04 · REVIT POR INSTANCIA · Una línea por casa abierta",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 34
       },
       "panels": []
     },
     {
       "type": "timeseries",
-      "id": 17,
+      "id": 20,
       "title": "RAM de cada Revit",
       "description": "Una línea por Revit abierto. Cada casa va en su propio Revit",
       "datasource": {
@@ -1229,7 +1272,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 24
+        "y": 35
       },
       "targets": [
         {
@@ -1283,7 +1326,7 @@
     },
     {
       "type": "timeseries",
-      "id": 18,
+      "id": 21,
       "title": "Procesador de cada Revit",
       "description": "Porcentaje de toda la máquina",
       "datasource": {
@@ -1294,7 +1337,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 35
       },
       "targets": [
         {
@@ -1348,20 +1391,20 @@
     },
     {
       "type": "row",
-      "id": 19,
+      "id": 22,
       "title": "05 · TEMPERATURA · Procesador y tarjeta de video",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 43
       },
       "panels": []
     },
     {
       "type": "timeseries",
-      "id": 20,
+      "id": 23,
       "title": "Procesador",
       "description": "Sensor Tctl/Tdie del Ryzen. Aviso a 80 °C, crítico a 90 °C",
       "datasource": {
@@ -1372,7 +1415,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 33
+        "y": 44
       },
       "targets": [
         {
@@ -1475,7 +1518,7 @@
     },
     {
       "type": "timeseries",
-      "id": 21,
+      "id": 24,
       "title": "Tarjeta NVIDIA",
       "description": "Aviso a 75 °C, crítico a 85 °C",
       "datasource": {
@@ -1486,7 +1529,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 33
+        "y": 44
       },
       "targets": [
         {
@@ -1589,20 +1632,20 @@
     },
     {
       "type": "row",
-      "id": 22,
+      "id": 25,
       "title": "06 · TARJETA DE VIDEO · Uso y memoria de la NVIDIA",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 41
+        "y": 52
       },
       "panels": []
     },
     {
       "type": "timeseries",
-      "id": 23,
+      "id": 26,
       "title": "Uso",
       "description": "",
       "datasource": {
@@ -1613,7 +1656,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 42
+        "y": 53
       },
       "targets": [
         {
@@ -1699,7 +1742,7 @@
     },
     {
       "type": "timeseries",
-      "id": 24,
+      "id": 27,
       "title": "Memoria de video usada",
       "description": "",
       "datasource": {
@@ -1710,7 +1753,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 42
+        "y": 53
       },
       "targets": [
         {
@@ -1795,20 +1838,20 @@
     },
     {
       "type": "row",
-      "id": 25,
+      "id": 28,
       "title": "07 · DISCO Y RED · Espacio libre y tráfico",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 50
+        "y": 61
       },
       "panels": []
     },
     {
       "type": "bargauge",
-      "id": 26,
+      "id": 29,
       "title": "Espacio libre por disco",
       "datasource": {
         "type": "prometheus",
@@ -1818,7 +1861,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 51
+        "y": 62
       },
       "targets": [
         {
@@ -1877,7 +1920,7 @@
     },
     {
       "type": "timeseries",
-      "id": 27,
+      "id": 30,
       "title": "Red",
       "description": "",
       "datasource": {
@@ -1888,7 +1931,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 51
+        "y": 62
       },
       "targets": [
         {

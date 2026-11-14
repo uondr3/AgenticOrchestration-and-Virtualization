@@ -14,6 +14,12 @@ source "$DIR/.env"
 OBS_RETENCION="${OBS_RETENCION:-90d}"
 OBS_PUERTO_SENSORES="${OBS_PUERTO_SENSORES:-4445}"
 OBS_VISTA_ANONIMA="${OBS_VISTA_ANONIMA:-no}"
+OBS_SMTP_USUARIO="${OBS_SMTP_USUARIO:-}"
+OBS_SMTP_CLAVE="${OBS_SMTP_CLAVE:-}"
+OBS_ALERTA_CORREO="${OBS_ALERTA_CORREO:-$OBS_SMTP_USUARIO}"
+OBS_HORA_INICIO="${OBS_HORA_INICIO:-09:00}"
+OBS_HORA_FIN="${OBS_HORA_FIN:-19:00}"
+OBS_ZONA="${OBS_ZONA:-America/Merida}"
 
 command -v brew >/dev/null || { echo "Se necesita Homebrew: https://brew.sh"; exit 1; }
 PREFIX="$(brew --prefix)"
@@ -99,6 +105,70 @@ if i >= 0:
 open(ini, "w", encoding="utf-8").write(s)
 PY
 grep -E "^(provisioning|http_addr) *=" "$INI" || true
+
+echo "==> Alertas por correo"
+if [ -n "$OBS_SMTP_USUARIO" ] && [ -n "$OBS_SMTP_CLAVE" ]; then
+  # SMTP de Gmail en grafana.ini. La clave viaja por variable de entorno, no por argumentos.
+  SMTP_USUARIO="$OBS_SMTP_USUARIO" SMTP_CLAVE="$OBS_SMTP_CLAVE" python3 -I - "$INI" <<'PY'
+import os, re, sys
+ini = sys.argv[1]
+s = open(ini, encoding="utf-8").read()
+valores = {"enabled": "true", "host": "smtp.gmail.com:587", "user": os.environ["SMTP_USUARIO"],
+           "password": '"""' + os.environ["SMTP_CLAVE"] + '"""', "from_address": os.environ["SMTP_USUARIO"],
+           "from_name": "Grafana UONDR", "startTLS_policy": "MandatoryStartTLS"}
+i = s.find("[smtp]")
+j = s.find("\n[", i + 1); j = len(s) if j < 0 else j
+sec = s[i:j]
+for k, v in valores.items():
+    sec, n = re.subn(rf"(?m)^;?\s*{k}\s*=.*$", f"{k} = {v}", sec, count=1)
+    if n == 0:
+        sec = sec.rstrip("\n") + f"\n{k} = {v}\n"
+s = s[:i] + sec + s[j:]
+open(ini, "w", encoding="utf-8").write(s)
+PY
+  cp "$DIR/grafana/provisioning/alerting/reglas.yml" "$PROV/alerting/reglas.yml"
+  cat > "$PROV/alerting/correo.yml" <<EOF2
+# Generado por instalar.sh desde .env. No se publica.
+apiVersion: 1
+contactPoints:
+  - orgId: 1
+    name: correo-uondr
+    receivers:
+      - uid: correo-uondr
+        type: email
+        settings:
+          addresses: "$OBS_ALERTA_CORREO"
+          singleEmail: true
+muteTimes:
+  - orgId: 1
+    name: fuera-de-horario
+    time_intervals:
+      - times:
+          - start_time: "00:00"
+            end_time: "$OBS_HORA_INICIO"
+          - start_time: "$OBS_HORA_FIN"
+            end_time: "24:00"
+        location: "$OBS_ZONA"
+      - weekdays: ["saturday", "sunday"]
+        location: "$OBS_ZONA"
+policies:
+  - orgId: 1
+    receiver: correo-uondr
+    group_by: ["alertname", "estacion"]
+    group_wait: 30s
+    group_interval: 5m
+    repeat_interval: 4h
+    routes:
+      - receiver: correo-uondr
+        object_matchers: [["equipo", "=", "uondr"]]
+        mute_time_intervals: ["fuera-de-horario"]
+EOF2
+  chmod 600 "$PROV/alerting/correo.yml"
+  echo "    alertas a $OBS_ALERTA_CORREO, silenciadas fuera de $OBS_HORA_INICIO-$OBS_HORA_FIN y en fin de semana"
+else
+  rm -f "$PROV/alerting/reglas.yml" "$PROV/alerting/correo.yml"
+  echo "    sin OBS_SMTP_USUARIO / OBS_SMTP_CLAVE en .env: alertas desactivadas"
+fi
 
 echo "==> Arrancando servicios"
 brew services restart prometheus
