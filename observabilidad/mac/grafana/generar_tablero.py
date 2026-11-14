@@ -91,16 +91,25 @@ def fila(titulo, y, repetir=None):
     return p
 
 
+# Orden fijo de las estaciones en los indicadores, igual que en las leyendas
+ORDEN_ESTACIONES = ["Estación 3ds Max", "Estación Revit"]
+
+
 def stat(titulo, expr, x, y, w, h=4, unidad="none", decimales=None, umbral=None,
-         mapeos=None, descripcion=""):
+         mapeos=None, descripcion="", tam_valor=30):
+    # Una consulta por estación para que siempre salgan en el mismo orden
+    objetivos = [target(f'({expr}) and on (estacion) up{{job="estaciones",estacion="{est}"}}',
+                        "{{estacion}}", ref=chr(65 + i), instant=True)
+                 for i, est in enumerate(ORDEN_ESTACIONES)]
     p = {
         "type": "stat", "id": nid(), "title": titulo, "description": descripcion, "datasource": DS,
         "gridPos": {"h": h, "w": w, "x": x, "y": y},
-        "targets": [target(expr, "{{estacion}}", instant=True)],
+        "targets": objetivos,
         "options": {"reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": False},
                     "colorMode": "background" if umbral or mapeos else "none",
                     "graphMode": "none", "justifyMode": "center", "textMode": "value_and_name",
-                    "orientation": "vertical", "wideLayout": True},
+                    "orientation": "vertical", "wideLayout": True,
+                    "text": {"titleSize": 13, "valueSize": tam_valor}},
         "fieldConfig": {"defaults": {"unit": unidad, "color": {"mode": "thresholds"},
                                      "thresholds": umbral or {"mode": "absolute", "steps": [{"color": "text", "value": None}]},
                                      "mappings": mapeos or []},
@@ -111,7 +120,7 @@ def stat(titulo, expr, x, y, w, h=4, unidad="none", decimales=None, umbral=None,
     return p
 
 
-def serie(titulo, objetivos, x, y, w, h=8, unidad="none", apilar=False, max_=None,
+def serie(titulo, objetivos, x, y, w, h=9, unidad="none", apilar=False, max_=None,
           sobreescribir=None, descripcion="", umbral=None, tope=None):
     d = {"unit": unidad, "color": {"mode": "palette-classic-by-name"},
          "custom": {"lineWidth": 0 if apilar else 2, "fillOpacity": 70 if apilar else 8, "showPoints": "never",
@@ -128,7 +137,7 @@ def serie(titulo, objetivos, x, y, w, h=8, unidad="none", apilar=False, max_=Non
         "type": "timeseries", "id": nid(), "title": titulo, "description": descripcion, "datasource": DS,
         "gridPos": {"h": h, "w": w, "x": x, "y": y},
         "targets": objetivos,
-        "options": {"legend": {"displayMode": "table", "placement": "right", "calcs": ["lastNotNull", "max"]},
+        "options": {"legend": {"displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "max"]},
                     "tooltip": {"mode": "multi", "sort": "desc"}},
         "fieldConfig": {"defaults": d, "overrides": sobreescribir or []},
     }
@@ -153,7 +162,7 @@ FICHA = {
         ("Procesador", "AMD Ryzen 9 9900X · 12 núcleos / 24 hilos"),
         ("Placa", "Gigabyte B850 AORUS ELITE WIFI7 ICE · BIOS F11"),
         ("RAM", "**64 GB** DDR5 · 4 × 16 GB · 4 de 4 ranuras · **3600 MT/s**"),
-        ("Módulos", "2 × G.Skill F5-6000J3636F16G + 2 × ADATA AX5U5600C4616G"),
+        ("Módulos", "Canales A y B: G.Skill F5-6000J3636F16G en DIMM 0 + ADATA AX5U5600C4616G en DIMM 1"),
         ("Tarjeta de video", "NVIDIA GeForce RTX 5080 · AMD Radeon integrada"),
         ("Disco", "Kingston NV3 1 TB NVMe"),
         ("Sistema", "Windows 11 Pro · build 26200"),
@@ -175,35 +184,37 @@ FICHA = {
 def ficha(nombre, x, y):
     filas = "\n".join(f"| **{k}** | {v} |" for k, v in FICHA[nombre])
     contenido = f"| | |\n|---|---|\n{filas}\n\n<small>Actualizada el {FICHA_FECHA}</small>"
-    return {"type": "text", "id": nid(), "title": nombre, "gridPos": {"h": 10, "w": 12, "x": x, "y": y},
+    return {"type": "text", "id": nid(), "title": nombre, "gridPos": {"h": 13, "w": 12, "x": x, "y": y},
             "options": {"mode": "markdown", "content": contenido}}
 
 
 def construir():
     panels = []
     y = 0
-    panels.append(fila("00 · FICHA TÉCNICA · Hardware de cada estación", y)); y += 1
-    panels += [ficha("Estación Revit", 0, y), ficha("Estación 3ds Max", 12, y)]
-    y += 10
     panels.append(fila("01 · EN VIVO · Estado actual de cada estación", y)); y += 1
     panels += [
-        stat("Conexión", Q["conexion"], 0, y, 4,
+        stat("Conexión", Q["conexion"], 0, y, 6,
              mapeos=[{"type": "value", "options": {"1": {"text": "En línea", "color": BUENO},
                                                    "0": {"text": "Sin datos", "color": CRITICO}}}],
-             umbral=umbrales((BUENO, 1)), descripcion="Prometheus lee el medidor de la estación"),
-        stat("Procesador", Q["cpu"], 4, y, 3, unidad="percentunit", decimales=0,
+             umbral=umbrales((BUENO, 1)), descripcion="Prometheus lee el medidor de la estación",
+             tam_valor=18),
+        stat("Procesador", Q["cpu"], 6, y, 6, unidad="percentunit", decimales=0,
              umbral=umbrales((AVISO, 0.75), (CRITICO, 0.9))),
-        stat("RAM usada", Q["ram_pct"], 7, y, 3, unidad="percentunit", decimales=0,
+        stat("RAM usada", Q["ram_pct"], 12, y, 6, unidad="percentunit", decimales=0,
              umbral=umbrales((AVISO, 0.75), (CRITICO, 0.9))),
-        stat("Revit abiertos", Q["revit_abiertos"], 10, y, 3, decimales=0,
+        stat("Revit abiertos", Q["revit_abiertos"], 18, y, 6, decimales=0,
              descripcion="Cada casa debe ir en su propio Revit"),
-        stat("Bakes", Q["bakes"], 13, y, 3, decimales=0,
+    ]
+    y += 4
+    panels += [
+        stat("Bakes", Q["bakes"], 0, y, 8, decimales=0,
              descripcion="Procesos 3dsmaxbatch activos"),
-        stat("Temp. procesador", Q["cpu_temp"], 16, y, 4, unidad="celsius", decimales=0,
+        stat("Temp. procesador", Q["cpu_temp"], 8, y, 8, unidad="celsius", decimales=0,
              umbral=umbrales((AVISO, 80), (CRITICO, 90)),
-             descripcion="Sensor Tctl/Tdie del Ryzen, leído por OhmGraphite"),
-        stat("Temp. tarjeta NVIDIA", Q["gpu_temp"], 20, y, 4, unidad="celsius", decimales=0,
-             umbral=umbrales((AVISO, 75), (CRITICO, 85))),
+             descripcion="Sensor Tctl/Tdie del Ryzen, leído por OhmGraphite. Aviso a 80 °C, crítico a 90 °C"),
+        stat("Temp. NVIDIA", Q["gpu_temp"], 16, y, 8, unidad="celsius", decimales=0,
+             umbral=umbrales((AVISO, 75), (CRITICO, 85)),
+             descripcion="Tarjeta de video NVIDIA. Aviso a 75 °C, crítico a 85 °C"),
     ]
     y += 4
 
@@ -215,20 +226,20 @@ def construir():
               sobreescribir=colores(COLOR_ESTACION),
               descripcion="Cada estación tiene 64 GB"),
     ]
-    y += 8
+    y += 9
 
     panels.append(fila("03 · POR PROGRAMA · $estacion", y, repetir="estacion")); y += 1
     panels += [
-        serie("RAM por programa", [target(Q["prog_ram"], "{{process}}")], 0, y, 8, unidad="bytes",
-              apilar=True, sobreescribir=colores(COLOR_PROGRAMA)),
-        serie("Procesador por programa", [target(Q["prog_cpu"], "{{process}}")], 8, y, 8,
-              unidad="percentunit", sobreescribir=colores(COLOR_PROGRAMA),
+        serie("RAM", [target(Q["prog_ram"], "{{process}}")], 0, y, 8, unidad="bytes",
+              apilar=True, sobreescribir=colores(COLOR_PROGRAMA), h=10),
+        serie("Procesador", [target(Q["prog_cpu"], "{{process}}")], 8, y, 8,
+              unidad="percentunit", sobreescribir=colores(COLOR_PROGRAMA), h=10,
               descripcion="Porcentaje de toda la máquina"),
-        serie("Memoria de video por programa", [target(Q["prog_vram"], "{{process}}")], 16, y, 8,
-              unidad="bytes", apilar=True, sobreescribir=colores(COLOR_PROGRAMA),
+        serie("Memoria de video", [target(Q["prog_vram"], "{{process}}")], 16, y, 8,
+              unidad="bytes", apilar=True, sobreescribir=colores(COLOR_PROGRAMA), h=10,
               descripcion="Solo la tarjeta NVIDIA"),
     ]
-    y += 8
+    y += 10
 
     panels.append(fila("04 · REVIT POR INSTANCIA · Una línea por casa abierta", y)); y += 1
     panels += [
@@ -237,7 +248,7 @@ def construir():
         serie("Procesador de cada Revit", [target(Q["revit_cpu"], "Revit pid {{process_id}}")], 12, y, 12,
               unidad="percentunit", descripcion="Porcentaje de toda la máquina"),
     ]
-    y += 8
+    y += 9
 
     panels.append(fila("05 · TEMPERATURA · Procesador y tarjeta de video", y)); y += 1
     panels += [
@@ -248,7 +259,7 @@ def construir():
               sobreescribir=colores(COLOR_ESTACION), umbral=umbrales((AVISO, 75), (CRITICO, 85)),
               descripcion="Aviso a 75 °C, crítico a 85 °C", tope=95),
     ]
-    y += 8
+    y += 9
 
     panels.append(fila("06 · TARJETA DE VIDEO · Uso y memoria de la NVIDIA", y)); y += 1
     panels += [
@@ -257,12 +268,12 @@ def construir():
         serie("Memoria de video usada", [target(Q["gpu_vram"], "{{estacion}}")], 12, y, 12, unidad="bytes",
               sobreescribir=colores(COLOR_ESTACION)),
     ]
-    y += 8
+    y += 9
 
     panels.append(fila("07 · DISCO Y RED · Espacio libre y tráfico", y)); y += 1
     disco = {
         "type": "bargauge", "id": nid(), "title": "Espacio libre por disco", "datasource": DS,
-        "gridPos": {"h": 8, "w": 12, "x": 0, "y": y},
+        "gridPos": {"h": 10, "w": 12, "x": 0, "y": y},
         "targets": [target(Q["disco"], "{{estacion}} · {{volume}}", instant=True)],
         "options": {"orientation": "horizontal", "displayMode": "basic", "showUnfilled": True,
                     "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": False}},
@@ -276,9 +287,13 @@ def construir():
     panels += [
         disco,
         serie("Red", [target(Q["red_rx"], "{{estacion}} · recibido", "A"),
-                      target(Q["red_tx"], "{{estacion}} · enviado", "B")], 12, y, 12, unidad="Bps",
+                      target(Q["red_tx"], "{{estacion}} · enviado", "B")], 12, y, 12, unidad="Bps", h=10,
               sobreescribir=red_colores()),
     ]
+    y += 10
+
+    panels.append(fila("08 · FICHA TÉCNICA · Hardware de cada estación", y)); y += 1
+    panels += [ficha("Estación Revit", 0, y), ficha("Estación 3ds Max", 12, y)]
 
     return {
         "uid": "uondr-estaciones",

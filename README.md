@@ -81,7 +81,7 @@ Todo viaja por **Tailscale**, la red privada que une las tres máquinas.
 | P4 🏠 Dos Revit | ¿Dos agentes en dos casas a la vez sin estorbar? | ✅ 0 errores |
 | P5 🔥 Bake trabajando | ¿La arquitecta sigue en Max durante un bake? | ⬜ |
 | P6 🖥️ Bake en otra PC | ¿La cadena corre en otra estación y qué licencias pide? | ⬜ |
-| P7 📦 Entrega sin WhatsApp | ¿La entrega llega y se valida sola? | ⬜ |
+| P7 📦 Entrega sin WhatsApp | ¿La entrega llega y se valida sola? | 🟡 Canal documentado, prueba pendiente |
 | 📈 Observabilidad | ¿Vemos el historial de recursos de cada estación? | ✅ Tablero UONDR con ficha técnica. Alertas por Gmail listas, falta la contraseña |
 
 Detalle en [tracking/hitos.md](tracking/hitos.md) y [tracking/ejecuciones.md](tracking/ejecuciones.md).
@@ -91,7 +91,7 @@ Detalle en [tracking/hitos.md](tracking/hitos.md) y [tracking/ejecuciones.md](tr
 | Carpeta | Qué hay |
 |---|---|
 | [`docs/`](docs) | Plan general, pruebas, observabilidad y reglas para los agentes |
-| [`docs/agentes/`](docs/agentes) | Instrucciones que se instalan en los proyectos de cada estación |
+| [`docs/agentes/`](docs/agentes) | Instrucciones para los agentes: reglas de la estación Revit y canales del recorrido 3D |
 | [`observabilidad/`](observabilidad) | Scripts y configuración de Prometheus, Grafana y windows_exporter |
 | [`tracking/`](tracking) | Hitos y bitácora de ejecuciones |
 

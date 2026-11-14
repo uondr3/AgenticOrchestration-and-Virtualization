@@ -21,6 +21,7 @@
 | 2026-11-12 | rvt-mcp 1.2.2 en la estación Revit | Desde la 1.1.0 distingue varios Revit del mismo año |
 | 2026-11-13 | Observabilidad: Prometheus + Grafana en la Mac coordinadora | El equipo trabaja en el mismo horario; historial central y tableros propios |
 | 2026-11-13 | Repo público en `uondr3` | Documentación compartida y trazabilidad |
+| 2026-11-14 | El recorrido 3D deja WhatsApp: correo de Orca al chat del agente de la estación 3ds Max y archivos por la carpeta compartida | Habla con el agente que ya tiene el contexto, la arquitecta lo ve en su chat y cada archivo se verifica por huella |
 
 ## Fases
 
@@ -28,9 +29,9 @@
 |---|---|---|
 | 1. Diagnóstico | Flujo actual, MCPs, licencias, virtualización | ✅ |
 | 2. Validación | Pruebas P1 a P7 ([pruebas.md](pruebas.md)) | 🟡 4 de 7 |
-| 3. Documentación para agentes | Reglas en los proyectos de cada estación ([agentes/](agentes)) | 🟡 Estación Revit lista |
+| 3. Documentación para agentes | Reglas en los proyectos de cada estación ([agentes/](agentes)) | 🟡 Estación Revit lista · guía de canales del recorrido 3D lista |
 | 4. Coordinación y piloto | Trabajo real con varias casas y entregas automáticas | 🟡 Estación Revit en uso |
-| 5. Observabilidad | Prometheus + Grafana ([observabilidad.md](observabilidad.md)) | 🟡 Tablero listo, faltan alertas |
+| 5. Observabilidad | Prometheus + Grafana ([observabilidad.md](observabilidad.md)) | 🟡 Tablero listo, alertas esperan la contraseña de Gmail |
 
 ## Medidas preventivas que siempre se mantienen
 

@@ -53,7 +53,7 @@
     {
       "type": "row",
       "id": 1,
-      "title": "00 · FICHA TÉCNICA · Hardware de cada estación",
+      "title": "01 · EN VIVO · Estado actual de cada estación",
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -64,51 +64,8 @@
       "panels": []
     },
     {
-      "type": "text",
-      "id": 2,
-      "title": "Estación Revit",
-      "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 0,
-        "y": 1
-      },
-      "options": {
-        "mode": "markdown",
-        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9900X · 12 núcleos / 24 hilos |\n| **Placa** | Gigabyte B850 AORUS ELITE WIFI7 ICE · BIOS F11 |\n| **RAM** | **64 GB** DDR5 · 4 × 16 GB · 4 de 4 ranuras · **3600 MT/s** |\n| **Módulos** | 2 × G.Skill F5-6000J3636F16G + 2 × ADATA AX5U5600C4616G |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5080 · AMD Radeon integrada |\n| **Disco** | Kingston NV3 1 TB NVMe |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Dos kits distintos: la RAM trabaja a 3600 MT/s, abajo de su nominal de 5600–6000 |\n\n<small>Actualizada el 2026-11-14</small>"
-      }
-    },
-    {
-      "type": "text",
-      "id": 3,
-      "title": "Estación 3ds Max",
-      "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
-        "y": 1
-      },
-      "options": {
-        "mode": "markdown",
-        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9950X · 16 núcleos / 32 hilos |\n| **Placa** | ASUS ProArt B850-CREATOR WIFI NEO · BIOS 0239 |\n| **RAM** | **64 GB** DDR5 · 2 × 32 GB · 2 de 4 ranuras · **4800 MT/s** |\n| **Módulos** | Corsair CMK64GX5M2D6000C40, kit de 2 × 32 GB |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5070 · AMD Radeon integrada |\n| **Discos** | Kingston NV3 1 TB NVMe interno · ADATA HV620S 1 TB USB · Transcend StoreJet 1 TB USB |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Kit de 6000 MT/s trabajando a 4800 MT/s: el perfil EXPO no está activo |\n\n<small>Actualizada el 2026-11-14</small>"
-      }
-    },
-    {
-      "type": "row",
-      "id": 4,
-      "title": "01 · EN VIVO · Estado actual de cada estación",
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 11
-      },
-      "panels": []
-    },
-    {
       "type": "stat",
-      "id": 5,
+      "id": 2,
       "title": "Conexión",
       "description": "Prometheus lee el medidor de la estación",
       "datasource": {
@@ -117,9 +74,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
+        "w": 6,
         "x": 0,
-        "y": 12
+        "y": 1
       },
       "targets": [
         {
@@ -127,9 +84,20 @@
             "type": "prometheus",
             "uid": "prometheus-uondr"
           },
-          "expr": "up{job=\"estaciones\",estacion=~\"$estacion\"}",
+          "expr": "(up{job=\"estaciones\",estacion=~\"$estacion\"}) and on (estacion) up{job=\"estaciones\",estacion=\"Estación 3ds Max\"}",
           "legendFormat": "{{estacion}}",
           "refId": "A",
+          "range": false,
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "(up{job=\"estaciones\",estacion=~\"$estacion\"}) and on (estacion) up{job=\"estaciones\",estacion=\"Estación Revit\"}",
+          "legendFormat": "{{estacion}}",
+          "refId": "B",
           "range": false,
           "instant": true
         }
@@ -147,7 +115,11 @@
         "justifyMode": "center",
         "textMode": "value_and_name",
         "orientation": "vertical",
-        "wideLayout": true
+        "wideLayout": true,
+        "text": {
+          "titleSize": 13,
+          "valueSize": 18
+        }
       },
       "fieldConfig": {
         "defaults": {
@@ -189,7 +161,7 @@
     },
     {
       "type": "stat",
-      "id": 6,
+      "id": 3,
       "title": "Procesador",
       "description": "",
       "datasource": {
@@ -198,9 +170,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
-        "x": 4,
-        "y": 12
+        "w": 6,
+        "x": 6,
+        "y": 1
       },
       "targets": [
         {
@@ -208,9 +180,20 @@
             "type": "prometheus",
             "uid": "prometheus-uondr"
           },
-          "expr": "1 - avg by (estacion) (rate(windows_cpu_time_seconds_total{mode=\"idle\",estacion=~\"$estacion\"}[$__rate_interval]))",
+          "expr": "(1 - avg by (estacion) (rate(windows_cpu_time_seconds_total{mode=\"idle\",estacion=~\"$estacion\"}[$__rate_interval]))) and on (estacion) up{job=\"estaciones\",estacion=\"Estación 3ds Max\"}",
           "legendFormat": "{{estacion}}",
           "refId": "A",
+          "range": false,
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "(1 - avg by (estacion) (rate(windows_cpu_time_seconds_total{mode=\"idle\",estacion=~\"$estacion\"}[$__rate_interval]))) and on (estacion) up{job=\"estaciones\",estacion=\"Estación Revit\"}",
+          "legendFormat": "{{estacion}}",
+          "refId": "B",
           "range": false,
           "instant": true
         }
@@ -228,7 +211,11 @@
         "justifyMode": "center",
         "textMode": "value_and_name",
         "orientation": "vertical",
-        "wideLayout": true
+        "wideLayout": true,
+        "text": {
+          "titleSize": 13,
+          "valueSize": 30
+        }
       },
       "fieldConfig": {
         "defaults": {
@@ -250,6 +237,251 @@
               {
                 "color": "#d03b3b",
                 "value": 0.9
+              }
+            ]
+          },
+          "mappings": [],
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "id": 4,
+      "title": "RAM usada",
+      "description": "",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-uondr"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "(1 - windows_memory_available_bytes{estacion=~\"$estacion\"} / windows_memory_physical_total_bytes{estacion=~\"$estacion\"}) and on (estacion) up{job=\"estaciones\",estacion=\"Estación 3ds Max\"}",
+          "legendFormat": "{{estacion}}",
+          "refId": "A",
+          "range": false,
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "(1 - windows_memory_available_bytes{estacion=~\"$estacion\"} / windows_memory_physical_total_bytes{estacion=~\"$estacion\"}) and on (estacion) up{job=\"estaciones\",estacion=\"Estación Revit\"}",
+          "legendFormat": "{{estacion}}",
+          "refId": "B",
+          "range": false,
+          "instant": true
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "textMode": "value_and_name",
+        "orientation": "vertical",
+        "wideLayout": true,
+        "text": {
+          "titleSize": 13,
+          "valueSize": 30
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#0ca30c",
+                "value": null
+              },
+              {
+                "color": "#fab219",
+                "value": 0.75
+              },
+              {
+                "color": "#d03b3b",
+                "value": 0.9
+              }
+            ]
+          },
+          "mappings": [],
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "id": 5,
+      "title": "Revit abiertos",
+      "description": "Cada casa debe ir en su propio Revit",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-uondr"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "(count by (estacion) (windows_process_info{process=\"Revit\",estacion=~\"$estacion\"}) or (0 * group by (estacion) (up{job=\"estaciones\",estacion=~\"$estacion\"}))) and on (estacion) up{job=\"estaciones\",estacion=\"Estación 3ds Max\"}",
+          "legendFormat": "{{estacion}}",
+          "refId": "A",
+          "range": false,
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "(count by (estacion) (windows_process_info{process=\"Revit\",estacion=~\"$estacion\"}) or (0 * group by (estacion) (up{job=\"estaciones\",estacion=~\"$estacion\"}))) and on (estacion) up{job=\"estaciones\",estacion=\"Estación Revit\"}",
+          "legendFormat": "{{estacion}}",
+          "refId": "B",
+          "range": false,
+          "instant": true
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "textMode": "value_and_name",
+        "orientation": "vertical",
+        "wideLayout": true,
+        "text": {
+          "titleSize": 13,
+          "valueSize": 30
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "mappings": [],
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "id": 6,
+      "title": "Bakes",
+      "description": "Procesos 3dsmaxbatch activos",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-uondr"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 5
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "(count by (estacion) (windows_process_info{process=\"3dsmaxbatch\",estacion=~\"$estacion\"}) or (0 * group by (estacion) (up{job=\"estaciones\",estacion=~\"$estacion\"}))) and on (estacion) up{job=\"estaciones\",estacion=\"Estación 3ds Max\"}",
+          "legendFormat": "{{estacion}}",
+          "refId": "A",
+          "range": false,
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "(count by (estacion) (windows_process_info{process=\"3dsmaxbatch\",estacion=~\"$estacion\"}) or (0 * group by (estacion) (up{job=\"estaciones\",estacion=~\"$estacion\"}))) and on (estacion) up{job=\"estaciones\",estacion=\"Estación Revit\"}",
+          "legendFormat": "{{estacion}}",
+          "refId": "B",
+          "range": false,
+          "instant": true
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "textMode": "value_and_name",
+        "orientation": "vertical",
+        "wideLayout": true,
+        "text": {
+          "titleSize": 13,
+          "valueSize": 30
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
               }
             ]
           },
@@ -262,217 +494,17 @@
     {
       "type": "stat",
       "id": 7,
-      "title": "RAM usada",
-      "description": "",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus-uondr"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 7,
-        "y": 12
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus-uondr"
-          },
-          "expr": "1 - windows_memory_available_bytes{estacion=~\"$estacion\"} / windows_memory_physical_total_bytes{estacion=~\"$estacion\"}",
-          "legendFormat": "{{estacion}}",
-          "refId": "A",
-          "range": false,
-          "instant": true
-        }
-      ],
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "textMode": "value_and_name",
-        "orientation": "vertical",
-        "wideLayout": true
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percentunit",
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#0ca30c",
-                "value": null
-              },
-              {
-                "color": "#fab219",
-                "value": 0.75
-              },
-              {
-                "color": "#d03b3b",
-                "value": 0.9
-              }
-            ]
-          },
-          "mappings": [],
-          "decimals": 0
-        },
-        "overrides": []
-      }
-    },
-    {
-      "type": "stat",
-      "id": 8,
-      "title": "Revit abiertos",
-      "description": "Cada casa debe ir en su propio Revit",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus-uondr"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 10,
-        "y": 12
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus-uondr"
-          },
-          "expr": "count by (estacion) (windows_process_info{process=\"Revit\",estacion=~\"$estacion\"}) or (0 * group by (estacion) (up{job=\"estaciones\",estacion=~\"$estacion\"}))",
-          "legendFormat": "{{estacion}}",
-          "refId": "A",
-          "range": false,
-          "instant": true
-        }
-      ],
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "none",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "textMode": "value_and_name",
-        "orientation": "vertical",
-        "wideLayout": true
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          },
-          "mappings": [],
-          "decimals": 0
-        },
-        "overrides": []
-      }
-    },
-    {
-      "type": "stat",
-      "id": 9,
-      "title": "Bakes",
-      "description": "Procesos 3dsmaxbatch activos",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus-uondr"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 13,
-        "y": 12
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus-uondr"
-          },
-          "expr": "count by (estacion) (windows_process_info{process=\"3dsmaxbatch\",estacion=~\"$estacion\"}) or (0 * group by (estacion) (up{job=\"estaciones\",estacion=~\"$estacion\"}))",
-          "legendFormat": "{{estacion}}",
-          "refId": "A",
-          "range": false,
-          "instant": true
-        }
-      ],
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "none",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "textMode": "value_and_name",
-        "orientation": "vertical",
-        "wideLayout": true
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          },
-          "mappings": [],
-          "decimals": 0
-        },
-        "overrides": []
-      }
-    },
-    {
-      "type": "stat",
-      "id": 10,
       "title": "Temp. procesador",
-      "description": "Sensor Tctl/Tdie del Ryzen, leído por OhmGraphite",
+      "description": "Sensor Tctl/Tdie del Ryzen, leído por OhmGraphite. Aviso a 80 °C, crítico a 90 °C",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus-uondr"
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 12
+        "w": 8,
+        "x": 8,
+        "y": 5
       },
       "targets": [
         {
@@ -480,9 +512,20 @@
             "type": "prometheus",
             "uid": "prometheus-uondr"
           },
-          "expr": "max by (estacion) (ohm_cpu_celsius{sensor=\"Core (Tctl/Tdie)\",estacion=~\"$estacion\"})",
+          "expr": "(max by (estacion) (ohm_cpu_celsius{sensor=\"Core (Tctl/Tdie)\",estacion=~\"$estacion\"})) and on (estacion) up{job=\"estaciones\",estacion=\"Estación 3ds Max\"}",
           "legendFormat": "{{estacion}}",
           "refId": "A",
+          "range": false,
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "(max by (estacion) (ohm_cpu_celsius{sensor=\"Core (Tctl/Tdie)\",estacion=~\"$estacion\"})) and on (estacion) up{job=\"estaciones\",estacion=\"Estación Revit\"}",
+          "legendFormat": "{{estacion}}",
+          "refId": "B",
           "range": false,
           "instant": true
         }
@@ -500,7 +543,11 @@
         "justifyMode": "center",
         "textMode": "value_and_name",
         "orientation": "vertical",
-        "wideLayout": true
+        "wideLayout": true,
+        "text": {
+          "titleSize": 13,
+          "valueSize": 30
+        }
       },
       "fieldConfig": {
         "defaults": {
@@ -533,18 +580,18 @@
     },
     {
       "type": "stat",
-      "id": 11,
-      "title": "Temp. tarjeta NVIDIA",
-      "description": "",
+      "id": 8,
+      "title": "Temp. NVIDIA",
+      "description": "Tarjeta de video NVIDIA. Aviso a 75 °C, crítico a 85 °C",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus-uondr"
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 12
+        "w": 8,
+        "x": 16,
+        "y": 5
       },
       "targets": [
         {
@@ -552,9 +599,20 @@
             "type": "prometheus",
             "uid": "prometheus-uondr"
           },
-          "expr": "max by (estacion) (windows_gpu_temperature_celsius{estacion=~\"$estacion\"} * on (instance, estacion, luid) group_left () windows_gpu_info{name=~\"NVIDIA.*\"})",
+          "expr": "(max by (estacion) (windows_gpu_temperature_celsius{estacion=~\"$estacion\"} * on (instance, estacion, luid) group_left () windows_gpu_info{name=~\"NVIDIA.*\"})) and on (estacion) up{job=\"estaciones\",estacion=\"Estación 3ds Max\"}",
           "legendFormat": "{{estacion}}",
           "refId": "A",
+          "range": false,
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "(max by (estacion) (windows_gpu_temperature_celsius{estacion=~\"$estacion\"} * on (instance, estacion, luid) group_left () windows_gpu_info{name=~\"NVIDIA.*\"})) and on (estacion) up{job=\"estaciones\",estacion=\"Estación Revit\"}",
+          "legendFormat": "{{estacion}}",
+          "refId": "B",
           "range": false,
           "instant": true
         }
@@ -572,7 +630,11 @@
         "justifyMode": "center",
         "textMode": "value_and_name",
         "orientation": "vertical",
-        "wideLayout": true
+        "wideLayout": true,
+        "text": {
+          "titleSize": 13,
+          "valueSize": 30
+        }
       },
       "fieldConfig": {
         "defaults": {
@@ -605,20 +667,20 @@
     },
     {
       "type": "row",
-      "id": 12,
+      "id": 9,
       "title": "02 · TENDENCIA · Procesador y memoria en el tiempo",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 9
       },
       "panels": []
     },
     {
       "type": "timeseries",
-      "id": 13,
+      "id": 10,
       "title": "Procesador",
       "description": "",
       "datasource": {
@@ -626,10 +688,10 @@
         "uid": "prometheus-uondr"
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 0,
-        "y": 17
+        "y": 10
       },
       "targets": [
         {
@@ -646,7 +708,7 @@
       "options": {
         "legend": {
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "calcs": [
             "lastNotNull",
             "max"
@@ -715,7 +777,7 @@
     },
     {
       "type": "timeseries",
-      "id": 14,
+      "id": 11,
       "title": "RAM usada",
       "description": "Cada estación tiene 64 GB",
       "datasource": {
@@ -723,10 +785,10 @@
         "uid": "prometheus-uondr"
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 12,
-        "y": 17
+        "y": 10
       },
       "targets": [
         {
@@ -743,7 +805,7 @@
       "options": {
         "legend": {
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "calcs": [
             "lastNotNull",
             "max"
@@ -811,32 +873,32 @@
     },
     {
       "type": "row",
-      "id": 15,
+      "id": 12,
       "title": "03 · POR PROGRAMA · $estacion",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 19
       },
       "panels": [],
       "repeat": "estacion"
     },
     {
       "type": "timeseries",
-      "id": 16,
-      "title": "RAM por programa",
+      "id": 13,
+      "title": "RAM",
       "description": "",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus-uondr"
       },
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 8,
         "x": 0,
-        "y": 26
+        "y": 20
       },
       "targets": [
         {
@@ -853,7 +915,7 @@
       "options": {
         "legend": {
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "calcs": [
             "lastNotNull",
             "max"
@@ -966,18 +1028,18 @@
     },
     {
       "type": "timeseries",
-      "id": 17,
-      "title": "Procesador por programa",
+      "id": 14,
+      "title": "Procesador",
       "description": "Porcentaje de toda la máquina",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus-uondr"
       },
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 8,
         "x": 8,
-        "y": 26
+        "y": 20
       },
       "targets": [
         {
@@ -994,7 +1056,7 @@
       "options": {
         "legend": {
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "calcs": [
             "lastNotNull",
             "max"
@@ -1107,18 +1169,18 @@
     },
     {
       "type": "timeseries",
-      "id": 18,
-      "title": "Memoria de video por programa",
+      "id": 15,
+      "title": "Memoria de video",
       "description": "Solo la tarjeta NVIDIA",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus-uondr"
       },
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 8,
         "x": 16,
-        "y": 26
+        "y": 20
       },
       "targets": [
         {
@@ -1135,7 +1197,7 @@
       "options": {
         "legend": {
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "calcs": [
             "lastNotNull",
             "max"
@@ -1248,20 +1310,20 @@
     },
     {
       "type": "row",
-      "id": 19,
+      "id": 16,
       "title": "04 · REVIT POR INSTANCIA · Una línea por casa abierta",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 30
       },
       "panels": []
     },
     {
       "type": "timeseries",
-      "id": 20,
+      "id": 17,
       "title": "RAM de cada Revit",
       "description": "Una línea por Revit abierto. Cada casa va en su propio Revit",
       "datasource": {
@@ -1269,10 +1331,10 @@
         "uid": "prometheus-uondr"
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 0,
-        "y": 35
+        "y": 31
       },
       "targets": [
         {
@@ -1289,7 +1351,7 @@
       "options": {
         "legend": {
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "calcs": [
             "lastNotNull",
             "max"
@@ -1326,7 +1388,7 @@
     },
     {
       "type": "timeseries",
-      "id": 21,
+      "id": 18,
       "title": "Procesador de cada Revit",
       "description": "Porcentaje de toda la máquina",
       "datasource": {
@@ -1334,10 +1396,10 @@
         "uid": "prometheus-uondr"
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 12,
-        "y": 35
+        "y": 31
       },
       "targets": [
         {
@@ -1354,7 +1416,7 @@
       "options": {
         "legend": {
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "calcs": [
             "lastNotNull",
             "max"
@@ -1391,20 +1453,20 @@
     },
     {
       "type": "row",
-      "id": 22,
+      "id": 19,
       "title": "05 · TEMPERATURA · Procesador y tarjeta de video",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 40
       },
       "panels": []
     },
     {
       "type": "timeseries",
-      "id": 23,
+      "id": 20,
       "title": "Procesador",
       "description": "Sensor Tctl/Tdie del Ryzen. Aviso a 80 °C, crítico a 90 °C",
       "datasource": {
@@ -1412,10 +1474,10 @@
         "uid": "prometheus-uondr"
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 0,
-        "y": 44
+        "y": 41
       },
       "targets": [
         {
@@ -1432,7 +1494,7 @@
       "options": {
         "legend": {
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "calcs": [
             "lastNotNull",
             "max"
@@ -1518,7 +1580,7 @@
     },
     {
       "type": "timeseries",
-      "id": 24,
+      "id": 21,
       "title": "Tarjeta NVIDIA",
       "description": "Aviso a 75 °C, crítico a 85 °C",
       "datasource": {
@@ -1526,10 +1588,10 @@
         "uid": "prometheus-uondr"
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 12,
-        "y": 44
+        "y": 41
       },
       "targets": [
         {
@@ -1546,7 +1608,7 @@
       "options": {
         "legend": {
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "calcs": [
             "lastNotNull",
             "max"
@@ -1594,6 +1656,212 @@
                 "value": 85
               }
             ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Estación Revit"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#3987e5"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Estación 3ds Max"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#d95926"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "row",
+      "id": 22,
+      "title": "06 · TARJETA DE VIDEO · Uso y memoria de la NVIDIA",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 50
+      },
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "id": 23,
+      "title": "Uso",
+      "description": "",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-uondr"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 51
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "max by (estacion) (sum by (estacion, instance, luid, engtype, eng) (rate(windows_gpu_engine_time_seconds_total{estacion=~\"$estacion\"}[$__rate_interval])) * on (instance, estacion, luid) group_left () windows_gpu_info{name=~\"NVIDIA.*\"})",
+          "legendFormat": "{{estacion}}",
+          "refId": "A",
+          "range": true
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "color": {
+            "mode": "palette-classic-by-name"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "showPoints": "never",
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "spanNulls": 60000,
+            "axisSoftMin": 0,
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "max": 1
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Estación Revit"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#3987e5"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Estación 3ds Max"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#d95926"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "timeseries",
+      "id": 24,
+      "title": "Memoria de video usada",
+      "description": "",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-uondr"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 51
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "max by (estacion) (windows_gpu_adapter_memory_dedicated_bytes{estacion=~\"$estacion\"} * on (instance, estacion, luid) group_left () windows_gpu_info{name=~\"NVIDIA.*\"})",
+          "legendFormat": "{{estacion}}",
+          "refId": "A",
+          "range": true
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "color": {
+            "mode": "palette-classic-by-name"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "showPoints": "never",
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "spanNulls": 60000,
+            "axisSoftMin": 0,
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           }
         },
         "overrides": [
@@ -1633,235 +1901,29 @@
     {
       "type": "row",
       "id": 25,
-      "title": "06 · TARJETA DE VIDEO · Uso y memoria de la NVIDIA",
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 52
-      },
-      "panels": []
-    },
-    {
-      "type": "timeseries",
-      "id": 26,
-      "title": "Uso",
-      "description": "",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus-uondr"
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 53
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus-uondr"
-          },
-          "expr": "max by (estacion) (sum by (estacion, instance, luid, engtype, eng) (rate(windows_gpu_engine_time_seconds_total{estacion=~\"$estacion\"}[$__rate_interval])) * on (instance, estacion, luid) group_left () windows_gpu_info{name=~\"NVIDIA.*\"})",
-          "legendFormat": "{{estacion}}",
-          "refId": "A",
-          "range": true
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "table",
-          "placement": "right",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percentunit",
-          "color": {
-            "mode": "palette-classic-by-name"
-          },
-          "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 8,
-            "showPoints": "never",
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "spanNulls": 60000,
-            "axisSoftMin": 0,
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "max": 1
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Estación Revit"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#3987e5"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Estación 3ds Max"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#d95926"
-                }
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "type": "timeseries",
-      "id": 27,
-      "title": "Memoria de video usada",
-      "description": "",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus-uondr"
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 53
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus-uondr"
-          },
-          "expr": "max by (estacion) (windows_gpu_adapter_memory_dedicated_bytes{estacion=~\"$estacion\"} * on (instance, estacion, luid) group_left () windows_gpu_info{name=~\"NVIDIA.*\"})",
-          "legendFormat": "{{estacion}}",
-          "refId": "A",
-          "range": true
-        }
-      ],
-      "options": {
-        "legend": {
-          "displayMode": "table",
-          "placement": "right",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bytes",
-          "color": {
-            "mode": "palette-classic-by-name"
-          },
-          "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 8,
-            "showPoints": "never",
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "spanNulls": 60000,
-            "axisSoftMin": 0,
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Estación Revit"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#3987e5"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Estación 3ds Max"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#d95926"
-                }
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "type": "row",
-      "id": 28,
       "title": "07 · DISCO Y RED · Espacio libre y tráfico",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 61
+        "y": 60
       },
       "panels": []
     },
     {
       "type": "bargauge",
-      "id": 29,
+      "id": 26,
       "title": "Espacio libre por disco",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus-uondr"
       },
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 12,
         "x": 0,
-        "y": 62
+        "y": 61
       },
       "targets": [
         {
@@ -1920,7 +1982,7 @@
     },
     {
       "type": "timeseries",
-      "id": 30,
+      "id": 27,
       "title": "Red",
       "description": "",
       "datasource": {
@@ -1928,10 +1990,10 @@
         "uid": "prometheus-uondr"
       },
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 12,
         "x": 12,
-        "y": 62
+        "y": 61
       },
       "targets": [
         {
@@ -1958,7 +2020,7 @@
       "options": {
         "legend": {
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "calcs": [
             "lastNotNull",
             "max"
@@ -2072,6 +2134,49 @@
             ]
           }
         ]
+      }
+    },
+    {
+      "type": "row",
+      "id": 28,
+      "title": "08 · FICHA TÉCNICA · Hardware de cada estación",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 71
+      },
+      "panels": []
+    },
+    {
+      "type": "text",
+      "id": 29,
+      "title": "Estación Revit",
+      "gridPos": {
+        "h": 13,
+        "w": 12,
+        "x": 0,
+        "y": 72
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9900X · 12 núcleos / 24 hilos |\n| **Placa** | Gigabyte B850 AORUS ELITE WIFI7 ICE · BIOS F11 |\n| **RAM** | **64 GB** DDR5 · 4 × 16 GB · 4 de 4 ranuras · **3600 MT/s** |\n| **Módulos** | Canales A y B: G.Skill F5-6000J3636F16G en DIMM 0 + ADATA AX5U5600C4616G en DIMM 1 |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5080 · AMD Radeon integrada |\n| **Disco** | Kingston NV3 1 TB NVMe |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Dos kits distintos: la RAM trabaja a 3600 MT/s, abajo de su nominal de 5600–6000 |\n\n<small>Actualizada el 2026-11-14</small>"
+      }
+    },
+    {
+      "type": "text",
+      "id": 30,
+      "title": "Estación 3ds Max",
+      "gridPos": {
+        "h": 13,
+        "w": 12,
+        "x": 12,
+        "y": 72
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9950X · 16 núcleos / 32 hilos |\n| **Placa** | ASUS ProArt B850-CREATOR WIFI NEO · BIOS 0239 |\n| **RAM** | **64 GB** DDR5 · 2 × 32 GB · 2 de 4 ranuras · **4800 MT/s** |\n| **Módulos** | Corsair CMK64GX5M2D6000C40, kit de 2 × 32 GB |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5070 · AMD Radeon integrada |\n| **Discos** | Kingston NV3 1 TB NVMe interno · ADATA HV620S 1 TB USB · Transcend StoreJet 1 TB USB |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Kit de 6000 MT/s trabajando a 4800 MT/s: el perfil EXPO no está activo |\n\n<small>Actualizada el 2026-11-14</small>"
       }
     }
   ],

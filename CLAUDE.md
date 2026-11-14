@@ -41,7 +41,7 @@ Todo lo que se sube lo puede leer cualquiera, y queda guardado aunque después s
 | `docs/plan.md` | Decisiones con fecha, fases y medidas preventivas |
 | `docs/pruebas.md` | Pruebas P1 a P7: criterio, cómo se hizo y resultado |
 | `docs/observabilidad.md` | Componentes, instalación, operación diaria, tablero y alertas |
-| `docs/agentes/` | Reglas que se instalan en los proyectos de cada estación |
+| `docs/agentes/` | Reglas y guías de los agentes: proyectos de cada estación y agente del recorrido 3D |
 | `observabilidad/` | Scripts y configuración de Prometheus, Grafana y las estaciones |
 | `tracking/ejecuciones.md` | Bitácora: todo lo que se ejecutó. Lo más reciente arriba |
 | `tracking/hitos.md` | Hitos con fecha y estado |
@@ -91,7 +91,7 @@ Forma de operar desde la Mac:
 
 - Tablero sin emojis. Las secciones van numeradas y en mayúsculas: `01 · EN VIVO · ...`.
 - Colores fijos: azul para la estación Revit, naranja para la estación 3ds Max. Verde, amarillo y rojo solo para umbrales.
-- Para revisarlo se toma una captura con Chrome sin ventana sobre la vista de solo lectura local:
+- Debe leerse en pantalla dividida. Para revisarlo se toman capturas con Chrome sin ventana a 900 y 1200 px de ancho, sobre la vista de solo lectura local:
 
   ```bash
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --virtual-time-budget=20000 \

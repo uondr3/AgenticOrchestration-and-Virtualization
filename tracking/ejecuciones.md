@@ -4,6 +4,10 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-14 | Repo | Guía de canales para el agente del recorrido 3D (`docs/agentes/recorrido-3d/CANALES.md`): correo de Orca al chat de la estación 3ds Max, carpeta compartida con huella SHA-256 y prueba del canal. Valores reales en `privado/` | ✅ Lista; prueba pendiente |
+| 2026-11-14 | Mac | Revisado el canal sin tocar la estación 3ds Max: Orca de la estación acepta comandos de orquestación, credencial de la carpeta compartida en el llavero, agente del recorrido 3D corriendo dentro de Orca | ✅ |
+| 2026-11-14 | Mac | Tablero legible en pantalla dividida: EN VIVO en dos filas con textos de tamaño fijo, estaciones siempre en el mismo orden, leyendas abajo, ficha técnica al final como **08**. Revisado con capturas a 900 y 1200 px | ✅ |
+| 2026-11-14 | Estación Revit | RAM verificada de nuevo con `ficha-tecnica.ps1` y consulta directa: 4 × 16 GB (2 G.Skill + 2 ADATA) a 3600 MT/s, 61.6 GB visibles. Sin cambios desde el arranque del 2026-11-13 | ✅ Verificado |
 | 2026-11-14 | Repo | `CLAUDE.md` con las convenciones y el método de trabajo del proyecto | ✅ |
 | 2026-11-14 | Mac | Alertas de Grafana por Gmail: 5 reglas, silencio fuera de horario. Reglas validadas en Grafana; falta la contraseña de aplicación para enviar | 🟡 |
 | 2026-11-14 | Mac | Sección **00 · FICHA TÉCNICA** en el tablero con el hardware de cada estación | ✅ |

@@ -10,7 +10,7 @@ Cada prueba responde una pregunta de sí o no. Los resultados se registran en [.
 | P4 🏠 Dos Revit | ¿Dos agentes editan dos casas a la vez sin estorbarse ni estorbar al arquitecto? | 0 órdenes en la casa equivocada, 0 errores | ✅ 2026-11-12 |
 | P5 🔥 Bake trabajando | ¿La arquitecta sigue en 3ds Max mientras corre un bake? | Max fluido y el bake se alarga poco | ⬜ |
 | P6 🖥️ Bake en otra PC | ¿La cadena de bakes corre en otra estación y qué licencias pide? | Lightmap equivalente y sin bloqueo de licencia | ⬜ |
-| P7 📦 Entrega sin WhatsApp | ¿La entrega llega a la Mac y se valida sola? | Huella correcta y validador aceptado | ⬜ |
+| P7 📦 Entrega sin WhatsApp | ¿La entrega llega a la Mac y se valida sola? | Huella correcta y validador aceptado | 🟡 Canal documentado, prueba pendiente |
 
 ## Cómo se hizo cada una
 
@@ -42,4 +42,6 @@ El agente hornea la zona más corta tres veces: normal, con prioridad baja, y co
 Se monta 3ds Max 2021, Corona 9 y Forest Pack con las mismas rutas en otra estación y se hornea la misma zona. Mientras corre se revisa qué licencia toma cada programa.
 
 ### P7 · Entrega sin WhatsApp
-El agente deja el ZIP en la carpeta compartida; la Mac verifica la huella contra `entrega.json` y corre el validador.
+El agente de la Mac le escribe al chat del agente de la estación 3ds Max con `orca orchestration send --on <estación> --to <term_…>`, y la respuesta vuelve con `orca orchestration reply`. Los archivos viajan por la carpeta compartida, en `para-estacion/` y `para-mac/`, con su huella SHA-256 en el mensaje.
+
+Primero se prueba el canal con archivos pequeños y una pregunta que solo contesta el agente con contexto. Después va la primera entrega real. Guía y pasos: [agentes/recorrido-3d/CANALES.md](agentes/recorrido-3d/CANALES.md).
