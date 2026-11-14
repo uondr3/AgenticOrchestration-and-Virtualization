@@ -4,6 +4,8 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-14 | Mac | MCP propio `uondr-discord` (`observabilidad/mac/discord/`): herramienta `avisar` por webhook, registrado en Claude Code. Aviso de prueba recibido por Discord | ✅ Conectado |
+| 2026-11-14 | Mac | Alertas de Grafana pasan de Gmail a Discord: punto de contacto `discord-uondr`, el de correo se borró. 5 reglas sanas | ✅ |
 | 2026-11-14 | Repo | Guía de canales para el agente del recorrido 3D (`docs/agentes/recorrido-3d/CANALES.md`): correo de Orca al chat de la estación 3ds Max, carpeta compartida con huella SHA-256 y prueba del canal. Valores reales en `privado/` | ✅ Lista; prueba pendiente |
 | 2026-11-14 | Mac | Revisado el canal sin tocar la estación 3ds Max: Orca de la estación acepta comandos de orquestación, credencial de la carpeta compartida en el llavero, agente del recorrido 3D corriendo dentro de Orca | ✅ |
 | 2026-11-14 | Mac | Tablero legible en pantalla dividida: EN VIVO en dos filas con textos de tamaño fijo, estaciones siempre en el mismo orden, leyendas abajo, ficha técnica al final como **08**. Revisado con capturas a 900 y 1200 px | ✅ |

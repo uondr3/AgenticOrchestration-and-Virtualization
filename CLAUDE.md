@@ -59,6 +59,7 @@ Formato de la bitácora: `| Fecha | Dónde | Qué se hizo | Resultado |`, con re
    - **Observabilidad · Tablero**: avance, componentes, hitos, seguridad, accesos.
 
    Notion lleva tablas y emojis, con poco texto. Se edita con cambios puntuales, sin reescribir la página.
+6. Avisar por Discord con la herramienta `avisar` del MCP `uondr-discord`: avance cerrado, falla o decisión pendiente. Si la sesión no tiene el MCP, se usa `observabilidad/mac/discord/avisos-mcp.sh`.
 
 ## Trabajo en las estaciones
 
@@ -103,5 +104,6 @@ Forma de operar desde la Mac:
 
 ## Secretos
 
-- Nunca se muestran ni se copian al chat ni a los documentos: el `.env`, los enlaces de emparejamiento, la contraseña de aplicación de Gmail ni la contraseña de Grafana.
+- Nunca se muestran ni se copian al chat ni a los documentos: el `.env`, los enlaces de emparejamiento, la URL del webhook de Discord ni la contraseña de Grafana.
+- Un secreto que el usuario tiene que dar se pide con una ventana de la Mac con texto oculto (`osascript ... with hidden answer`) y se escribe directo al archivo privado, sin pasar por el chat.
 - Para leer un valor del `.env` se usa sin imprimirlo.

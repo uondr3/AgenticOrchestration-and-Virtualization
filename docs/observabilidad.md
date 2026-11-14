@@ -150,9 +150,16 @@ cp observabilidad/mac/grafana/dashboards/uondr.json /opt/homebrew/etc/grafana/da
 
 Grafana lo recarga solo en 30 segundos. Los cambios hechos a mano en Grafana se pierden al regenerarlo.
 
-## Alertas por correo
+## Alertas y avisos por Discord
 
-Grafana envía las alertas por **Gmail**, con SMTP de `smtp.gmail.com:587` y una **contraseña de aplicación** de Google.
+Las notificaciones llegan a un canal de Discord por medio de un **webhook**: un enlace que solo puede publicar en ese canal. No hay bot ni permisos sobre el servidor.
+
+| Quién avisa | Cómo | Qué manda |
+|---|---|---|
+| Grafana | Punto de contacto `discord-uondr` | Las 5 alertas de las estaciones |
+| Agente coordinador | Herramienta `avisar` del MCP `uondr-discord` | Avances terminados, fallas y decisiones pendientes |
+
+### Alertas de Grafana
 
 | Alerta | Condición | Severidad |
 |---|---|---|
@@ -165,18 +172,36 @@ Grafana envía las alertas por **Gmail**, con SMTP de `smtp.gmail.com:587` y una
 - Fuera del horario de trabajo y en fin de semana las alertas se silencian.
 - Se agrupan por alerta y estación, y una alerta activa se repite cada 4 horas.
 - Las alertas salen de la Mac: si está dormida, no se evalúan.
+- Para probar el envío: Grafana → Alerting → Contact points → `discord-uondr` → Test. La prueba no respeta el silencio.
 
-Para activarlas, en `observabilidad/mac/.env`:
+### MCP de avisos
+
+`observabilidad/mac/discord/avisos_mcp.py` es un servidor MCP propio, en Python estándar y sin dependencias, con una sola herramienta:
+
+| Herramienta | Parámetros |
+|---|---|
+| `avisar` | `texto` (obligatorio), `titulo`, `nivel`: `info`, `ok`, `aviso` o `critico`, que define el color |
+
+`avisos-mcp.sh` lo arranca y le pasa solo la URL del webhook desde `.env`. Se registró en Claude Code con:
 
 ```bash
-OBS_SMTP_USUARIO="cuenta que envía"
-OBS_SMTP_CLAVE="contraseña de aplicación"   # https://myaccount.google.com/apppasswords
-OBS_ALERTA_CORREO="quién recibe"            # vacío = la misma cuenta
+claude mcp add -s user uondr-discord -- /bin/sh "<repo>/observabilidad/mac/discord/avisos-mcp.sh"
+claude mcp list     # debe decir uondr-discord ✔ Connected
+```
+
+Las sesiones de Claude abiertas antes de registrarlo lo ven al reiniciarse.
+
+### Configuración
+
+En `observabilidad/mac/.env`:
+
+```bash
+OBS_DISCORD_WEBHOOK="URL del webhook"   # Discord: Editar canal → Integraciones → Webhooks → Copiar URL
 OBS_HORA_INICIO="09:00"
 OBS_HORA_FIN="19:00"
 ```
 
-y volver a correr `observabilidad/mac/instalar.sh`. Las reglas están en `observabilidad/mac/grafana/provisioning/alerting/reglas.yml`. El destinatario y el horario se generan desde `.env` y no se publican. Para probar el envío: Grafana → Alerting → Contact points → `correo-uondr` → Test.
+y volver a correr `observabilidad/mac/instalar.sh`. La URL funciona como contraseña: no se publica ni se copia al chat. Si se filtra, se borra el webhook en Discord y se crea otro. Las reglas están en `observabilidad/mac/grafana/provisioning/alerting/reglas.yml`.
 
 ## Ficha técnica
 

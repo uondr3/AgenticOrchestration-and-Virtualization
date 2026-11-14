@@ -24,8 +24,8 @@
 | 2026-11-14 | Convenciones del proyecto en `CLAUDE.md` | ✅ |
 | 2026-11-14 | Tablero legible en pantalla dividida | ✅ |
 | 2026-11-14 | Guía de canales para el agente del recorrido 3D | ✅ |
+| 2026-11-14 | Alertas y avisos por Discord: Grafana y MCP del agente coordinador | ✅ |
 | — | Prueba del canal Mac ↔ estación 3ds Max por Orca y carpeta compartida | ⬜ |
-| — | Alertas de observabilidad por Gmail | 🟡 Falta la contraseña de aplicación |
 | — | **P5** Bake con la arquitecta trabajando | ⬜ |
 | — | **P6** Bake en otra estación y licencias | ⬜ |
 | — | **P7** Entrega sin WhatsApp | ⬜ |

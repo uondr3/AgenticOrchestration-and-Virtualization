@@ -14,9 +14,7 @@ source "$DIR/.env"
 OBS_RETENCION="${OBS_RETENCION:-90d}"
 OBS_PUERTO_SENSORES="${OBS_PUERTO_SENSORES:-4445}"
 OBS_VISTA_ANONIMA="${OBS_VISTA_ANONIMA:-no}"
-OBS_SMTP_USUARIO="${OBS_SMTP_USUARIO:-}"
-OBS_SMTP_CLAVE="${OBS_SMTP_CLAVE:-}"
-OBS_ALERTA_CORREO="${OBS_ALERTA_CORREO:-$OBS_SMTP_USUARIO}"
+OBS_DISCORD_WEBHOOK="${OBS_DISCORD_WEBHOOK:-}"
 OBS_HORA_INICIO="${OBS_HORA_INICIO:-09:00}"
 OBS_HORA_FIN="${OBS_HORA_FIN:-19:00}"
 OBS_ZONA="${OBS_ZONA:-America/Merida}"
@@ -106,39 +104,27 @@ open(ini, "w", encoding="utf-8").write(s)
 PY
 grep -E "^(provisioning|http_addr) *=" "$INI" || true
 
-echo "==> Alertas por correo"
-if [ -n "$OBS_SMTP_USUARIO" ] && [ -n "$OBS_SMTP_CLAVE" ]; then
-  # SMTP de Gmail en grafana.ini. La clave viaja por variable de entorno, no por argumentos.
-  SMTP_USUARIO="$OBS_SMTP_USUARIO" SMTP_CLAVE="$OBS_SMTP_CLAVE" python3 -I - "$INI" <<'PY'
-import os, re, sys
-ini = sys.argv[1]
-s = open(ini, encoding="utf-8").read()
-valores = {"enabled": "true", "host": "smtp.gmail.com:587", "user": os.environ["SMTP_USUARIO"],
-           "password": '"""' + os.environ["SMTP_CLAVE"] + '"""', "from_address": os.environ["SMTP_USUARIO"],
-           "from_name": "Grafana UONDR", "startTLS_policy": "MandatoryStartTLS"}
-i = s.find("[smtp]")
-j = s.find("\n[", i + 1); j = len(s) if j < 0 else j
-sec = s[i:j]
-for k, v in valores.items():
-    sec, n = re.subn(rf"(?m)^;?\s*{k}\s*=.*$", f"{k} = {v}", sec, count=1)
-    if n == 0:
-        sec = sec.rstrip("\n") + f"\n{k} = {v}\n"
-s = s[:i] + sec + s[j:]
-open(ini, "w", encoding="utf-8").write(s)
-PY
+echo "==> Alertas por Discord"
+case "$OBS_DISCORD_WEBHOOK" in
+  https://discord.com/api/webhooks/*|https://discordapp.com/api/webhooks/*)
   cp "$DIR/grafana/provisioning/alerting/reglas.yml" "$PROV/alerting/reglas.yml"
-  cat > "$PROV/alerting/correo.yml" <<EOF2
+  rm -f "$PROV/alerting/correo.yml"
+  # El webhook es un secreto: el archivo generado queda solo para el usuario.
+  ( umask 077; cat > "$PROV/alerting/discord.yml" <<EOF2
 # Generado por instalar.sh desde .env. No se publica.
 apiVersion: 1
+deleteContactPoints:
+  - orgId: 1
+    uid: correo-uondr
 contactPoints:
   - orgId: 1
-    name: correo-uondr
+    name: discord-uondr
     receivers:
-      - uid: correo-uondr
-        type: email
+      - uid: discord-uondr
+        type: discord
         settings:
-          addresses: "$OBS_ALERTA_CORREO"
-          singleEmail: true
+          url: "$OBS_DISCORD_WEBHOOK"
+          use_discord_username: false
 muteTimes:
   - orgId: 1
     name: fuera-de-horario
@@ -153,22 +139,24 @@ muteTimes:
         location: "$OBS_ZONA"
 policies:
   - orgId: 1
-    receiver: correo-uondr
+    receiver: discord-uondr
     group_by: ["alertname", "estacion"]
     group_wait: 30s
     group_interval: 5m
     repeat_interval: 4h
     routes:
-      - receiver: correo-uondr
+      - receiver: discord-uondr
         object_matchers: [["equipo", "=", "uondr"]]
         mute_time_intervals: ["fuera-de-horario"]
 EOF2
-  chmod 600 "$PROV/alerting/correo.yml"
-  echo "    alertas a $OBS_ALERTA_CORREO, silenciadas fuera de $OBS_HORA_INICIO-$OBS_HORA_FIN y en fin de semana"
-else
-  rm -f "$PROV/alerting/reglas.yml" "$PROV/alerting/correo.yml"
-  echo "    sin OBS_SMTP_USUARIO / OBS_SMTP_CLAVE en .env: alertas desactivadas"
-fi
+  )
+  echo "    alertas al canal de Discord, silenciadas fuera de $OBS_HORA_INICIO-$OBS_HORA_FIN y en fin de semana"
+  ;;
+  *)
+  rm -f "$PROV/alerting/reglas.yml" "$PROV/alerting/correo.yml" "$PROV/alerting/discord.yml"
+  echo "    sin OBS_DISCORD_WEBHOOK válido en .env: alertas desactivadas"
+  ;;
+esac
 
 echo "==> Arrancando servicios"
 brew services restart prometheus
