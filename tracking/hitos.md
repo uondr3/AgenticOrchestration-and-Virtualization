@@ -19,7 +19,7 @@
 | 2026-11-13 | Observabilidad instalada: Prometheus y Grafana en la Mac, medidor en las dos estaciones | ✅ |
 | 2026-11-13 | Tablero UONDR · Estaciones en Grafana | ✅ |
 | 2026-11-13 | Temperatura del procesador en la estación 3ds Max | ✅ |
-| — | Temperatura del procesador en la estación Revit | ⬜ |
+| 2026-11-14 | Temperatura del procesador en la estación Revit | ✅ |
 | 2026-11-14 | Ficha técnica de las estaciones en el tablero | ✅ |
 | 2026-11-14 | Convenciones del proyecto en `CLAUDE.md` | ✅ |
 | — | Alertas de observabilidad por Gmail | 🟡 Falta la contraseña de aplicación |

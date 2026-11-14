@@ -82,7 +82,7 @@ Grafana queda en <http://127.0.0.1:3000>. El primer inicio pide cambiar la contr
 | windows_exporter, estación Revit | 0.32.1 | ✅ |
 | windows_exporter, estación 3ds Max | 0.32.1 | ✅ |
 | OhmGraphite + PawnIO, estación 3ds Max | 0.38.0 + 2.2.0 | ✅ Temperatura del procesador |
-| OhmGraphite + PawnIO, estación Revit | 0.38.0 + 2.2.0 | ⬜ La estación estaba apagada |
+| OhmGraphite + PawnIO, estación Revit | 0.38.0 + 2.2.0 | ✅ Temperatura del procesador |
 
 ### Temperatura del procesador
 
