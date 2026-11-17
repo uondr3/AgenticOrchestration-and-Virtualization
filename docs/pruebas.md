@@ -39,6 +39,7 @@ orca orchestration worker-start --spec-file tarea.txt --on <estación> \
 El agente hornea la zona más corta tres veces: normal, con prioridad baja, y con prioridad baja dejando núcleos libres en Corona. Se mide la duración, la RAM máxima y la fluidez de Max.
 
 ### P6 · Bake en otra PC
+La estación Revit no tiene 3ds Max ni Corona; se pueden comprar (2026-11-17). Antes de comprar: confirmar que la licencia permite activar 3ds Max 2021, la versión de la cadena, y qué licencia de Corona usa `3dsmaxbatch`.
 Se monta 3ds Max 2021, Corona 9 y Forest Pack con las mismas rutas en otra estación y se hornea la misma zona. Mientras corre se revisa qué licencia toma cada programa.
 
 ### P7 · Entrega sin WhatsApp
