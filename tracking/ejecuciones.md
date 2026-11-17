@@ -4,6 +4,7 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-17 | Repo | Reglas de orquestación para la estación 3ds Max (`docs/agentes/max/ORQUESTACION.md`): canal de Orca, carpeta compartida con huella, bakes uno a la vez y registro de horarios para medir | ✅ Publicadas; falta instalarlas |
 | 2026-11-17 | Estación Revit | Licencias para P6: la estación Revit no tiene 3ds Max ni Corona; se pueden comprar. Antes de comprar hay que confirmar que se puede activar la versión 2021 que usa la cadena | ✅ Aclarado |
 | 2026-11-17 | Mac | Decisión: las estaciones no se emparejan con el Orca de la Mac. Se sigue avisando con una línea en el chat de la estación | ✅ Registrada |
 | 2026-11-17 | Mac → estación 3ds Max | Conexión revisada otra vez: Orca responde, sesión del agente conectada y libre, carpeta compartida y medidores en línea | ✅ |
