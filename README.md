@@ -6,7 +6,7 @@
 
 ![Estado](https://img.shields.io/badge/estado-en%20construcci%C3%B3n-f59e0b?style=for-the-badge&logo=hammer&logoColor=white)
 ![Fase](https://img.shields.io/badge/fase-validaci%C3%B3n-6366f1?style=for-the-badge&logo=target&logoColor=white)
-![Pruebas](https://img.shields.io/badge/pruebas-4%20de%207-22c55e?style=for-the-badge&logo=checkmarx&logoColor=white)
+![Pruebas](https://img.shields.io/badge/pruebas-5%20de%207-22c55e?style=for-the-badge&logo=checkmarx&logoColor=white)
 
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-D97757?style=flat-square&logo=claude&logoColor=white)
 ![MCP](https://img.shields.io/badge/MCP-111827?style=flat-square&logo=modelcontextprotocol&logoColor=white)
@@ -82,7 +82,7 @@ Todo viaja por **Tailscale**, la red privada que une las tres máquinas.
 | P4 🏠 Dos Revit | ¿Dos agentes en dos casas a la vez sin estorbar? | ✅ 0 errores |
 | P5 🔥 Bake trabajando | ¿La arquitecta sigue en Max durante un bake? | ⬜ |
 | P6 🖥️ Bake en otra PC | ¿La cadena corre en otra estación y qué licencias pide? | ⬜ |
-| P7 📦 Entrega sin WhatsApp | ¿La entrega llega y se valida sola? | 🟡 Canal documentado, prueba pendiente |
+| P7 📦 Entrega sin WhatsApp | ¿La entrega llega y se valida sola? | ✅ v12: 1.38 GB en 55 s, huella y validador correctos |
 | 📈 Observabilidad | ¿Vemos el historial de recursos de cada estación? | ✅ Tablero UONDR con ficha técnica. Alertas y avisos por Discord |
 
 Detalle en [tracking/hitos.md](tracking/hitos.md) y [tracking/ejecuciones.md](tracking/ejecuciones.md).

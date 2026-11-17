@@ -29,7 +29,7 @@
 | Fase | Contenido | Estado |
 |---|---|---|
 | 1. Diagnóstico | Flujo actual, MCPs, licencias, virtualización | ✅ |
-| 2. Validación | Pruebas P1 a P7 ([pruebas.md](pruebas.md)) | 🟡 4 de 7 |
+| 2. Validación | Pruebas P1 a P7 ([pruebas.md](pruebas.md)) | 🟡 5 de 7: faltan P5 y P6 |
 | 3. Documentación para agentes | Reglas en los proyectos de cada estación ([agentes/](agentes)) | 🟡 Estación Revit lista · guía de canales del recorrido 3D lista |
 | 4. Coordinación y piloto | Trabajo real con varias casas y entregas automáticas | 🟡 Estación Revit en uso |
 | 5. Observabilidad | Prometheus + Grafana ([observabilidad.md](observabilidad.md)) | 🟡 Tablero y alertas por Discord listos, faltan los eventos de agentes |

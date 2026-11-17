@@ -41,9 +41,19 @@ Guía para el agente de la **Mac coordinadora** que trabaja el recorrido 3D web.
      --body "<pedido completo>"
    ```
 
-3. **Terminar el turno.** La respuesta llega sola como mensaje nuevo: Orca despierta al agente. No se espera con `sleep` ni se revisa `check` en ciclo.
+3. **Avisar que revise su bandeja.** Si el agente de la estación está ocupado o esperando, Orca retiene el correo y no se lo entrega. Primero se lee su pantalla, solo lectura, y luego se escribe una sola línea en su chat:
 
-4. **Contestar preguntas** del otro agente:
+   ```bash
+   orca terminal read --environment <estación 3ds Max> --terminal <term_…> --screen
+   orca terminal send --environment <estación 3ds Max> --terminal <term_…> \
+     --text "Revisa tus mensajes de Orca: <msg_id>" --enter
+   ```
+
+   Esa línea solo avisa; el pedido completo siempre va por correo.
+
+4. **Esperar la respuesta.** Hoy la respuesta no despierta al agente de la Mac. Se vigila la bandeja propia sin consumirla, con `orca orchestration inbox`, y luego se lee con `orca orchestration check`.
+
+5. **Contestar preguntas** del otro agente:
 
    ```bash
    orca orchestration reply --id <msg_id> --body "<respuesta>"
@@ -51,6 +61,16 @@ Guía para el agente de la **Mac coordinadora** que trabaja el recorrido 3D web.
 
 > [!IMPORTANT]
 > Para mensajes siempre se usa `--on`. Con `--environment` el comando corre en la estación, pero no entrega correo.
+
+### Lo aprendido en la primera prueba (2026-11-14)
+
+| Detalle | Qué pasa |
+|---|---|
+| Entrega automática del correo | No funcionó en ninguna dirección: Orca lo retiene mientras el agente está ocupado o esperando |
+| Aviso en el chat | Una línea con `orca terminal send` hace que el agente de la estación lea su bandeja |
+| `--type` con `--on` | Solo se aceptan `status` y `handoff`. Con `question` se rechaza y no se envía nada; lo normal es omitir `--type` |
+| Sentido contrario | La estación no está emparejada con la Mac, así que su agente no puede escribirle al de la Mac. Responde con `reply` y el de la Mac vigila su bandeja |
+| Archivos | Prueba en las dos direcciones con huellas iguales. La v12, de 1.38 GB, llegó en 55 s con la huella correcta |
 
 ### Cómo escribir el mensaje
 

@@ -25,8 +25,8 @@
 | 2026-11-14 | Tablero legible en pantalla dividida | ✅ |
 | 2026-11-14 | Guía de canales para el agente del recorrido 3D | ✅ |
 | 2026-11-14 | Alertas y avisos por Discord: Grafana y MCP del agente coordinador | ✅ |
-| — | Prueba del canal Mac ↔ estación 3ds Max por Orca y carpeta compartida | ⬜ |
+| 2026-11-14 | Prueba del canal Mac ↔ estación 3ds Max por Orca y carpeta compartida | ✅ Con aviso manual |
+| 2026-11-14 | **P7** Entrega sin WhatsApp: v12 de 1.38 GB, huella y validador correctos | ✅ |
 | — | **P5** Bake con la arquitecta trabajando | ⬜ |
 | — | **P6** Bake en otra estación y licencias | ⬜ |
-| — | **P7** Entrega sin WhatsApp | ⬜ |
 | — | Reglas de orquestación en la estación 3ds Max | ⬜ |

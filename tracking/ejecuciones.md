@@ -4,6 +4,10 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-17 | Mac → estación 3ds Max | El Orca de la estación no responde (puerto 6768 sin respuesta), aunque la estación sigue en línea en Prometheus. El canal queda en pausa hasta abrir Orca | ⚠️ |
+| 2026-11-14 | Mac | **P7**: el agente del recorrido 3D validó la v12 con el validador 0.4.0: aceptada, 0 errores | ✅ |
+| 2026-11-14 | Mac ↔ estación 3ds Max | **P7**: la v12 llegó por el canal, sin WhatsApp: ZIP de 1.38 GB y su `.md`, copiados en 55 s, huellas iguales | ✅ |
+| 2026-11-14 | Mac ↔ estación 3ds Max | Prueba del canal: pregunta con contexto respondida y archivos de prueba en las dos direcciones con huellas iguales; los archivos se borraron. El correo de Orca no se entregó solo: hizo falta avisar en el chat de la estación | ✅ Con aviso manual |
 | 2026-11-14 | Mac | MCP propio `uondr-discord` (`observabilidad/mac/discord/`): herramienta `avisar` por webhook, registrado en Claude Code. Aviso de prueba recibido por Discord | ✅ Conectado |
 | 2026-11-14 | Mac | Alertas de Grafana pasan de Gmail a Discord: punto de contacto `discord-uondr`, el de correo se borró. 5 reglas sanas | ✅ |
 | 2026-11-14 | Repo | Guía de canales para el agente del recorrido 3D (`docs/agentes/recorrido-3d/CANALES.md`): correo de Orca al chat de la estación 3ds Max, carpeta compartida con huella SHA-256 y prueba del canal. Valores reales en `privado/` | ✅ Lista; prueba pendiente |
