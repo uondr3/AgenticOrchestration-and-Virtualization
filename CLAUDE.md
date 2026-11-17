@@ -79,6 +79,8 @@ Forma de operar desde la Mac:
 - **Permiso de administrador:** `Start-Process powershell -Verb RunAs`. El arquitecto acepta la ventana de Windows, y el resultado se escribe en `C:\ProgramData\UONDR-obs\*.log`.
 - **Tareas para agentes:** `orca orchestration worker-start --on <estación> --worktree <identidad del proyecto existente>`. En áreas de trabajo nuevas la tarea no llega en Windows.
 - **Agentes con `--keep-open`:** mantienen ocupado su Revit. Se liberan con `orca orchestration worker-release`.
+- **Emparejamiento en un solo sentido:** la Mac entra al Orca de las estaciones. Las PCs de los arquitectos no se emparejan con el Orca de la Mac.
+- **Correo a un agente de una estación:** `orca orchestration send --on <estación> --to <term_…>`. Después se lee su pantalla y se escribe una sola línea en su chat para que revise su bandeja. La respuesta no despierta a quien envió, así que se vigila su bandeja con `orca orchestration inbox`.
 - **Archivos de texto con acentos:** los `.ps1` se guardan con BOM UTF-8 para PowerShell 5.1.
 
 ## Observabilidad

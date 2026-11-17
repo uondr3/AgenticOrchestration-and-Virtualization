@@ -69,7 +69,7 @@ Guía para el agente de la **Mac coordinadora** que trabaja el recorrido 3D web.
 | Entrega automática del correo | No funcionó en ninguna dirección: Orca lo retiene mientras el agente está ocupado o esperando |
 | Aviso en el chat | Una línea con `orca terminal send` hace que el agente de la estación lea su bandeja |
 | `--type` con `--on` | Solo se aceptan `status` y `handoff`. Con `question` se rechaza y no se envía nada; lo normal es omitir `--type` |
-| Sentido contrario | La estación no está emparejada con la Mac, así que su agente no puede escribirle al de la Mac. Responde con `reply` y el de la Mac vigila su bandeja |
+| Sentido contrario | La estación no está emparejada con la Mac y así se queda, por decisión del coordinador del 2026-11-17. Su agente responde con `reply` y el de la Mac vigila su bandeja |
 | Archivos | Prueba en las dos direcciones con huellas iguales. La v12, de 1.38 GB, llegó en 55 s con la huella correcta |
 
 ### Cómo escribir el mensaje

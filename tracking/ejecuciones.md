@@ -4,6 +4,8 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-17 | Mac | Decisión: las estaciones no se emparejan con el Orca de la Mac. Se sigue avisando con una línea en el chat de la estación | ✅ Registrada |
+| 2026-11-17 | Mac → estación 3ds Max | Conexión revisada otra vez: Orca responde, sesión del agente conectada y libre, carpeta compartida y medidores en línea | ✅ |
 | 2026-11-17 | Mac → estación 3ds Max | El Orca de la estación no responde (puerto 6768 sin respuesta), aunque la estación sigue en línea en Prometheus. El canal queda en pausa hasta abrir Orca | ⚠️ |
 | 2026-11-14 | Mac | **P7**: el agente del recorrido 3D validó la v12 con el validador 0.4.0: aceptada, 0 errores | ✅ |
 | 2026-11-14 | Mac ↔ estación 3ds Max | **P7**: la v12 llegó por el canal, sin WhatsApp: ZIP de 1.38 GB y su `.md`, copiados en 55 s, huellas iguales | ✅ |

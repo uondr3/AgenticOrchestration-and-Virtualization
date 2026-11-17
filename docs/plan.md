@@ -22,6 +22,7 @@
 | 2026-11-13 | Observabilidad: Prometheus + Grafana en la Mac coordinadora | El equipo trabaja en el mismo horario; historial central y tableros propios |
 | 2026-11-13 | Repo público en `uondr3` | Documentación compartida y trazabilidad |
 | 2026-11-14 | Notificaciones por Discord en lugar de Gmail: webhook a un canal, para Grafana y para el agente coordinador | Decisión del coordinador. El webhook solo puede publicar en su canal |
+| 2026-11-17 | Las estaciones no se emparejan con el Orca de la Mac. El agente de la Mac avisa con una línea en el chat de la estación y vigila su propia bandeja | Las PCs de los arquitectos no deben tener acceso al Orca de la Mac |
 | 2026-11-14 | El recorrido 3D deja WhatsApp: correo de Orca al chat del agente de la estación 3ds Max y archivos por la carpeta compartida | Habla con el agente que ya tiene el contexto, la arquitecta lo ve en su chat y cada archivo se verifica por huella |
 
 ## Fases
