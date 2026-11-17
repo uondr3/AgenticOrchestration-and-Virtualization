@@ -29,4 +29,4 @@
 | 2026-11-14 | **P7** Entrega sin WhatsApp: v12 de 1.38 GB, huella y validador correctos | ✅ |
 | — | **P5** Bake con la arquitecta trabajando | ⬜ |
 | — | **P6** Bake en otra estación y licencias | ⬜ |
-| — | Reglas de orquestación en la estación 3ds Max | ⬜ |
+| 2026-11-17 | Reglas de orquestación en la estación 3ds Max | ✅ |

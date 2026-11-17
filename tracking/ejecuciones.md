@@ -4,6 +4,7 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-17 | Estación 3ds Max | Reglas de orquestación instaladas por su agente con visto bueno de la arquitecta: respaldo del archivo de reglas, `ORQUESTACION.md` con huella verificada y cargado al inicio, una regla vieja anotada. Revisado desde la Mac: huella igual, respaldo presente, las dos líneas al inicio | ✅ |
 | 2026-11-17 | Mac → estación 3ds Max | Pedido de instalar las reglas enviado por el canal y avisado con una línea en su chat. Su agente descargó el archivo, verificó la huella y espera el visto bueno de la arquitecta | ⏸️ Esperando visto bueno |
 | 2026-11-17 | Repo | Reglas de orquestación para la estación 3ds Max (`docs/agentes/max/ORQUESTACION.md`): canal de Orca, carpeta compartida con huella, bakes uno a la vez y registro de horarios para medir | ✅ Publicadas; falta instalarlas |
 | 2026-11-17 | Estación Revit | Licencias para P6: la estación Revit no tiene 3ds Max ni Corona; se pueden comprar. Antes de comprar hay que confirmar que se puede activar la versión 2021 que usa la cadena | ✅ Aclarado |

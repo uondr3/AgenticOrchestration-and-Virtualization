@@ -116,6 +116,7 @@ Los archivos de prueba se borran al terminar. Las entregas reales se quedan en l
 | Procesos pesados en `3dsmaxbatch`, uno a la vez si guardan EXR | Evita choques de archivos y de RAM |
 | Antes de pedir un bake o algo pesado, revisar el tablero y avisar en el mensaje | La arquitecta sigue trabajando en la misma máquina |
 | La arquitecta tiene la última palabra en su chat | El canal no reemplaza su criterio |
+| Cada entrega espera su visto bueno antes de llegar a `para-mac/` | Decisión de la arquitecta del 2026-11-17: hay que contar con ese tiempo |
 | Nunca mandar contraseñas, enlaces de emparejamiento ni el contenido de un `.env` | El mensaje queda en su chat |
 | No lanzar trabajadores de Orca en la estación sin permiso del coordinador | Un trabajador es otro agente con acceso a sus archivos |
 
