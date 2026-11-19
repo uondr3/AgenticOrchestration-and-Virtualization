@@ -779,7 +779,7 @@
       "type": "timeseries",
       "id": 11,
       "title": "RAM usada",
-      "description": "Cada estación tiene 64 GB",
+      "description": "La RAM instalada de cada estación está en 08 · FICHA TÉCNICA",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus-uondr"
@@ -2150,33 +2150,213 @@
       "panels": []
     },
     {
-      "type": "text",
+      "type": "stat",
       "id": 29,
-      "title": "Estación Revit",
+      "title": "RAM instalada",
+      "description": "En vivo, la que reporta Windows. 64 GB se ven como unos 61 GiB",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-uondr"
+      },
       "gridPos": {
-        "h": 13,
-        "w": 12,
+        "h": 7,
+        "w": 8,
         "x": 0,
         "y": 72
       },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "(windows_memory_physical_total_bytes{estacion=~\"$estacion\"}) and on (estacion) up{job=\"estaciones\",estacion=\"Estación 3ds Max\"}",
+          "legendFormat": "{{estacion}}",
+          "refId": "A",
+          "range": false,
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "(windows_memory_physical_total_bytes{estacion=~\"$estacion\"}) and on (estacion) up{job=\"estaciones\",estacion=\"Estación Revit\"}",
+          "legendFormat": "{{estacion}}",
+          "refId": "B",
+          "range": false,
+          "instant": true
+        }
+      ],
       "options": {
-        "mode": "markdown",
-        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9900X · 12 núcleos / 24 hilos |\n| **Placa** | Gigabyte B850 AORUS ELITE WIFI7 ICE · BIOS F11 |\n| **RAM** | **64 GB** DDR5 · 4 × 16 GB · 4 de 4 ranuras · **3600 MT/s** |\n| **Módulos** | Canales A y B: G.Skill F5-6000J3636F16G en DIMM 0 + ADATA AX5U5600C4616G en DIMM 1 |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5080 · AMD Radeon integrada |\n| **Disco** | Kingston NV3 1 TB NVMe |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Dos kits distintos: la RAM trabaja a 3600 MT/s, abajo de su nominal de 5600–6000 |\n\n<small>Actualizada el 2026-11-14</small>"
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "textMode": "value_and_name",
+        "orientation": "vertical",
+        "wideLayout": true,
+        "text": {
+          "titleSize": 13,
+          "valueSize": 30
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "mappings": [],
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "table",
+      "id": 30,
+      "title": "Módulos de RAM · en vivo",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-uondr"
+      },
+      "description": "Cada módulo instalado, leído por OhmGraphite. Se actualiza solo cuando se mueve la RAM",
+      "gridPos": {
+        "h": 7,
+        "w": 16,
+        "x": 8,
+        "y": 72
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-uondr"
+          },
+          "expr": "ohm_ram_bytes{sensor=\"Capacity\",estacion=~\"$estacion\"}",
+          "legendFormat": "",
+          "refId": "A",
+          "range": false,
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "instance": true,
+              "job": true,
+              "sensor": true,
+              "hw_instance": true
+            },
+            "indexByName": {
+              "estacion": 0,
+              "hardware": 1,
+              "Value": 2
+            },
+            "renameByName": {
+              "estacion": "Estación",
+              "hardware": "Módulo",
+              "Value": "Capacidad"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "Estación"
+              }
+            ]
+          }
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "decimals": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Capacidad"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Estación"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          }
+        ]
       }
     },
     {
       "type": "text",
-      "id": 30,
-      "title": "Estación 3ds Max",
+      "id": 31,
+      "title": "Estación Revit",
       "gridPos": {
-        "h": 13,
+        "h": 14,
         "w": 12,
-        "x": 12,
-        "y": 72
+        "x": 0,
+        "y": 79
       },
       "options": {
         "mode": "markdown",
-        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9950X · 16 núcleos / 32 hilos |\n| **Placa** | ASUS ProArt B850-CREATOR WIFI NEO · BIOS 0239 |\n| **RAM** | **64 GB** DDR5 · 2 × 32 GB · 2 de 4 ranuras · **4800 MT/s** |\n| **Módulos** | Corsair CMK64GX5M2D6000C40, kit de 2 × 32 GB |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5070 · AMD Radeon integrada |\n| **Discos** | Kingston NV3 1 TB NVMe interno · ADATA HV620S 1 TB USB · Transcend StoreJet 1 TB USB |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Kit de 6000 MT/s trabajando a 4800 MT/s: el perfil EXPO no está activo |\n\n<small>Actualizada el 2026-11-14</small>"
+        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9900X · 12 núcleos / 24 hilos |\n| **Placa** | Gigabyte B850 AORUS ELITE WIFI7 ICE · BIOS F11 |\n| **RAM** | **32 GB** DDR5 · 2 × 16 GB · 2 de 4 ranuras · velocidad por confirmar |\n| **Módulos** | G.Skill F5-6000J3636F16G, kit de 2 × 16 GB |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5080 · AMD Radeon integrada |\n| **Disco** | Kingston NV3 1 TB NVMe |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Bajó de 64 a 32 GB el 2026-11-19: salieron los ADATA. Falta leer la velocidad |\n\n<small>Actualizada el 2026-11-19</small>"
+      }
+    },
+    {
+      "type": "text",
+      "id": 32,
+      "title": "Estación 3ds Max",
+      "gridPos": {
+        "h": 14,
+        "w": 12,
+        "x": 12,
+        "y": 79
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9950X · 16 núcleos / 32 hilos |\n| **Placa** | ASUS ProArt B850-CREATOR WIFI NEO · BIOS 0239 |\n| **RAM** | **64 GB** DDR5 · 2 × 32 GB · 2 de 4 ranuras · **3600 MT/s** |\n| **Módulos** | Corsair CMK64GX5M2D6000C40, kit de 2 × 32 GB |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5070 · AMD Radeon integrada |\n| **Discos** | Kingston NV3 1 TB NVMe interno · ADATA HV620S 1 TB USB · Transcend StoreJet 1 TB USB |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Kit de 6000 MT/s a 3600; el 2026-11-14 iba a 4800. EXPO apagado |\n\n<small>Actualizada el 2026-11-19</small>"
       }
     }
   ],

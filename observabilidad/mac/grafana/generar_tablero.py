@@ -49,6 +49,7 @@ Q = {
     "revit_cpu": 'sum by (estacion, process_id) (rate(windows_process_cpu_time_seconds_total{process="Revit",estacion="Estación Revit"}[$__rate_interval])) / on (estacion) group_left () count by (estacion) (windows_cpu_time_seconds_total{mode="idle",estacion="Estación Revit"})',
     "disco": 'windows_logical_disk_free_bytes{volume=~"[A-Z]:",%s} / windows_logical_disk_size_bytes{volume=~"[A-Z]:",%s}' % (EST, EST),
     "red_rx": 'sum by (estacion) (rate(windows_net_bytes_received_total{%s}[$__rate_interval]))' % EST,
+    "ram_modulos": 'ohm_ram_bytes{sensor="Capacity",%s}' % EST,
     "red_tx": 'sum by (estacion) (rate(windows_net_bytes_sent_total{%s}[$__rate_interval]))' % EST,
 }
 
@@ -156,27 +157,27 @@ def red_colores():
 
 # Ficha técnica de cada estación. Actualizar cuando cambie el hardware
 # (se obtiene con observabilidad/windows/ficha-tecnica.ps1).
-FICHA_FECHA = "2026-11-14"
+FICHA_FECHA = "2026-11-19"
 FICHA = {
     "Estación Revit": [
         ("Procesador", "AMD Ryzen 9 9900X · 12 núcleos / 24 hilos"),
         ("Placa", "Gigabyte B850 AORUS ELITE WIFI7 ICE · BIOS F11"),
-        ("RAM", "**64 GB** DDR5 · 4 × 16 GB · 4 de 4 ranuras · **3600 MT/s**"),
-        ("Módulos", "Canales A y B: G.Skill F5-6000J3636F16G en DIMM 0 + ADATA AX5U5600C4616G en DIMM 1"),
+        ("RAM", "**32 GB** DDR5 · 2 × 16 GB · 2 de 4 ranuras · velocidad por confirmar"),
+        ("Módulos", "G.Skill F5-6000J3636F16G, kit de 2 × 16 GB"),
         ("Tarjeta de video", "NVIDIA GeForce RTX 5080 · AMD Radeon integrada"),
         ("Disco", "Kingston NV3 1 TB NVMe"),
         ("Sistema", "Windows 11 Pro · build 26200"),
-        ("Nota", "Dos kits distintos: la RAM trabaja a 3600 MT/s, abajo de su nominal de 5600–6000"),
+        ("Nota", "Bajó de 64 a 32 GB el 2026-11-19: salieron los ADATA. Falta leer la velocidad"),
     ],
     "Estación 3ds Max": [
         ("Procesador", "AMD Ryzen 9 9950X · 16 núcleos / 32 hilos"),
         ("Placa", "ASUS ProArt B850-CREATOR WIFI NEO · BIOS 0239"),
-        ("RAM", "**64 GB** DDR5 · 2 × 32 GB · 2 de 4 ranuras · **4800 MT/s**"),
+        ("RAM", "**64 GB** DDR5 · 2 × 32 GB · 2 de 4 ranuras · **3600 MT/s**"),
         ("Módulos", "Corsair CMK64GX5M2D6000C40, kit de 2 × 32 GB"),
         ("Tarjeta de video", "NVIDIA GeForce RTX 5070 · AMD Radeon integrada"),
         ("Discos", "Kingston NV3 1 TB NVMe interno · ADATA HV620S 1 TB USB · Transcend StoreJet 1 TB USB"),
         ("Sistema", "Windows 11 Pro · build 26200"),
-        ("Nota", "Kit de 6000 MT/s trabajando a 4800 MT/s: el perfil EXPO no está activo"),
+        ("Nota", "Kit de 6000 MT/s a 3600; el 2026-11-14 iba a 4800. EXPO apagado"),
     ],
 }
 
@@ -184,8 +185,30 @@ FICHA = {
 def ficha(nombre, x, y):
     filas = "\n".join(f"| **{k}** | {v} |" for k, v in FICHA[nombre])
     contenido = f"| | |\n|---|---|\n{filas}\n\n<small>Actualizada el {FICHA_FECHA}</small>"
-    return {"type": "text", "id": nid(), "title": nombre, "gridPos": {"h": 13, "w": 12, "x": x, "y": y},
+    return {"type": "text", "id": nid(), "title": nombre, "gridPos": {"h": 14, "w": 12, "x": x, "y": y},
             "options": {"mode": "markdown", "content": contenido}}
+
+
+def modulos(x, y, w):
+    """Tabla en vivo de los módulos de RAM que lee OhmGraphite en cada estación."""
+    return {
+        "type": "table", "id": nid(), "title": "Módulos de RAM · en vivo", "datasource": DS,
+        "description": "Cada módulo instalado, leído por OhmGraphite. Se actualiza solo cuando se mueve la RAM",
+        "gridPos": {"h": 7, "w": w, "x": x, "y": y},
+        "targets": [dict(target(Q["ram_modulos"], "", instant=True), format="table")],
+        "transformations": [{"id": "organize", "options": {
+            "excludeByName": {"Time": True, "__name__": True, "instance": True, "job": True,
+                              "sensor": True, "hw_instance": True},
+            "indexByName": {"estacion": 0, "hardware": 1, "Value": 2},
+            "renameByName": {"estacion": "Estación", "hardware": "Módulo", "Value": "Capacidad"}}},
+            {"id": "sortBy", "options": {"sort": [{"field": "Estación"}]}}],
+        "options": {"showHeader": True, "cellHeight": "sm"},
+        "fieldConfig": {"defaults": {"unit": "bytes", "decimals": 0}, "overrides": [
+            {"matcher": {"id": "byName", "options": "Capacidad"},
+             "properties": [{"id": "custom.width", "value": 110}]},
+            {"matcher": {"id": "byName", "options": "Estación"},
+             "properties": [{"id": "custom.width", "value": 150}]}]},
+    }
 
 
 def construir():
@@ -224,7 +247,7 @@ def construir():
               sobreescribir=colores(COLOR_ESTACION)),
         serie("RAM usada", [target(Q["ram_usada"], "{{estacion}}")], 12, y, 12, unidad="bytes",
               sobreescribir=colores(COLOR_ESTACION),
-              descripcion="Cada estación tiene 64 GB"),
+              descripcion="La RAM instalada de cada estación está en 08 · FICHA TÉCNICA"),
     ]
     y += 9
 
@@ -293,6 +316,12 @@ def construir():
     y += 10
 
     panels.append(fila("08 · FICHA TÉCNICA · Hardware de cada estación", y)); y += 1
+    panels += [
+        stat("RAM instalada", Q["ram_total"], 0, y, 8, h=7, unidad="bytes", decimales=0,
+             descripcion="En vivo, la que reporta Windows. 64 GB se ven como unos 61 GiB"),
+        modulos(8, y, 16),
+    ]
+    y += 7
     panels += [ficha("Estación Revit", 0, y), ficha("Estación 3ds Max", 12, y)]
 
     return {

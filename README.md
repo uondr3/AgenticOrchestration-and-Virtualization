@@ -70,7 +70,7 @@ Todo viaja por **Tailscale**, la red privada que une las tres máquinas.
 | 🤖 Ejecución | Claude Code + rvt-mcp / scripts de 3ds Max | Los agentes trabajan en Revit y 3ds Max |
 | 📦 Archivos | Carpeta compartida de Windows | Las entregas grandes llegan a la Mac |
 | 📈 Observabilidad | Prometheus + Grafana + windows_exporter | Historial de procesador, RAM, disco, tarjeta de video y consumo por programa |
-| 🔔 Avisos | Discord | Alertas de Grafana y avisos del agente coordinador en un canal |
+| 🔔 Avisos | Discord | Alertas de Grafana y avisos del agente coordinador en un canal. Lun–vie 9–18 h, sáb 9–13 h |
 
 ## 🗺️ Estado
 

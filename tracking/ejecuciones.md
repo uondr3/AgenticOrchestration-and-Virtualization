@@ -4,6 +4,10 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-19 | Mac | Horario de avisos a Discord igual al de la oficina: lunes a viernes de 9:00 a 18:00 y sábado de 9:00 a 13:00; domingo en silencio. La recolección de datos no se apaga. `instalar.sh` corrido otra vez: 5 medidores arriba y 5 alertas evaluando sin error | ✅ |
+| 2026-11-19 | Tablero | Ficha técnica actualizada y dos paneles nuevos en vivo en 08: **RAM instalada** y **Módulos de RAM**, que se actualizan solos cuando se mueve la RAM. Revisado a 900 y 1200 px | ✅ |
+| 2026-11-19 | Las dos estaciones | Después de mover la RAM, conexiones revisadas: 5 medidores arriba y datos al minuto. Estación Revit: **32 GB**, 2 × 16 GB G.Skill (salieron los ADATA). Estación 3ds Max: 64 GB, 2 × 32 GB Corsair, ahora a **3600 MT/s** (antes 4800) | ✅ |
+| 2026-11-19 | Estación Revit | `ficha-tecnica.ps1` no se pudo correr: su Orca no respondió, aunque Tailscale y los medidores sí. Falta leer la velocidad de la RAM | ⚠️ Pendiente |
 | 2026-11-17 | Estación 3ds Max | Reglas de orquestación instaladas por su agente con visto bueno de la arquitecta: respaldo del archivo de reglas, `ORQUESTACION.md` con huella verificada y cargado al inicio, una regla vieja anotada. Revisado desde la Mac: huella igual, respaldo presente, las dos líneas al inicio | ✅ |
 | 2026-11-17 | Mac → estación 3ds Max | Pedido de instalar las reglas enviado por el canal y avisado con una línea en su chat. Su agente descargó el archivo, verificó la huella y espera el visto bueno de la arquitecta | ⏸️ Esperando visto bueno |
 | 2026-11-17 | Repo | Reglas de orquestación para la estación 3ds Max (`docs/agentes/max/ORQUESTACION.md`): canal de Orca, carpeta compartida con huella, bakes uno a la vez y registro de horarios para medir | ✅ Publicadas; falta instalarlas |

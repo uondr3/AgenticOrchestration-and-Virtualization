@@ -16,7 +16,8 @@ OBS_PUERTO_SENSORES="${OBS_PUERTO_SENSORES:-4445}"
 OBS_VISTA_ANONIMA="${OBS_VISTA_ANONIMA:-no}"
 OBS_DISCORD_WEBHOOK="${OBS_DISCORD_WEBHOOK:-}"
 OBS_HORA_INICIO="${OBS_HORA_INICIO:-09:00}"
-OBS_HORA_FIN="${OBS_HORA_FIN:-19:00}"
+OBS_HORA_FIN="${OBS_HORA_FIN:-18:00}"
+OBS_HORA_FIN_SABADO="${OBS_HORA_FIN_SABADO:-13:00}"
 OBS_ZONA="${OBS_ZONA:-America/Merida}"
 
 command -v brew >/dev/null || { echo "Se necesita Homebrew: https://brew.sh"; exit 1; }
@@ -129,13 +130,21 @@ muteTimes:
   - orgId: 1
     name: fuera-de-horario
     time_intervals:
-      - times:
+      - weekdays: ["monday:friday"]
+        times:
           - start_time: "00:00"
             end_time: "$OBS_HORA_INICIO"
           - start_time: "$OBS_HORA_FIN"
             end_time: "24:00"
         location: "$OBS_ZONA"
-      - weekdays: ["saturday", "sunday"]
+      - weekdays: ["saturday"]
+        times:
+          - start_time: "00:00"
+            end_time: "$OBS_HORA_INICIO"
+          - start_time: "$OBS_HORA_FIN_SABADO"
+            end_time: "24:00"
+        location: "$OBS_ZONA"
+      - weekdays: ["sunday"]
         location: "$OBS_ZONA"
 policies:
   - orgId: 1
@@ -150,7 +159,7 @@ policies:
         mute_time_intervals: ["fuera-de-horario"]
 EOF2
   )
-  echo "    alertas al canal de Discord, silenciadas fuera de $OBS_HORA_INICIO-$OBS_HORA_FIN y en fin de semana"
+  echo "    alertas al canal de Discord, activas lun-vie $OBS_HORA_INICIO-$OBS_HORA_FIN y sáb $OBS_HORA_INICIO-$OBS_HORA_FIN_SABADO"
   ;;
   *)
   rm -f "$PROV/alerting/reglas.yml" "$PROV/alerting/correo.yml" "$PROV/alerting/discord.yml"

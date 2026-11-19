@@ -169,7 +169,7 @@ Las notificaciones llegan a un canal de Discord por medio de un **webhook**: un 
 | Tarjeta NVIDIA arriba de 85 °C | Durante 2 min | crítico |
 | Disco del sistema con menos de 10 % libre | Disco C:, durante 15 min | aviso |
 
-- Fuera del horario de trabajo y en fin de semana las alertas se silencian.
+- Los avisos llegan de lunes a viernes de 9:00 a 18:00 y el sábado de 9:00 a 13:00. Fuera de ese horario y en domingo se silencian.
 - Se agrupan por alerta y estación, y una alerta activa se repite cada 4 horas.
 - Las alertas salen de la Mac: si está dormida, no se evalúan.
 - Para probar el envío: Grafana → Alerting → Contact points → `discord-uondr` → Test. La prueba no respeta el silencio.
@@ -198,14 +198,25 @@ En `observabilidad/mac/.env`:
 ```bash
 OBS_DISCORD_WEBHOOK="URL del webhook"   # Discord: Editar canal → Integraciones → Webhooks → Copiar URL
 OBS_HORA_INICIO="09:00"
-OBS_HORA_FIN="19:00"
+OBS_HORA_FIN="18:00"
+OBS_HORA_FIN_SABADO="13:00"
 ```
+
+| Día | Avisos a Discord |
+|---|---|
+| Lunes a viernes | 9:00 a 18:00 |
+| Sábado | 9:00 a 13:00 |
+| Domingo | Silencio |
+
+Prometheus guarda datos todo el tiempo que la Mac y la estación estén encendidas. El horario solo silencia los avisos, no la recolección.
 
 y volver a correr `observabilidad/mac/instalar.sh`. La URL funciona como contraseña: no se publica ni se copia al chat. Si se filtra, se borra el webhook en Discord y se crea otro. Las reglas están en `observabilidad/mac/grafana/provisioning/alerting/reglas.yml`.
 
 ## Ficha técnica
 
 La sección **08 · FICHA TÉCNICA**, al final del tablero, muestra el hardware de cada estación. Se obtiene con `observabilidad/windows/ficha-tecnica.ps1`, que solo lee, y se escribe en `FICHA` dentro de `generar_tablero.py`. Hay que actualizarla cuando cambie el hardware.
+
+Arriba de la ficha hay dos paneles en vivo que se actualizan solos cuando se mueve la RAM: **RAM instalada**, que reporta Windows, y **Módulos de RAM**, que lee OhmGraphite de cada módulo. Si no coinciden con la ficha, toca volver a correr el script.
 
 ## Siguientes pasos
 
