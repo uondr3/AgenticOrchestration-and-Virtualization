@@ -945,7 +945,8 @@
             "thresholdsStyle": {
               "mode": "off"
             }
-          }
+          },
+          "noValue": "Nada abierto de Revit, 3ds Max, bakes ni agentes"
         },
         "overrides": [
           {
@@ -1086,7 +1087,8 @@
             "thresholdsStyle": {
               "mode": "off"
             }
-          }
+          },
+          "noValue": "Nada abierto de Revit, 3ds Max, bakes ni agentes"
         },
         "overrides": [
           {
@@ -1171,7 +1173,7 @@
       "type": "timeseries",
       "id": 15,
       "title": "Memoria de video",
-      "description": "Solo la tarjeta NVIDIA",
+      "description": "Solo la tarjeta NVIDIA. Sin datos si ningún programa usa la NVIDIA",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus-uondr"
@@ -1227,7 +1229,8 @@
             "thresholdsStyle": {
               "mode": "off"
             }
-          }
+          },
+          "noValue": "Nada abierto de Revit, 3ds Max, bakes ni agentes"
         },
         "overrides": [
           {
@@ -1381,7 +1384,8 @@
             "thresholdsStyle": {
               "mode": "off"
             }
-          }
+          },
+          "noValue": "Ningún Revit abierto"
         },
         "overrides": []
       }
@@ -1446,7 +1450,8 @@
             "thresholdsStyle": {
               "mode": "off"
             }
-          }
+          },
+          "noValue": "Ningún Revit abierto"
         },
         "overrides": []
       }

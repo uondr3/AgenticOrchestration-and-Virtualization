@@ -53,6 +53,8 @@ Q = {
     "red_tx": 'sum by (estacion) (rate(windows_net_bytes_sent_total{%s}[$__rate_interval]))' % EST,
 }
 
+SIN_PROGRAMAS = "Nada abierto de Revit, 3ds Max, bakes ni agentes"
+
 _id = 0
 
 
@@ -122,7 +124,7 @@ def stat(titulo, expr, x, y, w, h=4, unidad="none", decimales=None, umbral=None,
 
 
 def serie(titulo, objetivos, x, y, w, h=9, unidad="none", apilar=False, max_=None,
-          sobreescribir=None, descripcion="", umbral=None, tope=None):
+          sobreescribir=None, descripcion="", umbral=None, tope=None, sin_datos=None):
     d = {"unit": unidad, "color": {"mode": "palette-classic-by-name"},
          "custom": {"lineWidth": 0 if apilar else 2, "fillOpacity": 70 if apilar else 8, "showPoints": "never",
                     "stacking": {"mode": "normal" if apilar else "none", "group": "A"},
@@ -134,6 +136,8 @@ def serie(titulo, objetivos, x, y, w, h=9, unidad="none", apilar=False, max_=Non
         d["custom"]["axisSoftMax"] = tope
     if umbral:
         d["thresholds"] = umbral
+    if sin_datos:
+        d["noValue"] = sin_datos
     return {
         "type": "timeseries", "id": nid(), "title": titulo, "description": descripcion, "datasource": DS,
         "gridPos": {"h": h, "w": w, "x": x, "y": y},
@@ -252,24 +256,27 @@ def construir():
     y += 9
 
     panels.append(fila("03 · POR PROGRAMA · $estacion", y, repetir="estacion")); y += 1
+    # Solo se miden Revit, 3dsmax, 3dsmaxbatch, claude y rvt-mcp: sin ellos abiertos, no hay datos
     panels += [
         serie("RAM", [target(Q["prog_ram"], "{{process}}")], 0, y, 8, unidad="bytes",
-              apilar=True, sobreescribir=colores(COLOR_PROGRAMA), h=10),
+              apilar=True, sobreescribir=colores(COLOR_PROGRAMA), h=10, sin_datos=SIN_PROGRAMAS),
         serie("Procesador", [target(Q["prog_cpu"], "{{process}}")], 8, y, 8,
-              unidad="percentunit", sobreescribir=colores(COLOR_PROGRAMA), h=10,
+              unidad="percentunit", sobreescribir=colores(COLOR_PROGRAMA), h=10, sin_datos=SIN_PROGRAMAS,
               descripcion="Porcentaje de toda la máquina"),
         serie("Memoria de video", [target(Q["prog_vram"], "{{process}}")], 16, y, 8,
-              unidad="bytes", apilar=True, sobreescribir=colores(COLOR_PROGRAMA), h=10,
-              descripcion="Solo la tarjeta NVIDIA"),
+              unidad="bytes", apilar=True, sobreescribir=colores(COLOR_PROGRAMA), h=10, sin_datos=SIN_PROGRAMAS,
+              descripcion="Solo la tarjeta NVIDIA. Sin datos si ningún programa usa la NVIDIA"),
     ]
     y += 10
 
     panels.append(fila("04 · REVIT POR INSTANCIA · Una línea por casa abierta", y)); y += 1
     panels += [
         serie("RAM de cada Revit", [target(Q["revit_ram"], "Revit pid {{process_id}}")], 0, y, 12,
-              unidad="bytes", descripcion="Una línea por Revit abierto. Cada casa va en su propio Revit"),
+              unidad="bytes", descripcion="Una línea por Revit abierto. Cada casa va en su propio Revit",
+              sin_datos="Ningún Revit abierto"),
         serie("Procesador de cada Revit", [target(Q["revit_cpu"], "Revit pid {{process_id}}")], 12, y, 12,
-              unidad="percentunit", descripcion="Porcentaje de toda la máquina"),
+              unidad="percentunit", descripcion="Porcentaje de toda la máquina",
+              sin_datos="Ningún Revit abierto"),
     ]
     y += 9
 
