@@ -72,6 +72,19 @@ Grafana queda en <http://127.0.0.1:3000>. El primer inicio pide cambiar la contr
 - Nada se expone a internet. Las métricas viajan solo por Tailscale.
 - El puerto 9182 de cada estación acepta solo direcciones de Tailscale.
 - Los nombres reales de las máquinas viven en `observabilidad/mac/.env`, que no se publica.
+- El tablero se puede ver desde otro equipo de la red de Tailscale con **Tailscale Serve** (2026-11-19). Nunca con Funnel, que lo publicaría en internet.
+
+### Ver el tablero desde otro equipo
+
+| Paso | Qué |
+|---|---|
+| Activar, en la Mac | `tailscale serve --bg --http=80 http://127.0.0.1:3000`. Grafana sigue escuchando solo en `127.0.0.1` |
+| Abrir | `http://<nombre corto de la Mac en Tailscale>/d/uondr-estaciones` desde un equipo con Tailscale y la misma cuenta. El nombre real está en `privado/` |
+| Apagar | `tailscale serve --http=80 off` |
+| Por qué http | El túnel de Tailscale ya va cifrado. Los certificados HTTPS de Tailscale publicarían el nombre de la Mac en un registro público |
+| Nombre corto | Chrome bloquea la dirección larga `*.ts.net` por http; el nombre corto sí abre |
+| Pendiente | Hoy las PCs de las estaciones también pueden abrirlo, porque la vista es anónima. Falta una regla de acceso en Tailscale si solo debe verlo el coordinador |
+| Requisito | La Mac prendida y despierta |
 
 ## Estado
 
