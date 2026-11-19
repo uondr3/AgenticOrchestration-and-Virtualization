@@ -19,6 +19,9 @@ OBS_HORA_INICIO="${OBS_HORA_INICIO:-09:00}"
 OBS_HORA_FIN="${OBS_HORA_FIN:-18:00}"
 OBS_HORA_FIN_SABADO="${OBS_HORA_FIN_SABADO:-13:00}"
 OBS_ZONA="${OBS_ZONA:-America/Merida}"
+# Nombres que se muestran en lugar de los roles. Solo en .env: el repo es público
+OBS_NOMBRE_REVIT="${OBS_NOMBRE_REVIT:-}"
+OBS_NOMBRE_MAX="${OBS_NOMBRE_MAX:-}"
 
 command -v brew >/dev/null || { echo "Se necesita Homebrew: https://brew.sh"; exit 1; }
 PREFIX="$(brew --prefix)"
@@ -84,6 +87,8 @@ mkdir -p "$PROV/datasources" "$PROV/dashboards" "$PROV/alerting" "$PROV/plugins"
 cp "$DIR/grafana/provisioning/datasources/prometheus.yml" "$PROV/datasources/prometheus.yml"
 mkdir -p "$ETC/grafana/dashboards"
 cp "$DIR"/grafana/dashboards/*.json "$ETC/grafana/dashboards/"
+# El tablero instalado lleva los nombres del .env; el del repo se queda con roles
+/usr/bin/python3 "$DIR/grafana/generar_tablero.py" --instalar "$ETC/grafana/dashboards" >/dev/null
 sed "s|__DASHBOARDS_DIR__|$ETC/grafana/dashboards|" "$DIR/grafana/provisioning/dashboards/uondr.yml" > "$PROV/dashboards/uondr.yml"
 python3 -I - "$INI" "$PROV" "$OBS_VISTA_ANONIMA" <<'PY'
 import re, sys
@@ -108,7 +113,11 @@ grep -E "^(provisioning|http_addr) *=" "$INI" || true
 echo "==> Alertas por Discord"
 case "$OBS_DISCORD_WEBHOOK" in
   https://discord.com/api/webhooks/*|https://discordapp.com/api/webhooks/*)
-  cp "$DIR/grafana/provisioning/alerting/reglas.yml" "$PROV/alerting/reglas.yml"
+  # Los avisos dicen el nombre de la estación si está en .env (solo cambia el texto)
+  ESTACION='{{ $labels.estacion }}'
+  [ -n "$OBS_NOMBRE_REVIT" ] && ESTACION="{{ reReplaceAll \"Estación Revit\" \"$OBS_NOMBRE_REVIT\" $(printf '%s' "$ESTACION" | sed 's/^{{ //; s/ }}$//') }}"
+  [ -n "$OBS_NOMBRE_MAX" ] && ESTACION="{{ reReplaceAll \"Estación 3ds Max\" \"$OBS_NOMBRE_MAX\" ($(printf '%s' "$ESTACION" | sed 's/^{{ //; s/ }}$//')) }}"
+  sed "s|{{ \$labels.estacion }}|$ESTACION|g" "$DIR/grafana/provisioning/alerting/reglas.yml" > "$PROV/alerting/reglas.yml"
   rm -f "$PROV/alerting/correo.yml"
   # El webhook es un secreto: el archivo generado queda solo para el usuario.
   ( umask 077; cat > "$PROV/alerting/discord.yml" <<EOF2

@@ -2,8 +2,14 @@
 """Genera el tablero UONDR de Grafana (dashboards/uondr.json).
 
 Uso:
-    python3 generar_tablero.py            # escribe dashboards/uondr.json
+    python3 generar_tablero.py            # escribe dashboards/uondr.json, con roles
     python3 generar_tablero.py --probar   # además ejecuta cada consulta en Prometheus local
+    python3 generar_tablero.py --instalar # además lo instala en Grafana con los nombres del .env
+
+El repo es público: dashboards/uondr.json lleva roles ("Estación Revit"). Los nombres
+que ve el coordinador (OBS_NOMBRE_REVIT y OBS_NOMBRE_MAX) viven solo en
+observabilidad/mac/.env y se aplican al instalar. Solo cambia lo que se muestra: la
+etiqueta estacion de Prometheus sigue igual y el historial no se parte.
 
 El tablero se versiona en el repo y Grafana lo carga por provisioning.
 """
@@ -209,9 +215,9 @@ def modulos(x, y, w):
         "options": {"showHeader": True, "cellHeight": "sm"},
         "fieldConfig": {"defaults": {"unit": "bytes", "decimals": 0}, "overrides": [
             {"matcher": {"id": "byName", "options": "Capacidad"},
-             "properties": [{"id": "custom.width", "value": 110}]},
+             "properties": [{"id": "custom.width", "value": 90}]},
             {"matcher": {"id": "byName", "options": "Estación"},
-             "properties": [{"id": "custom.width", "value": 150}]}]},
+             "properties": [{"id": "custom.width", "value": 130}]}]},
     }
 
 
@@ -358,6 +364,53 @@ def construir():
     }
 
 
+def leer_nombres():
+    """Nombres a mostrar, tomados de observabilidad/mac/.env. Vacío si no están."""
+    env = Path(__file__).resolve().parent.parent / ".env"
+    claves = {"OBS_NOMBRE_REVIT": "Estación Revit", "OBS_NOMBRE_MAX": "Estación 3ds Max"}
+    nombres = {}
+    if env.exists():
+        for linea in env.read_text(encoding="utf-8").splitlines():
+            k, _, v = linea.partition("=")
+            v = v.split("#")[0].strip().strip('"').strip("'")
+            if k.strip() in claves and v:
+                nombres[claves[k.strip()]] = v
+    return nombres
+
+
+def con_nombres(tablero, nombres):
+    """Cambia solo lo que se ve: leyendas, colores, tabla, títulos y el selector."""
+    if not nombres:
+        return tablero
+    renombrar = [{"id": "renameByRegex", "options": {"regex": f"^{rol}(.*)$", "renamePattern": f"{nombre}$1"}}
+                 for rol, nombre in nombres.items()]
+
+    def mostrar(texto):
+        for rol, nombre in nombres.items():
+            texto = texto.replace(rol, nombre)
+        return texto
+
+    for p in tablero["panels"]:
+        if p["type"] in ("timeseries", "stat", "bargauge"):
+            p["transformations"] = p.get("transformations", []) + renombrar
+        if p["type"] == "text":
+            p["title"] = mostrar(p["title"])
+        fc = p.get("fieldConfig", {})
+        for o in fc.get("overrides", []):
+            if o["matcher"]["id"] == "byName":
+                o["matcher"]["options"] = mostrar(o["matcher"]["options"])
+        if p["type"] == "table":
+            fc["overrides"].append({"matcher": {"id": "byName", "options": "Estación"}, "properties": [
+                {"id": "mappings", "value": [{"type": "value", "options": {
+                    rol: {"text": nombre} for rol, nombre in nombres.items()}}]}]})
+    var = tablero["templating"]["list"][0]
+    opciones = ", ".join(f"{nombres.get(r, r)} : {r}" for r in sorted(COLOR_ESTACION))
+    var.update({"type": "custom", "query": opciones, "regex": ""})
+    for k in ("datasource", "definition", "refresh", "sort"):
+        var.pop(k, None)
+    return tablero
+
+
 def probar():
     errores = 0
     for nombre, expr in Q.items():
@@ -383,5 +436,14 @@ if __name__ == "__main__":
     salida = Path(__file__).parent / "dashboards" / "uondr.json"
     salida.write_text(json.dumps(construir(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"escrito {salida}")
+    if "--instalar" in sys.argv:
+        i = sys.argv.index("--instalar")
+        carpeta = sys.argv[i + 1] if len(sys.argv) > i + 1 and not sys.argv[i + 1].startswith("--") \
+            else "/opt/homebrew/etc/grafana/dashboards"
+        destino = Path(carpeta) / "uondr.json"
+        nombres = leer_nombres()
+        destino.write_text(json.dumps(con_nombres(construir(), nombres), ensure_ascii=False, indent=2) + "\n",
+                           encoding="utf-8")
+        print(f"instalado {destino} · {len(nombres)} nombres del .env")
     if "--probar" in sys.argv:
         sys.exit(1 if probar() else 0)

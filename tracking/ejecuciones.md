@@ -4,6 +4,7 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-19 | Mac | Estaciones con el nombre de su arquitecto en el tablero instalado y en los avisos de Discord, a pedido del coordinador. Los nombres viven solo en `.env`; el repo sigue con roles y Prometheus no cambia, así que el historial sigue completo. Revisado con capturas: leyendas, colores, disco, red, tabla y fichas. 5 alertas sin error | ✅ |
 | 2026-11-19 | Tablero | Sección 03 sin datos en la estación 3ds Max: no es falla. Desde el 18-nov a las 12:21 no tiene abierto ningún programa medido (3ds Max, bakes ni agente); su medidor funciona. Las secciones 03 y 04 ahora dicen qué falta abrir en vez de "No data". En la estación Revit hay un 3ds Max 2021 abierto: revisar para P6 | ✅ |
 | 2026-11-19 | Mac | Horario de avisos a Discord igual al de la oficina: lunes a viernes de 9:00 a 18:00 y sábado de 9:00 a 13:00; domingo en silencio. La recolección de datos no se apaga. `instalar.sh` corrido otra vez: 5 medidores arriba y 5 alertas evaluando sin error | ✅ |
 | 2026-11-19 | Tablero | Ficha técnica actualizada y dos paneles nuevos en vivo en 08: **RAM instalada** y **Módulos de RAM**, que se actualizan solos cuando se mueve la RAM. Revisado a 900 y 1200 px | ✅ |

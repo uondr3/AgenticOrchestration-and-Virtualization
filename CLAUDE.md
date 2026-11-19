@@ -16,6 +16,7 @@ Todo lo que se sube lo puede leer cualquiera, y queda guardado aunque después s
 **Nunca se publica:** nombres de personas, usuarios de Windows, direcciones IP, nombres de máquina (`DESKTOP-*`, nombres reales en Tailscale), enlaces de emparejamiento de Orca, correos, contraseñas, nombres de proyectos o casas de clientes.
 
 - En los documentos se usan roles: **estación Revit**, **estación 3ds Max**, **Mac coordinadora**.
+- En lo privado (chat con el coordinador, Discord, Notion y el tablero instalado en la Mac) cada estación se nombra como su arquitecto, para reconocerla rápido. Los nombres están en `OBS_NOMBRE_REVIT` y `OBS_NOMBRE_MAX` de `observabilidad/mac/.env`.
 - Los datos reales viven en archivos que git ignora: `.env`, `observabilidad/mac/.env` y `privado/`.
 - Antes de cada push se revisa lo que va a subir:
 
@@ -88,8 +89,7 @@ Forma de operar desde la Mac:
 - El tablero **UONDR · Estaciones** es código: `observabilidad/mac/grafana/generar_tablero.py`. Se edita ahí, nunca a mano en Grafana.
 
   ```bash
-  python3 observabilidad/mac/grafana/generar_tablero.py --probar   # genera y prueba cada consulta
-  cp observabilidad/mac/grafana/dashboards/uondr.json /opt/homebrew/etc/grafana/dashboards/
+  python3 observabilidad/mac/grafana/generar_tablero.py --probar --instalar   # prueba cada consulta e instala con los nombres del .env
   ```
 
 - Tablero sin emojis. Las secciones van numeradas y en mayúsculas: `01 · EN VIVO · ...`.

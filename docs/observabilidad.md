@@ -144,8 +144,7 @@ Colores: azul para la estación Revit y para Revit, naranja para la estación 3d
 El tablero es código: se genera con `observabilidad/mac/grafana/generar_tablero.py`. Para cambiarlo se edita ese archivo y se corre:
 
 ```bash
-python3 observabilidad/mac/grafana/generar_tablero.py --probar   # genera y prueba cada consulta
-cp observabilidad/mac/grafana/dashboards/uondr.json /opt/homebrew/etc/grafana/dashboards/
+python3 observabilidad/mac/grafana/generar_tablero.py --probar --instalar   # prueba cada consulta e instala en Grafana
 ```
 
 Grafana lo recarga solo en 30 segundos. Los cambios hechos a mano en Grafana se pierden al regenerarlo.
@@ -211,6 +210,22 @@ OBS_HORA_FIN_SABADO="13:00"
 Prometheus guarda datos todo el tiempo que la Mac y la estación estén encendidas. El horario solo silencia los avisos, no la recolección.
 
 y volver a correr `observabilidad/mac/instalar.sh`. La URL funciona como contraseña: no se publica ni se copia al chat. Si se filtra, se borra el webhook en Discord y se crea otro. Las reglas están en `observabilidad/mac/grafana/provisioning/alerting/reglas.yml`.
+
+## Nombres de las estaciones
+
+El repo es público y usa roles. En la Mac, el tablero y los avisos de Discord muestran el nombre que el coordinador reconoce más rápido, tomado de `observabilidad/mac/.env`:
+
+```bash
+OBS_NOMBRE_REVIT="..."
+OBS_NOMBRE_MAX="..."
+```
+
+| Dónde | Qué se ve |
+|---|---|
+| `dashboards/uondr.json` en el repo | Roles |
+| Tablero instalado (`generar_tablero.py --instalar`) | Nombres del `.env`: leyendas, colores, tabla, fichas y selector |
+| Avisos de Discord (`instalar.sh`) | Nombres del `.env` en el texto de cada alerta |
+| Etiqueta `estacion` en Prometheus | Roles, sin cambios: el historial no se parte |
 
 ## Ficha técnica
 
