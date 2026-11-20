@@ -4,6 +4,8 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-20 | Mac | Mapa de componentes en Excalidraw: estaciones, agentes, repositorio donde escribe cada uno, carpeta de entregas y pendientes. Privado, porque lleva nombres; revisado con un render | ✅ |
+| 2026-11-20 | Estación Revit | Inventario de solo lectura por Orca, que ya responde: 3ds Max 2021.3.17, Corona 9 Hotfix 1 y Forest Pack Pro 6.3.1 instalados; RAM 2 × 16 GB a 4800 MT/s. Para hornear ahí falta el exportador glTF, `fopenexr`, Python, el MCP de 3ds Max y aclarar licencias. Ficha técnica actualizada. Terminal cerrada | ✅ |
 | 2026-11-19 | Mac | Tablero visible desde otros equipos de Tailscale con `tailscale serve` por http, solo dentro de la red. Probado por la dirección de Tailscale: salud 200, tablero 200 y captura a ancho de celular. Falta la regla para que las PCs de las estaciones no lo vean | ✅ / ⚠️ regla pendiente |
 | 2026-11-19 | Mac | Estaciones con el nombre de su arquitecto en el tablero instalado y en los avisos de Discord, a pedido del coordinador. Los nombres viven solo en `.env`; el repo sigue con roles y Prometheus no cambia, así que el historial sigue completo. Revisado con capturas: leyendas, colores, disco, red, tabla y fichas. 5 alertas sin error | ✅ |
 | 2026-11-19 | Tablero | Sección 03 sin datos en la estación 3ds Max: no es falla. Desde el 18-nov a las 12:21 no tiene abierto ningún programa medido (3ds Max, bakes ni agente); su medidor funciona. Las secciones 03 y 04 ahora dicen qué falta abrir en vez de "No data". En la estación Revit hay un 3ds Max 2021 abierto: revisar para P6 | ✅ |

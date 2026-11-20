@@ -2346,7 +2346,7 @@
       },
       "options": {
         "mode": "markdown",
-        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9900X · 12 núcleos / 24 hilos |\n| **Placa** | Gigabyte B850 AORUS ELITE WIFI7 ICE · BIOS F11 |\n| **RAM** | **32 GB** DDR5 · 2 × 16 GB · 2 de 4 ranuras · velocidad por confirmar |\n| **Módulos** | G.Skill F5-6000J3636F16G, kit de 2 × 16 GB |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5080 · AMD Radeon integrada |\n| **Disco** | Kingston NV3 1 TB NVMe |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Bajó de 64 a 32 GB el 2026-11-19: salieron los ADATA. Falta leer la velocidad |\n\n<small>Actualizada el 2026-11-19</small>"
+        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9900X · 12 núcleos / 24 hilos |\n| **Placa** | Gigabyte B850 AORUS ELITE WIFI7 ICE · BIOS F11 |\n| **RAM** | **32 GB** DDR5 · 2 × 16 GB · 2 de 4 ranuras · **4800 MT/s** |\n| **Módulos** | G.Skill F5-6000J3636F16G, kit de 2 × 16 GB |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5080 · AMD Radeon integrada |\n| **Disco** | Kingston NV3 1 TB NVMe |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Bajó de 64 a 32 GB el 2026-11-19. Con un solo kit subió de 3600 a 4800 MT/s |\n\n<small>Actualizada el 2026-11-20</small>"
       }
     },
     {
@@ -2361,7 +2361,7 @@
       },
       "options": {
         "mode": "markdown",
-        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9950X · 16 núcleos / 32 hilos |\n| **Placa** | ASUS ProArt B850-CREATOR WIFI NEO · BIOS 0239 |\n| **RAM** | **64 GB** DDR5 · 2 × 32 GB · 2 de 4 ranuras · **3600 MT/s** |\n| **Módulos** | Corsair CMK64GX5M2D6000C40, kit de 2 × 32 GB |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5070 · AMD Radeon integrada |\n| **Discos** | Kingston NV3 1 TB NVMe interno · ADATA HV620S 1 TB USB · Transcend StoreJet 1 TB USB |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Kit de 6000 MT/s a 3600; el 2026-11-14 iba a 4800. EXPO apagado |\n\n<small>Actualizada el 2026-11-19</small>"
+        "content": "| | |\n|---|---|\n| **Procesador** | AMD Ryzen 9 9950X · 16 núcleos / 32 hilos |\n| **Placa** | ASUS ProArt B850-CREATOR WIFI NEO · BIOS 0239 |\n| **RAM** | **64 GB** DDR5 · 2 × 32 GB · 2 de 4 ranuras · **3600 MT/s** |\n| **Módulos** | Corsair CMK64GX5M2D6000C40, kit de 2 × 32 GB |\n| **Tarjeta de video** | NVIDIA GeForce RTX 5070 · AMD Radeon integrada |\n| **Discos** | Kingston NV3 1 TB NVMe interno · ADATA HV620S 1 TB USB · Transcend StoreJet 1 TB USB |\n| **Sistema** | Windows 11 Pro · build 26200 |\n| **Nota** | Kit de 6000 MT/s a 3600; el 2026-11-14 iba a 4800. EXPO apagado |\n\n<small>Actualizada el 2026-11-20</small>"
       }
     }
   ],

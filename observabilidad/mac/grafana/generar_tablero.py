@@ -167,17 +167,17 @@ def red_colores():
 
 # Ficha técnica de cada estación. Actualizar cuando cambie el hardware
 # (se obtiene con observabilidad/windows/ficha-tecnica.ps1).
-FICHA_FECHA = "2026-11-19"
+FICHA_FECHA = "2026-11-20"
 FICHA = {
     "Estación Revit": [
         ("Procesador", "AMD Ryzen 9 9900X · 12 núcleos / 24 hilos"),
         ("Placa", "Gigabyte B850 AORUS ELITE WIFI7 ICE · BIOS F11"),
-        ("RAM", "**32 GB** DDR5 · 2 × 16 GB · 2 de 4 ranuras · velocidad por confirmar"),
+        ("RAM", "**32 GB** DDR5 · 2 × 16 GB · 2 de 4 ranuras · **4800 MT/s**"),
         ("Módulos", "G.Skill F5-6000J3636F16G, kit de 2 × 16 GB"),
         ("Tarjeta de video", "NVIDIA GeForce RTX 5080 · AMD Radeon integrada"),
         ("Disco", "Kingston NV3 1 TB NVMe"),
         ("Sistema", "Windows 11 Pro · build 26200"),
-        ("Nota", "Bajó de 64 a 32 GB el 2026-11-19: salieron los ADATA. Falta leer la velocidad"),
+        ("Nota", "Bajó de 64 a 32 GB el 2026-11-19. Con un solo kit subió de 3600 a 4800 MT/s"),
     ],
     "Estación 3ds Max": [
         ("Procesador", "AMD Ryzen 9 9950X · 16 núcleos / 32 hilos"),
