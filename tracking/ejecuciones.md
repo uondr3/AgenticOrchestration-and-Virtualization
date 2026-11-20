@@ -4,6 +4,8 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-20 | Notion | Tablero nuevo para el segundo recorrido 3D, con la misma estructura que los otros dos: orden aprobado, estado de la estación Revit, agentes y repos, pendientes y decisiones. Releído después de crearlo | ✅ |
+| 2026-11-20 | Mac | Decisión del coordinador: orden de trabajo del segundo recorrido 3D aprobado (ver `docs/plan.md`) | ✅ Registrada |
 | 2026-11-20 | Mac | Mapa de componentes en Excalidraw: estaciones, agentes, repositorio donde escribe cada uno, carpeta de entregas y pendientes. Privado, porque lleva nombres; revisado con un render | ✅ |
 | 2026-11-20 | Estación Revit | Inventario de solo lectura por Orca, que ya responde: 3ds Max 2021.3.17, Corona 9 Hotfix 1 y Forest Pack Pro 6.3.1 instalados; RAM 2 × 16 GB a 4800 MT/s. Para hornear ahí falta el exportador glTF, `fopenexr`, Python, el MCP de 3ds Max y aclarar licencias. Ficha técnica actualizada. Terminal cerrada | ✅ |
 | 2026-11-19 | Mac | Tablero visible desde otros equipos de Tailscale con `tailscale serve` por http, solo dentro de la red. Probado por la dirección de Tailscale: salud 200, tablero 200 y captura a ancho de celular. Falta la regla para que las PCs de las estaciones no lo vean | ✅ / ⚠️ regla pendiente |

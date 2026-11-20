@@ -58,6 +58,7 @@ Formato de la bitácora: `| Fecha | Dónde | Qué se hizo | Resultado |`, con re
 5. Actualizar Notion, en **UONDR / 3D WALKTROUGHT**:
    - **Orquestación de agentes · Tablero**: fases, pruebas, máquinas, pendientes, decisiones.
    - **Observabilidad · Tablero**: avance, componentes, hitos, seguridad, accesos.
+   - **Tablero del segundo recorrido 3D** (lleva el nombre del proyecto): orden de trabajo, estación Revit, agentes y repos, pendientes, decisiones.
 
    Notion lleva tablas y emojis, con poco texto. Se edita con cambios puntuales, sin reescribir la página.
 6. Avisar por Discord con la herramienta `avisar` del MCP `uondr-discord`: avance cerrado, falla o decisión pendiente. Si la sesión no tiene el MCP, se usa `observabilidad/mac/discord/avisos-mcp.sh`.

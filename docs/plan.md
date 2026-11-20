@@ -24,6 +24,8 @@
 | 2026-11-14 | Notificaciones por Discord en lugar de Gmail: webhook a un canal, para Grafana y para el agente coordinador | Decisión del coordinador. El webhook solo puede publicar en su canal |
 | 2026-11-17 | Cada entrega espera el visto bueno de la arquitecta antes de ir a `para-mac\`, aunque la Mac la pida | Decisión de la arquitecta, anotada en sus reglas |
 | 2026-11-17 | Las estaciones no se emparejan con el Orca de la Mac. El agente de la Mac avisa con una línea en el chat de la estación y vigila su propia bandeja | Las PCs de los arquitectos no deben tener acceso al Orca de la Mac |
+| 2026-11-20 | Segundo recorrido 3D, producido en la estación Revit con un agente nuevo de 3ds Max. Orden: termina la ronda en curso → el agente de la estación 3ds Max escribe sus lecciones → limpieza y una carpeta por proyecto en el repo de la cadena → se instala lo que falta en la estación Revit → nace el agente nuevo y lee las lecciones | Reorganizar a media ronda rompería la cadena, y el agente nuevo debe partir de lo ya aprendido |
+| 2026-11-20 | Las dos estaciones serán máquinas de horneado. El repo de la cadena llevará tareas y lecciones por proyecto | Hornear zonas a la vez solo se gana en PCs distintas; dos proyectos no deben pisarse |
 | 2026-11-14 | El recorrido 3D deja WhatsApp: correo de Orca al chat del agente de la estación 3ds Max y archivos por la carpeta compartida | Habla con el agente que ya tiene el contexto, la arquitecta lo ve en su chat y cada archivo se verifica por huella |
 
 ## Fases
