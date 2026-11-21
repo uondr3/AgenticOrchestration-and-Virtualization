@@ -27,6 +27,6 @@
 | 2026-11-14 | Alertas y avisos por Discord: Grafana y MCP del agente coordinador | ✅ |
 | 2026-11-14 | Prueba del canal Mac ↔ estación 3ds Max por Orca y carpeta compartida | ✅ Con aviso manual |
 | 2026-11-14 | **P7** Entrega sin WhatsApp: v12 de 1.38 GB, huella y validador correctos | ✅ |
-| — | **P5** Bake con la arquitecta trabajando | ⬜ |
+| 2026-11-20 | **P5** Bake con la arquitecta trabajando: la prioridad baja no alarga el bake; falta medir con su 3ds Max abierto | 🟡 |
 | — | **P6** Bake en otra estación y licencias | ⬜ |
 | 2026-11-17 | Reglas de orquestación en la estación 3ds Max | ✅ |

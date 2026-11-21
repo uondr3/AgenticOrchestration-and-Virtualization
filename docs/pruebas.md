@@ -8,7 +8,7 @@ Cada prueba responde una pregunta de sí o no. Los resultados se registran en [.
 | P2 🔗 Orca entre máquinas | ¿La Mac entra al Orca de cada estación? | `orca host name` y `orca repo list` responden para cada estación | ✅ 2026-11-12 |
 | P3 💬 Ida y vuelta | ¿Un agente en la Mac y otro en una estación se preguntan y responden solos? | La tarea llega, la pregunta llega, el reporte final se acepta | ✅ 2026-11-12 |
 | P4 🏠 Dos Revit | ¿Dos agentes editan dos casas a la vez sin estorbarse ni estorbar al arquitecto? | 0 órdenes en la casa equivocada, 0 errores | ✅ 2026-11-12 |
-| P5 🔥 Bake trabajando | ¿La arquitecta sigue en 3ds Max mientras corre un bake? | Max fluido y el bake se alarga poco | ⬜ |
+| P5 🔥 Bake trabajando | ¿La arquitecta sigue en 3ds Max mientras corre un bake? | Max fluido y el bake se alarga poco | 🟡 2026-11-20: la prioridad baja no alarga el bake; falta medir con su 3ds Max abierto |
 | P6 🖥️ Bake en otra PC | ¿La cadena de bakes corre en otra estación y qué licencias pide? | Lightmap equivalente y sin bloqueo de licencia | ⬜ |
 | P7 📦 Entrega sin WhatsApp | ¿La entrega llega a la Mac y se valida sola? | Huella correcta y validador aceptado | ✅ 2026-11-14 |
 
@@ -38,8 +38,35 @@ orca orchestration worker-start --spec-file tarea.txt --on <estación> \
 ### P5 · Bake trabajando
 El agente hornea la zona más corta tres veces: normal, con prioridad baja, y con prioridad baja dejando núcleos libres en Corona. Se mide la duración, la RAM máxima y la fluidez de Max.
 
+**Resultado parcial, 2026-11-20.** Se midió con una entrega real: seis horneados seguidos, uno a la vez, todos en prioridad baja y con todos los hilos de Corona. El patio se horneó dos veces para comparar.
+
+| Qué se midió | Resultado |
+|---|---|
+| Patio en prioridad normal | 523 s |
+| Patio en prioridad baja | 529 s, 1 % más |
+| Uso de la PC durante los horneados largos | 5 de 5 según la arquitecta, sin abrir su 3ds Max |
+| Procesador | 89 a 93 % de media en los horneados largos |
+| Temperatura del procesador | 83 °C como máximo |
+| RAM de cada horneado | 26 a 32 GB como máximo |
+| RAM total de la estación | 46 GB como máximo, de 64 |
+
+| Zona | Duración |
+|---|---|
+| Suite | 56 min |
+| Secundaria | 53 min |
+| Cocina-sala | 30 min |
+| Exterior | 12 min |
+| Patio | 9 min |
+
+- **Pasa:** la prioridad baja no alarga el horneado y la PC se usa sin trabas para lo demás.
+- **Falta:** repetir con el 3ds Max de la arquitecta abierto y una escena cargada. Con 64 GB caben un horneado y su 3ds Max, pero no se ha medido.
+- **Hallazgo:** cada horneado pide de 26 a 32 GB, no los 10 GB que se suponían. `3dsmaxbatch` lanza un `3dsmax.exe` aparte, y por eso el tablero muestra esa memoria como si fuera el 3ds Max de la arquitecta.
+- **Regla nueva:** la estación se apaga al cierre del horario. Un horneado que cruce esa hora se corta, como pasó el 2026-11-19 con la suite. Antes de lanzarlo se revisa que termine a tiempo o se pide dejar la estación encendida.
+
 ### P6 · Bake en otra PC
 Inventario del 2026-11-20, solo lectura: la estación Revit **ya tiene** 3ds Max 2021.3.17 (la misma versión de la cadena), Corona 9 Hotfix 1 y Forest Pack Pro 6.3.1. Falta el resto de la cadena: exportador glTF de Khronos, `fopenexr`, Python con su entorno, el MCP de 3ds Max y una carpeta de entregas. Falta también saber qué licencia toma cada programa al hornear en las dos estaciones a la vez. Antes de comprar: confirmar que la licencia permite activar 3ds Max 2021, la versión de la cadena, y qué licencia de Corona usa `3dsmaxbatch`.
+**RAM, medido el 2026-11-20:** un horneado de la casa pide de 26 a 32 GB, y la estación Revit tiene 32 GB desde el 2026-11-19. Ahí no cabe un horneado de ese tamaño, ni siquiera con Revit cerrado. Antes de comprar licencias se decide si la estación Revit vuelve a 64 GB o si solo hornea escenas más ligeras.
+
 Se monta 3ds Max 2021, Corona 9 y Forest Pack con las mismas rutas en otra estación y se hornea la misma zona. Mientras corre se revisa qué licencia toma cada programa.
 
 ### P7 · Entrega sin WhatsApp

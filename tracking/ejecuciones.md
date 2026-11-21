@@ -4,6 +4,7 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-21 | Mac | P5 medida con la entrega v13, solo lectura: reporte de la estación y Prometheus. Patio 523 s en prioridad normal y 529 s en baja (1 % más), procesador a 83 °C como máximo, uso de la PC 5 de 5. Cada horneado pide de 26 a 32 GB de RAM. Falta medir con el 3ds Max de la arquitecta abierto. La estación Revit, con 32 GB, no puede hornear la casa | 🟡 A medias |
 | 2026-11-20 | Notion | Tablero nuevo para el segundo recorrido 3D, con la misma estructura que los otros dos: orden aprobado, estado de la estación Revit, agentes y repos, pendientes y decisiones. Releído después de crearlo | ✅ |
 | 2026-11-20 | Mac | Decisión del coordinador: orden de trabajo del segundo recorrido 3D aprobado (ver `docs/plan.md`) | ✅ Registrada |
 | 2026-11-20 | Mac | Mapa de componentes en Excalidraw: estaciones, agentes, repositorio donde escribe cada uno, carpeta de entregas y pendientes. Privado, porque lleva nombres; revisado con un render | ✅ |
