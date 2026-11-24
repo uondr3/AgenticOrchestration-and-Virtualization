@@ -4,6 +4,7 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-24 | Estación 3ds Max | Su agente terminó el encargo con el visto bueno de la arquitecta, sin horneados: última entrega respaldada con etiqueta, 149 lecciones comunes en 10 temas y 19 propias de la primera casa, y la estructura por proyecto en una rama sin unir. Comprobado desde la Mac leyendo el repo: etiqueta, commits, conteo de lecciones, árbol de la rama y ausencia de nombres en lo común. Falta aprobar la prueba antes de unir la rama | ✅ Verificado |
 | 2026-11-24 | Estación 3ds Max | Encargo enviado a su agente por correo de Orca, con aviso de una línea en su chat: respaldo de la última entrega con etiqueta, lecciones por tema y estructura por proyecto en una rama aparte. Sin horneados ni cambios en la carpeta de trabajo; pide el visto bueno de la arquitecta y se detiene a reportar antes de unir la rama | ✅ Recibido, en curso |
 | 2026-11-24 | Mac | Decisiones del coordinador: el repo de la cadena deja de ser espejo; la RAM de la estación Revit se prueba antes de subirla (ver `docs/plan.md`) | ✅ Registradas |
 | 2026-11-23 | Mac | Revisión de conexión con las dos estaciones: datos, Tailscale y Orca. La estación 3ds Max respondió en todo; el Orca de la estación Revit estaba cerrado y respondió al día siguiente | ⚠️ |
