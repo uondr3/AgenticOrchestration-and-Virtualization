@@ -27,6 +27,8 @@
 | 2026-11-20 | Segundo recorrido 3D, producido en la estación Revit con un agente nuevo de 3ds Max. Orden: termina la ronda en curso → el agente de la estación 3ds Max escribe sus lecciones → limpieza y una carpeta por proyecto en el repo de la cadena → se instala lo que falta en la estación Revit → nace el agente nuevo y lee las lecciones | Reorganizar a media ronda rompería la cadena, y el agente nuevo debe partir de lo ya aprendido |
 | 2026-11-20 | Las dos estaciones serán máquinas de horneado. El repo de la cadena llevará tareas y lecciones por proyecto | Hornear zonas a la vez solo se gana en PCs distintas; dos proyectos no deben pisarse |
 | 2026-11-14 | El recorrido 3D deja WhatsApp: correo de Orca al chat del agente de la estación 3ds Max y archivos por la carpeta compartida | Habla con el agente que ya tiene el contexto, la arquitecta lo ve en su chat y cada archivo se verifica por huella |
+| 2026-11-24 | El repo de la cadena de horneado deja de ser un espejo de la carpeta de la estación 3ds Max y pasa a ser el repo de trabajo de los dos agentes de 3ds Max | Cada proyecto en su carpeta, lo compartido en `comun/`, y tareas y lecciones por proyecto. Antes se marca la última entrega con una etiqueta |
+| 2026-11-24 | La estación Revit se prueba para hornear con sus 32 GB; solo si no alcanza se sube la RAM | Un horneado de la primera casa pide de 26 a 32 GB, pero el segundo recorrido puede pesar distinto |
 
 ## Fases
 

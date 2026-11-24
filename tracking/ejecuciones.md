@@ -4,6 +4,9 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-24 | Estación 3ds Max | Encargo enviado a su agente por correo de Orca, con aviso de una línea en su chat: respaldo de la última entrega con etiqueta, lecciones por tema y estructura por proyecto en una rama aparte. Sin horneados ni cambios en la carpeta de trabajo; pide el visto bueno de la arquitecta y se detiene a reportar antes de unir la rama | ✅ Recibido, en curso |
+| 2026-11-24 | Mac | Decisiones del coordinador: el repo de la cadena deja de ser espejo; la RAM de la estación Revit se prueba antes de subirla (ver `docs/plan.md`) | ✅ Registradas |
+| 2026-11-23 | Mac | Revisión de conexión con las dos estaciones: datos, Tailscale y Orca. La estación 3ds Max respondió en todo; el Orca de la estación Revit estaba cerrado y respondió al día siguiente | ⚠️ |
 | 2026-11-21 | Mac | P5 medida con la entrega v13, solo lectura: reporte de la estación y Prometheus. Patio 523 s en prioridad normal y 529 s en baja (1 % más), procesador a 83 °C como máximo, uso de la PC 5 de 5. Cada horneado pide de 26 a 32 GB de RAM. Falta medir con el 3ds Max de la arquitecta abierto. La estación Revit, con 32 GB, no puede hornear la casa | 🟡 A medias |
 | 2026-11-20 | Notion | Tablero nuevo para el segundo recorrido 3D, con la misma estructura que los otros dos: orden aprobado, estado de la estación Revit, agentes y repos, pendientes y decisiones. Releído después de crearlo | ✅ |
 | 2026-11-20 | Mac | Decisión del coordinador: orden de trabajo del segundo recorrido 3D aprobado (ver `docs/plan.md`) | ✅ Registrada |
