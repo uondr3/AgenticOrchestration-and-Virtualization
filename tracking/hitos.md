@@ -30,3 +30,4 @@
 | 2026-11-20 | **P5** Bake con la arquitecta trabajando: la prioridad baja no alarga el bake; falta medir con su 3ds Max abierto | 🟡 |
 | — | **P6** Bake en otra estación y licencias | ⬜ |
 | 2026-11-17 | Reglas de orquestación en la estación 3ds Max | ✅ |
+| 2026-11-25 | Agente de 3ds Max del segundo recorrido creado en la estación Revit, sobre un clon del repo de la cadena | ✅ |

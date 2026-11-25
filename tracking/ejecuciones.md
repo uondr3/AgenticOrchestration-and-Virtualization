@@ -4,6 +4,9 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-25 | Estación Revit | Con el acceso ya dado a su cuenta de GitHub, el repo de la cadena quedó clonado en la carpeta del segundo recorrido, en la rama de la estructura nueva: 840 archivos, mismo commit que el remoto y sin cambios locales. Se lanzó ahí el chat del agente nuevo de 3ds Max y se le envió su primer mensaje: qué leer, reglas, contrato de entrega y una primera tarea de inventario sin instalar ni hornear. Terminal de revisión cerrada | ✅ |
+| 2026-11-25 | Estación 3ds Max | Prueba de la rama aprobada por la arquitecta y el coordinador, enviada a su agente: 15 min sin 3ds Max y horneado del patio desde un clon. No une la rama hasta confirmar | ✅ Enviada |
+| 2026-11-25 | Mac | Decisión del coordinador: publicar el validador 0.4.0. Se pasó al agente del recorrido web, que es quien lo publica | ✅ Enviada |
 | 2026-11-25 | Estación Revit | Revisión de solo lectura de la carpeta nueva del segundo recorrido: existe en Orca, está vacía y tiene Git, Node, Python y Claude Code. El repo de la cadena no se pudo clonar: la cuenta de GitHub activa en la estación no tiene acceso a ese repo. Terminal cerrada y archivo temporal borrado | ⛔ Falta dar acceso |
 | 2026-11-25 | Mac | Contexto nuevo enviado al agente del recorrido web por correo de Orca, con aviso en su chat: decisiones, estructura del repo de la cadena, quién escribe dónde y datos medidos. Primer mensaje del agente nuevo de 3ds Max redactado | ✅ Enviado |
 | 2026-11-25 | Estación 3ds Max | La arquitecta aprobó la prueba para unir la rama. No se pudo avisar a su agente: el Orca de la estación está cerrado | ⏸️ |
