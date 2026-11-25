@@ -67,6 +67,8 @@ El agente hornea la zona más corta tres veces: normal, con prioridad baja, y co
 Inventario del 2026-11-20, solo lectura: la estación Revit **ya tiene** 3ds Max 2021.3.17 (la misma versión de la cadena), Corona 9 Hotfix 1 y Forest Pack Pro 6.3.1. Falta el resto de la cadena: exportador glTF de Khronos, `fopenexr`, Python con su entorno, el MCP de 3ds Max y una carpeta de entregas. Falta también saber qué licencia toma cada programa al hornear en las dos estaciones a la vez. Antes de comprar: confirmar que la licencia permite activar 3ds Max 2021, la versión de la cadena, y qué licencia de Corona usa `3dsmaxbatch`.
 **RAM, medido el 2026-11-20:** un horneado de la casa pide de 26 a 32 GB, y la estación Revit tiene 32 GB desde el 2026-11-19. Ahí no cabe un horneado de ese tamaño, ni siquiera con Revit cerrado. Antes de comprar licencias se decide si la estación Revit vuelve a 64 GB o si solo hornea escenas más ligeras.
 
+**Inventario del 2026-11-25:** los plugins glTF de la estación Revit son una versión anterior a la de la cadena (comparados por huella SHA-256) y hay que actualizarlos con permiso de administrador. Faltan el entorno de Python, el validador y la biblioteca de texturas. Con tres Revit abiertos quedan unos 9 GB libres: la prueba de horneado se hace con Revit cerrado.
+
 Se monta 3ds Max 2021, Corona 9 y Forest Pack con las mismas rutas en otra estación y se hornea la misma zona. Mientras corre se revisa qué licencia toma cada programa.
 
 ### P7 · Entrega sin WhatsApp
