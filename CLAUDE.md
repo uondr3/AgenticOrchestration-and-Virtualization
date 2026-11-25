@@ -44,6 +44,7 @@ Todo lo que se sube lo puede leer cualquiera, y queda guardado aunque después s
 | `docs/observabilidad.md` | Componentes, instalación, operación diaria, tablero y alertas |
 | `docs/agentes/` | Reglas y guías de los agentes: proyectos de cada estación y agente del recorrido 3D |
 | `observabilidad/` | Scripts y configuración de Prometheus, Grafana y las estaciones |
+| `herramientas/windows/` | Scripts que se corren en las estaciones y no son de observabilidad |
 | `tracking/ejecuciones.md` | Bitácora: todo lo que se ejecutó. Lo más reciente arriba |
 | `tracking/hitos.md` | Hitos con fecha y estado |
 
