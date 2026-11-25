@@ -9,7 +9,7 @@ Cada prueba responde una pregunta de sí o no. Los resultados se registran en [.
 | P3 💬 Ida y vuelta | ¿Un agente en la Mac y otro en una estación se preguntan y responden solos? | La tarea llega, la pregunta llega, el reporte final se acepta | ✅ 2026-11-12 |
 | P4 🏠 Dos Revit | ¿Dos agentes editan dos casas a la vez sin estorbarse ni estorbar al arquitecto? | 0 órdenes en la casa equivocada, 0 errores | ✅ 2026-11-12 |
 | P5 🔥 Bake trabajando | ¿La arquitecta sigue en 3ds Max mientras corre un bake? | Max fluido y el bake se alarga poco | ✅ 2026-11-25 |
-| P6 🖥️ Bake en otra PC | ¿La cadena de bakes corre en otra estación y qué licencias pide? | Lightmap equivalente y sin bloqueo de licencia | ⬜ |
+| P6 🖥️ Bake en otra PC | ¿La cadena de bakes corre en otra estación y qué licencias pide? | Lightmap equivalente y sin bloqueo de licencia | ✅ 2026-11-25, sin margen de memoria |
 | P7 📦 Entrega sin WhatsApp | ¿La entrega llega a la Mac y se valida sola? | Huella correcta y validador aceptado | ✅ 2026-11-14 |
 
 ## Cómo se hizo cada una
@@ -109,7 +109,30 @@ Con Revit abierto, la estación Revit no carga la escena de la primera casa dent
 | Límite de memoria reservable (RAM más paginación) | 42 GB; Windows no lo amplió durante la prueba |
 | Licencia de Corona en un horneado real | Sin dato: no llegó a renderizar |
 
-**Conclusión:** con 32 GB la estación Revit no hornea una zona de la primera casa dentro de un margen seguro. El horneado completo reserva cerca de 36 GB, que sumados a los 24 GB del resto de programas no caben en 42 GB. Fue la segunda falla y la prueba se detuvo. Para repetirla hace falta más RAM; la estación tiene dos ranuras libres.
+**Conclusión:** con 32 GB la estación Revit no hornea una zona de la primera casa dentro de un margen seguro. El horneado completo reserva cerca de 36 GB, que sumados a los 24 GB del resto de programas no caben en 42 GB. Fue la segunda falla y la prueba se detuvo.
+
+**Resultado final, 2026-11-25: tercera corrida, sin el corte de seguridad, por decisión del coordinador.** Revit y 3ds Max cerrados, con el visto bueno del arquitecto. Horneó completo.
+
+| Qué se midió | Estación Revit, 32 GB | Estación 3ds Max, 64 GB |
+|---|---|---|
+| Horneado de prueba | 103 s | 137 s |
+| Horneado completo del patio | 615 s | 530 s |
+| Memoria reservada por el proceso | 32.4 GB | 35.8 GB |
+| Memoria física en uso por el proceso | 17.7 GB | 30.1 GB |
+| RAM de la estación | Llena: 31.7 GB | 54 de 64 GB |
+
+| Qué se comprobó | Resultado |
+|---|---|
+| Lightmap contra el de la entrega | Nivel medio 0.9998; 0.26 % de los bloques difiere más de 10 % |
+| Imagen de referencia contra la de la entrega | Nivel medio 1.0000, ningún bloque con más de 5 % |
+| Corona | Sin marca de agua ni aviso de licencia |
+| Licencia de 3ds Max | Tomada y devuelta; 0 de 100 en uso al terminar |
+| Paginación de Windows | Se amplió sola de 42 a 62 GB |
+| Margen mínimo de memoria disponible | 0.2 GB |
+| Otros programas | Ninguno falló |
+| Texturas | Las 658 se encontraron junto a la escena, sin cambiar la configuración de 3ds Max |
+
+**Pasa:** la cadena corre en la estación Revit, el resultado es equivalente y ninguna licencia bloquea. **Con una reserva:** con 32 GB hornea sin margen, 16 % más lento y solo con Revit y 3ds Max cerrados. No sirve para hornear mientras el arquitecto trabaja ni para dejarla sola. Para usarla como máquina de horneado hace falta más RAM; tiene dos ranuras libres.
 
 Se monta 3ds Max 2021, Corona 9 y Forest Pack con las mismas rutas en otra estación y se hornea la misma zona. Mientras corre se revisa qué licencia toma cada programa.
 
