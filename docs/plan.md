@@ -29,6 +29,7 @@
 | 2026-11-14 | El recorrido 3D deja WhatsApp: correo de Orca al chat del agente de la estación 3ds Max y archivos por la carpeta compartida | Habla con el agente que ya tiene el contexto, la arquitecta lo ve en su chat y cada archivo se verifica por huella |
 | 2026-11-24 | El repo de la cadena de horneado deja de ser un espejo de la carpeta de la estación 3ds Max y pasa a ser el repo de trabajo de los dos agentes de 3ds Max | Cada proyecto en su carpeta, lo compartido en `comun/`, y tareas y lecciones por proyecto. Antes se marca la última entrega con una etiqueta |
 | 2026-11-24 | La estación Revit se prueba para hornear con sus 32 GB; solo si no alcanza se sube la RAM | Un horneado de la primera casa pide de 26 a 32 GB, pero el segundo recorrido puede pesar distinto |
+| 2026-11-25 | En la estación Revit, la carpeta de código del agente del segundo recorrido es un clon del repo de la cadena, sin sincronización intermedia | Evita que el repo y la carpeta de trabajo se separen, como pasa con la primera casa |
 
 ## Fases
 

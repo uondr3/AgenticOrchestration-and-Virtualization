@@ -4,6 +4,9 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-25 | Estación Revit | Revisión de solo lectura de la carpeta nueva del segundo recorrido: existe en Orca, está vacía y tiene Git, Node, Python y Claude Code. El repo de la cadena no se pudo clonar: la cuenta de GitHub activa en la estación no tiene acceso a ese repo. Terminal cerrada y archivo temporal borrado | ⛔ Falta dar acceso |
+| 2026-11-25 | Mac | Contexto nuevo enviado al agente del recorrido web por correo de Orca, con aviso en su chat: decisiones, estructura del repo de la cadena, quién escribe dónde y datos medidos. Primer mensaje del agente nuevo de 3ds Max redactado | ✅ Enviado |
+| 2026-11-25 | Estación 3ds Max | La arquitecta aprobó la prueba para unir la rama. No se pudo avisar a su agente: el Orca de la estación está cerrado | ⏸️ |
 | 2026-11-24 | Estación 3ds Max | Su agente terminó el encargo con el visto bueno de la arquitecta, sin horneados: última entrega respaldada con etiqueta, 149 lecciones comunes en 10 temas y 19 propias de la primera casa, y la estructura por proyecto en una rama sin unir. Comprobado desde la Mac leyendo el repo: etiqueta, commits, conteo de lecciones, árbol de la rama y ausencia de nombres en lo común. Falta aprobar la prueba antes de unir la rama | ✅ Verificado |
 | 2026-11-24 | Estación 3ds Max | Encargo enviado a su agente por correo de Orca, con aviso de una línea en su chat: respaldo de la última entrega con etiqueta, lecciones por tema y estructura por proyecto en una rama aparte. Sin horneados ni cambios en la carpeta de trabajo; pide el visto bueno de la arquitecta y se detiene a reportar antes de unir la rama | ✅ Recibido, en curso |
 | 2026-11-24 | Mac | Decisiones del coordinador: el repo de la cadena deja de ser espejo; la RAM de la estación Revit se prueba antes de subirla (ver `docs/plan.md`) | ✅ Registradas |
