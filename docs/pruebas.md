@@ -8,7 +8,7 @@ Cada prueba responde una pregunta de sí o no. Los resultados se registran en [.
 | P2 🔗 Orca entre máquinas | ¿La Mac entra al Orca de cada estación? | `orca host name` y `orca repo list` responden para cada estación | ✅ 2026-11-12 |
 | P3 💬 Ida y vuelta | ¿Un agente en la Mac y otro en una estación se preguntan y responden solos? | La tarea llega, la pregunta llega, el reporte final se acepta | ✅ 2026-11-12 |
 | P4 🏠 Dos Revit | ¿Dos agentes editan dos casas a la vez sin estorbarse ni estorbar al arquitecto? | 0 órdenes en la casa equivocada, 0 errores | ✅ 2026-11-12 |
-| P5 🔥 Bake trabajando | ¿La arquitecta sigue en 3ds Max mientras corre un bake? | Max fluido y el bake se alarga poco | 🟡 2026-11-20: la prioridad baja no alarga el bake; falta medir con su 3ds Max abierto |
+| P5 🔥 Bake trabajando | ¿La arquitecta sigue en 3ds Max mientras corre un bake? | Max fluido y el bake se alarga poco | ✅ 2026-11-25 |
 | P6 🖥️ Bake en otra PC | ¿La cadena de bakes corre en otra estación y qué licencias pide? | Lightmap equivalente y sin bloqueo de licencia | ⬜ |
 | P7 📦 Entrega sin WhatsApp | ¿La entrega llega a la Mac y se valida sola? | Huella correcta y validador aceptado | ✅ 2026-11-14 |
 
@@ -59,8 +59,20 @@ El agente hornea la zona más corta tres veces: normal, con prioridad baja, y co
 | Patio | 9 min |
 
 - **Pasa:** la prioridad baja no alarga el horneado y la PC se usa sin trabas para lo demás.
-- **Falta:** repetir con el 3ds Max de la arquitecta abierto y una escena cargada. Con 64 GB caben un horneado y su 3ds Max, pero no se ha medido.
 - **Hallazgo:** cada horneado pide de 26 a 32 GB, no los 10 GB que se suponían. `3dsmaxbatch` lanza un `3dsmax.exe` aparte, y por eso el tablero muestra esa memoria como si fuera el 3ds Max de la arquitecta.
+**Resultado final, 2026-11-25.** Un horneado del patio corrió con el 3ds Max de la arquitecta abierto y en uso.
+
+| Qué se midió | Resultado |
+|---|---|
+| Fluidez de su 3ds Max durante el horneado | 5 de 5 |
+| Al volver a trabajar después | No notó nada |
+| Duración del horneado | 530 s, contra 529 s sin su 3ds Max en uso |
+| RAM del horneado | 30 GB |
+| RAM total de la estación | 54 GB como máximo, de 64 |
+| Memoria en uso de su 3ds Max | Windows la bajó de 13.6 a 2.3 GB durante el horneado |
+
+**Pasa.** Con 64 GB caben un horneado y el 3ds Max de la arquitecta, con unos 10 GB de margen. No caben dos horneados a la vez.
+
 - **Regla nueva:** la estación se apaga al cierre del horario. Un horneado que cruce esa hora se corta, como pasó el 2026-11-19 con la suite. Antes de lanzarlo se revisa que termine a tiempo o se pide dejar la estación encendida.
 
 ### P6 · Bake en otra PC

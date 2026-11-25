@@ -27,7 +27,8 @@
 | 2026-11-14 | Alertas y avisos por Discord: Grafana y MCP del agente coordinador | ✅ |
 | 2026-11-14 | Prueba del canal Mac ↔ estación 3ds Max por Orca y carpeta compartida | ✅ Con aviso manual |
 | 2026-11-14 | **P7** Entrega sin WhatsApp: v12 de 1.38 GB, huella y validador correctos | ✅ |
-| 2026-11-20 | **P5** Bake con la arquitecta trabajando: la prioridad baja no alarga el bake; falta medir con su 3ds Max abierto | 🟡 |
+| 2026-11-25 | **P5** Bake con la arquitecta trabajando: fluidez 5 de 5 con su 3ds Max en uso y el bake no se alarga | ✅ |
 | — | **P6** Bake en otra estación y licencias | ⬜ |
 | 2026-11-17 | Reglas de orquestación en la estación 3ds Max | ✅ |
 | 2026-11-25 | Agente de 3ds Max del segundo recorrido creado en la estación Revit, sobre un clon del repo de la cadena | ✅ |
+| 2026-11-25 | Repo de la cadena con estructura por proyecto, lecciones y tareas, unido a la rama principal | ✅ |
