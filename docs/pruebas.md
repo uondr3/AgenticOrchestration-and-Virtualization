@@ -69,6 +69,8 @@ Inventario del 2026-11-20, solo lectura: la estación Revit **ya tiene** 3ds Max
 
 **Inventario del 2026-11-25:** los plugins glTF de la estación Revit son una versión anterior a la de la cadena (comparados por huella SHA-256) y hay que actualizarlos con permiso de administrador. Faltan el entorno de Python, el validador y la biblioteca de texturas. Con tres Revit abiertos quedan unos 9 GB libres: la prueba de horneado se hace con Revit cerrado.
 
+**Licencias, leído el 2026-11-25:** en la estación Revit, 3ds Max 2021 usa una licencia de red con el servidor en la misma PC; el servidor de licencias de Corona está instalado pero sin activar, así que hoy un horneado ahí no tendría licencia. El entorno de Python y el validador ya están instalados dentro de la carpeta del proyecto.
+
 Se monta 3ds Max 2021, Corona 9 y Forest Pack con las mismas rutas en otra estación y se hornea la misma zona. Mientras corre se revisa qué licencia toma cada programa.
 
 ### P7 · Entrega sin WhatsApp
