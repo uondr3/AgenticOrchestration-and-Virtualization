@@ -4,6 +4,7 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-25 | Mac | Segundo pull request del repo de la cadena, el primero que toca lo compartido: lo revisó el agente de la otra estación, pidió dos correcciones de licencias, se aplicaron y se unió. Hallazgos: 3ds Max usa licencia de red con servidor local en las dos estaciones (100 licencias, 1 en uso en la estación Revit); la consulta al servidor de licencias de Corona no decide por sí sola, así que se prueba con un render mínimo. Rama vieja de la estructura borrada del remoto, ya unida | ✅ |
 | 2026-11-25 | Estación Revit | Preparada la actualización de los plugins glTF, con permiso del coordinador: los dos archivos vigentes se copiaron de la estación 3ds Max a la Mac y de ahí a la estación Revit por Tailscale, con la misma huella SHA-256 en cada paso. Script publicado en `herramientas/windows/actualizar-plugins-gltf.ps1`: revisa huellas, respalda los archivos actuales y deja registro. No se ha corrido: 3ds Max está abierto en esa estación y pide permiso de administrador | ⏸️ Espera ventana |
 | 2026-11-25 | Mac | Primer pull request del agente de la estación Revit, revisado y unido a la rama principal del repo de la cadena: 5 archivos, todos dentro de la carpeta del segundo recorrido, sin datos sensibles | ✅ |
 | 2026-11-25 | Mac | P5 cerrada: en el horneado del patio de hoy la arquitecta usó su 3ds Max, lo calificó 5 de 5 y no notó nada al volver. El horneado tardó 530 s contra 529 s | ✅ |
