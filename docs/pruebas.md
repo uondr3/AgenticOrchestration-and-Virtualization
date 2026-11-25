@@ -94,7 +94,22 @@ Inventario del 2026-11-20, solo lectura: la estación Revit **ya tiene** 3ds Max
 | Cómo terminó | Un corte de seguridad detuvo solo el proceso de la prueba |
 | Revit del arquitecto | Sin afectar |
 
-Con Revit abierto, la estación Revit no carga la escena de la primera casa dentro de un margen seguro. Falta repetir con Revit cerrado.
+Con Revit abierto, la estación Revit no carga la escena de la primera casa dentro de un margen seguro.
+
+**Segundo intento, 2026-11-25, con Revit y 3ds Max cerrados.** Tampoco llegó a hornear.
+
+| Qué se midió | Resultado |
+|---|---|
+| Memoria libre al empezar | 17.5 GB de 31 |
+| Paso alcanzado | Cargar la escena del patio, cortado a los 69 s |
+| Memoria del proceso al cortar | 13.4 GB en uso, 16.5 GB reservados |
+| Memoria de la estación | 27 GB usados, de 31 |
+| Margen de memoria disponible | Bajó a 0.8 GB |
+| Memoria ya reservada por los demás programas | 24 GB, con Revit cerrado |
+| Límite de memoria reservable (RAM más paginación) | 42 GB; Windows no lo amplió durante la prueba |
+| Licencia de Corona en un horneado real | Sin dato: no llegó a renderizar |
+
+**Conclusión:** con 32 GB la estación Revit no hornea una zona de la primera casa dentro de un margen seguro. El horneado completo reserva cerca de 36 GB, que sumados a los 24 GB del resto de programas no caben en 42 GB. Fue la segunda falla y la prueba se detuvo. Para repetirla hace falta más RAM; la estación tiene dos ranuras libres.
 
 Se monta 3ds Max 2021, Corona 9 y Forest Pack con las mismas rutas en otra estación y se hornea la misma zona. Mientras corre se revisa qué licencia toma cada programa.
 
