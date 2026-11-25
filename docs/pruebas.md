@@ -83,6 +83,19 @@ Inventario del 2026-11-20, solo lectura: la estación Revit **ya tiene** 3ds Max
 
 **Licencias, leído el 2026-11-25:** en la estación Revit, 3ds Max 2021 usa una licencia de red con el servidor en la misma PC; el servidor de licencias de Corona responde que no está activado. Eso no decide: en la estación 3ds Max ese servidor ni siquiera corre y Corona hornea con licencia. Las dos estaciones usan el mismo tipo de licencia de 3ds Max, con 100 licencias emitidas en la estación Revit. La licencia de Corona se comprueba con un render mínimo en batch. **Hecho el 2026-11-25:** renderizó en 28 s, sin marca de agua ni avisos de licencia, y sin quitarle la licencia de 3ds Max al arquitecto. Se vuelve a comprobar dentro del primer horneado real. El entorno de Python y el validador ya están instalados dentro de la carpeta del proyecto.
 
+**Primer intento, 2026-11-25, con tres Revit abiertos por decisión del arquitecto.** No llegó a hornear.
+
+| Qué se midió | Resultado |
+|---|---|
+| Paso alcanzado | Cargar la escena del patio, sin render |
+| Memoria del proceso al cortar | 12 GB a los 53 s, subiendo cerca de 1 GB cada 2 s |
+| Memoria de la estación | De 20 a 29 GB usados, de 31 |
+| Margen de memoria disponible | Cayó a menos de 0.5 GB |
+| Cómo terminó | Un corte de seguridad detuvo solo el proceso de la prueba |
+| Revit del arquitecto | Sin afectar |
+
+Con Revit abierto, la estación Revit no carga la escena de la primera casa dentro de un margen seguro. Falta repetir con Revit cerrado.
+
 Se monta 3ds Max 2021, Corona 9 y Forest Pack con las mismas rutas en otra estación y se hornea la misma zona. Mientras corre se revisa qué licencia toma cada programa.
 
 ### P7 · Entrega sin WhatsApp
