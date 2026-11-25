@@ -4,6 +4,7 @@ Qué se ejecutó, dónde y con qué resultado. Lo más reciente arriba.
 
 | Fecha | Dónde | Qué se hizo | Resultado |
 |---|---|---|---|
+| 2026-11-25 | Mac | Primer pull request del agente de la estación Revit, revisado y unido a la rama principal del repo de la cadena: 5 archivos, todos dentro de la carpeta del segundo recorrido, sin datos sensibles | ✅ |
 | 2026-11-25 | Mac | P5 cerrada: en el horneado del patio de hoy la arquitecta usó su 3ds Max, lo calificó 5 de 5 y no notó nada al volver. El horneado tardó 530 s contra 529 s | ✅ |
 | 2026-11-25 | Estación 3ds Max | Su agente corrigió la sincronización (ya no borra archivos que git no conoce, incluye la configuración que faltaba y usa rutas relativas) y unió la estructura nueva a la rama principal sin forzar. Comprobado en GitHub: raíz con lo común y los proyectos, etiqueta de respaldo intacta, commit de unión con sus dos padres. Aviso al agente de la estación Revit para que pase su trabajo y abra su pull request | ✅ Verificado |
 | 2026-11-25 | Estación Revit | Su agente instaló, con el visto bueno del arquitecto y solo dentro de la carpeta del proyecto: entorno de Python de la cadena, validador 0.4.0 y validador de Khronos. Licencias leídas sin abrir 3ds Max: 3ds Max usa licencia de red con servidor local; el servidor de licencias de Corona no está activado. La prueba de horneado no se lanzó: faltan la licencia de Corona, los plugins glTF al día y cerrar Revit | ⚠️ Falta licencia de Corona |
