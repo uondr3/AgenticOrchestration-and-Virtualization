@@ -30,7 +30,8 @@
 | 2026-11-24 | El repo de la cadena de horneado deja de ser un espejo de la carpeta de la estación 3ds Max y pasa a ser el repo de trabajo de los dos agentes de 3ds Max | Cada proyecto en su carpeta, lo compartido en `comun/`, y tareas y lecciones por proyecto. Antes se marca la última entrega con una etiqueta |
 | 2026-11-24 | La estación Revit se prueba para hornear con sus 32 GB; solo si no alcanza se sube la RAM | Un horneado de la primera casa pide de 26 a 32 GB, pero el segundo recorrido puede pesar distinto |
 | 2026-11-25 | En la estación Revit, la carpeta de código del agente del segundo recorrido es un clon del repo de la cadena, sin sincronización intermedia | Evita que el repo y la carpeta de trabajo se separen, como pasa con la primera casa |
-| 2026-11-25 | Los horneados de una entrega se reparten por zonas entre las dos estaciones, para que corran a la vez | Las dos estaciones ya hornean con resultado equivalente (P6). Cada una hornea una zona a la vez; la estación Revit, con 32 GB, solo con Revit y 3ds Max cerrados |
+| 2026-11-25 | Repartir por zonas los horneados de una entrega entre las dos estaciones queda como idea validada, sin ponerla en marcha todavía | Las dos estaciones ya hornean con resultado equivalente (P6). Faltaría llevar la escena y las texturas completas a la estación Revit, que con 32 GB solo hornea con Revit y 3ds Max cerrados |
+| 2026-11-25 | El trabajo queda en pausa hasta nueva indicación. La RAM de la estación Revit se decide después | Los arquitectos tienen que terminar su parte de los dos recorridos antes de seguir |
 
 ## Fases
 
@@ -39,7 +40,7 @@
 | 1. Diagnóstico | Flujo actual, MCPs, licencias, virtualización | ✅ |
 | 2. Validación | Pruebas P1 a P7 ([pruebas.md](pruebas.md)) | ✅ 7 de 7. P6 pasa sin margen de memoria en la estación Revit |
 | 3. Documentación para agentes | Reglas en los proyectos de cada estación ([agentes/](agentes)) | ✅ Reglas en las dos estaciones · guía de canales del recorrido 3D |
-| 4. Coordinación y piloto | Trabajo real con varias casas y entregas automáticas | 🟡 Estación Revit en uso |
+| 4. Coordinación y piloto | Trabajo real con varias casas y entregas automáticas | ⏸️ Las dos estaciones listas para hornear. En pausa hasta que los arquitectos terminen su parte |
 | 5. Observabilidad | Prometheus + Grafana ([observabilidad.md](observabilidad.md)) | 🟡 Tablero y alertas por Discord listos, faltan los eventos de agentes |
 
 ## Medidas preventivas que siempre se mantienen

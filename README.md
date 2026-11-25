@@ -5,7 +5,7 @@
 **Orquestación de agentes de IA entre las estaciones de trabajo de arquitectura de UONDR**
 
 ![Estado](https://img.shields.io/badge/estado-en%20construcci%C3%B3n-f59e0b?style=for-the-badge&logo=hammer&logoColor=white)
-![Fase](https://img.shields.io/badge/fase-validaci%C3%B3n-6366f1?style=for-the-badge&logo=target&logoColor=white)
+![Fase](https://img.shields.io/badge/fase-validaci%C3%B3n%20completa-22c55e?style=for-the-badge&logo=target&logoColor=white)
 ![Pruebas](https://img.shields.io/badge/pruebas-5%20de%207-22c55e?style=for-the-badge&logo=checkmarx&logoColor=white)
 
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-D97757?style=flat-square&logo=claude&logoColor=white)
